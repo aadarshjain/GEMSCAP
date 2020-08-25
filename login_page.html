@@ -9,16 +9,24 @@
 <body>
 	<div class = "container">
 		<h1 class = "label">Admin Login</h1>
-		<form class = "login_form" autocomplete = "off" method = "post" name = "form" onsubmit = "return validated()">
+		<!center><!img src = "{{ first_img }}"><!/center>
+		<style>
+		body {
+  			background-image: url("{{ first_img }}");
+  			background-size: cover;
+		}
+		</style>
+		<form class = "login_form" autocomplete = "off" method = "post" name = "form">
 			<div class = "font">Username</div>
 			<input type = "text" name = "email">
-			<div id = "email_error">Please fill correct Username</div>
+			
 			<div class = "font font2">Password</div>
 			<input type = "password" name = "password">
-			<div id = "pass_error">Please fill correct Password </div>
-			<button type = "submit" formaction = "home.html">Login</button>
+			
+			<button type = "submit" formaction = "/form_login">Login</button>
 		</form>
+		<h3 style="color:red;">{{info}}</h3>	
 	</div>
-	<script src = "valid.js"></script>
+	
 </body>
 </html>
