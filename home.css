@@ -4,9 +4,9 @@
 
 }
 body{
-	background: url(Logo12.png) no-repeat;
+	/*background: url(Logo12.png) no-repeat;
 	background-size: ;
-	background-position: center top;
+	background-position: center top*/;
 	align-items: center;
 	justify-content: center;
 	display: flex;
