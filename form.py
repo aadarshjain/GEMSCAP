@@ -15,7 +15,6 @@ class userform(FlaskForm):
     
     PermanentAddress = StringField('Permanent Address' , validators=[validators.DataRequired()])
     LocalAddress = StringField('Local Address' , validators=[validators.DataRequired()])
-    #EmailAddress = StringField('Email Address',[validators.Required("Please enter your email address.")] )
     EmailAddress = EmailField('Email address', [validators.DataRequired(), validators.Email()])
 
     ContactNumber1 = StringField('Contact Number 1',validators=[validators.DataRequired(),validators.Regexp(regex=r'^(\+91){1}[1-9]{1}[0-9]{9}$', message="MOBILE NO STARTING WITH +91")])

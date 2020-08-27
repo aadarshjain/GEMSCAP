@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='styles/user_profile.css') }}">
 <div class = "profile">
 
-<form class = "User_profile" autocomplete = "on" method = "post" name = "form">
+<form class = "User_profile" autocomplete = "on" action = "/savedetails" method="post" name = "form">
     {{ form.csrf_token }}
 	<a href = "/home.html" class = "previous">&laquo; Back</a>
 	<h2>Employee's Personal Information</h2><!--             heading           -->
@@ -219,6 +219,7 @@
     	{{form.AccountHolderName2.label}}<br>
     	{{form.AccountHolderName2}}
     </p>
-    <button value = {{form.submit()}} ></button>
+    <button value = {{form.submit()}} >Submit</button>
+    <button type = "button" onClick = "window.print()">Print</button>
 </form>
 </div>

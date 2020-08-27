@@ -1,0 +1,107 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>VIEW DETAILS</title>  
+</head>  
+<body>  
+  
+<h3>Employee Information</h3>  
+<table border=5>  
+    <thead>  
+        <td>EmployeeID</td>  
+        <td>FirstName</td>  
+        <td>MiddleName</td>  
+        <td>LastName</td>
+        <td>FatherName</td>
+        <td>MotherName</td>  
+        <td>LastName</td>
+        <td>DOB</td>
+        <td>MaritialStatus</td>
+        <td>PermanentAddress</td>
+        <td>LocalAddress</td>
+        <td>EmailAddress</td>
+        <td>ContactNumber1</td>
+        <td>LasContactNumber2tName</td>
+        <td>FamilyPersonsName1</td>
+        <td>FamilyPersonsContactNumber1</td>
+        <td>FamilyPersonsRelationWithEmployee1</td>
+        <td>FamilyPersonsName2</td>
+        <td>FamilyPersonsContactNumber2</td>
+        <td>FamilyPersonsRelationWithEmployee2</td>
+        <td>AadharCard</td>
+        <td>PanCard</td>
+        <td>EductionalCourseDetail</td>
+        <td>PassingYear</td>
+        <td>PassingStatus</td>
+        <td>PFNomineeName</td>
+        <td>PFNomineeRelation</td>
+        <td>PFNomineeDOB</td>
+        <td>DateOfJoining</td>
+        <td>DateOfResigning</td>
+        <td>AccountNumber1</td>
+        <td>IFSCcode1</td>
+        <td>BankName1</td>
+        <td>AccountType1</td>
+        <td>AccountHolderName1</td>
+        <td>AccountNumber2</td>
+        <td>PFNomiIFSCcode2neeDOB</td>
+        <td>BankName2</td>
+        <td>AccountType2</td>
+        <td>AccountHolderName2</td>
+    </thead>  
+      
+    {% for row in rows %}  
+      
+        <tr>  
+            <td>{{row["EmployeeID"]}}</td>  
+            <td>{{row["FirstName"]}}</td>  
+            <td>{{row["MiddleName"]}}</td>  
+            <td>{{row["LastName"]}}</td>
+            <td>{{row["FatherName"]}}</td>  
+            <td>{{row["MotherName"]}}</td>  
+            <td>{{row["DOB"]}}</td>  
+            <td>{{row["Gender"]}}</td>
+            <td>{{row["MaritialStatus"]}}</td>  
+            <td>{{row["PermanentAddress"]}}</td>  
+            <td>{{row["LocalAddress"]}}</td>  
+            <td>{{row["EmailAddress"]}}</td>  
+            <td>{{row["ContactNumber1"]}}</td>  
+            <td>{{row["ContactNumber2"]}}</td>  
+            <td>{{row["FamilyPersonsName1"]}}</td>  
+            <td>{{row["FamilyPersonsContactNumber1"]}}</td>
+            <td>{{row["FamilyPersonsRelationWithEmployee1"]}}</td>  
+            <td>{{row["FamilyPersonsName2"]}}</td>  
+            <td>{{row["FamilyPersonsContactNumber2"]}}</td>  
+            <td>{{row["FamilyPersonsRelationWithEmployee2"]}}</td>
+            <td>{{row["AadharCard"]}}</td>  
+            <td>{{row["PanCard"]}}</td>  
+            <td>{{row["EductionalCourseDetail"]}}</td>  
+            <td>{{row["PassingYear"]}}</td>
+            <td>{{row["PassingStatus"]}}</td>  
+            <td>{{row["PFNomineeName"]}}</td>  
+            <td>{{row["PFNomineeRelation"]}}</td>  
+            <td>{{row["PFNomineeDOB"]}}</td>
+            <td>{{row["DateOfJoining"]}}</td>  
+            <td>{{row["DateOfResigning"]}}</td>  
+            <td>{{row["AccountNumber1"]}}</td>  
+            <td>{{row["IFSCcode1"]}}</td>
+            <td>{{row["BankName1"]}}</td>  
+            <td>{{row["AccountType1"]}}</td>  
+            <td>{{row["AccountHolderName1"]}}</td>  
+            <td>{{row["AccountNumber2"]}}</td>
+            <td>{{row["IFSCcode2"]}}</td>  
+            <td>{{row["BankName2"]}}</td>  
+            <td>{{row["AccountType2"]}}</td>  
+            <td>{{row["AccountHolderName2"]}}</td>
+           
+
+        </tr>  
+      
+    {% endfor %}  
+</table>  
+<br><br>  
+  
+<!a href="/">Go back to home page<!/a>  
+  
+</body>  
+</html>
