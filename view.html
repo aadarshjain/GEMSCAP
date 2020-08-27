@@ -2,97 +2,118 @@
 <html>  
 <head>  
     <title>VIEW DETAILS</title>  
+    <style type="text/css">
+    .print button{
+        margin: 45px 0 30px 0;
+        height: 40px;
+        width: 380px;
+        font-size: 20px;
+        color: white;
+        outline: none;
+        cursor: pointer;
+        font-weight: bold;
+        background: #1A237E;
+        border-radius: 3px;
+        border: 1px solid #3949AB;
+        transition: .5s;
+    }
+    .print button:hover{
+        background: #800000;
+    }  
+    </style>
 </head>  
 <body>  
   
 <h3>Employee Information</h3>  
 <table border=5>  
-    <thead>  
-        <td>EmployeeID</td>  
-        <td>FirstName</td>  
-        <td>MiddleName</td>  
-        <td>LastName</td>
-        <td>FatherName</td>
-        <td>MotherName</td>  
-        <td>LastName</td>
-        <td>DOB</td>
-        <td>MaritialStatus</td>
-        <td>PermanentAddress</td>
-        <td>LocalAddress</td>
-        <td>EmailAddress</td>
-        <td>ContactNumber1</td>
-        <td>LasContactNumber2tName</td>
-        <td>FamilyPersonsName1</td>
-        <td>FamilyPersonsContactNumber1</td>
-        <td>FamilyPersonsRelationWithEmployee1</td>
-        <td>FamilyPersonsName2</td>
-        <td>FamilyPersonsContactNumber2</td>
-        <td>FamilyPersonsRelationWithEmployee2</td>
-        <td>AadharCard</td>
-        <td>PanCard</td>
-        <td>EductionalCourseDetail</td>
-        <td>PassingYear</td>
-        <td>PassingStatus</td>
-        <td>PFNomineeName</td>
-        <td>PFNomineeRelation</td>
-        <td>PFNomineeDOB</td>
-        <td>DateOfJoining</td>
-        <td>DateOfResigning</td>
-        <td>AccountNumber1</td>
-        <td>IFSCcode1</td>
-        <td>BankName1</td>
-        <td>AccountType1</td>
-        <td>AccountHolderName1</td>
-        <td>AccountNumber2</td>
-        <td>PFNomiIFSCcode2neeDOB</td>
-        <td>BankName2</td>
-        <td>AccountType2</td>
-        <td>AccountHolderName2</td>
+    <thead>
+    <tr>  
+        <th>EmployeeID</th>  
+        <th>FirstName</th>  
+        <th>MiddleName</th>  
+        <th>LastName</th>
+        <th>FatherName</th>
+        <th>MotherName</th>  
+        <th>LastName</th>
+        <th>DOB</th>
+        <th>MaritialStatus</th>
+        <th>PermanentAddress</th>
+        <th>LocalAddress</th>
+        <th>EmailAddress</th>
+        <th>ContactNumber1</th>
+        <th>LasContactNumber2tName</th>
+        <th>FamilyPersonsName1</th>
+        <th>FamilyPersonsContactNumber1</th>
+        <th>FamilyPersonsRelationWithEmployee1</th>
+        <th>FamilyPersonsName2</th>
+        <th>FamilyPersonsContactNumber2</th>
+        <th>FamilyPersonsRelationWithEmployee2</th>
+        <th>AadharCard</th>
+        <th>PanCard</th>
+        <th>EductionalCourseDetail</th>
+        <th>PassingYear</th>
+        <th>PassingStatus</th>
+        <th>PFNomineeName</th>
+        <th>PFNomineeRelation</th>
+        <th>PFNomineeDOB</th>
+        <th>DateOfJoining</th>
+        <th>DateOfResigning</th>
+        <th>AccountNumber1</th>
+        <th>IFSCcode1</th>
+        <th>BankName1</th>
+        <th>AccountType1</th>
+        <th>AccountHolderName1</th>
+        <th>AccountNumber2</th>
+        <th>PFNomiIFSCcode2neeDOB</th>
+        <th>BankName2</th>
+        <th>AccountType2</th>
+        <th>AccountHolderName2</th>
+    </tr>
     </thead>  
       
     {% for row in rows %}  
       
         <tr>  
-            <td>{{row["EmployeeID"]}}</td>  
-            <td>{{row["FirstName"]}}</td>  
-            <td>{{row["MiddleName"]}}</td>  
-            <td>{{row["LastName"]}}</td>
-            <td>{{row["FatherName"]}}</td>  
-            <td>{{row["MotherName"]}}</td>  
-            <td>{{row["DOB"]}}</td>  
-            <td>{{row["Gender"]}}</td>
-            <td>{{row["MaritialStatus"]}}</td>  
-            <td>{{row["PermanentAddress"]}}</td>  
-            <td>{{row["LocalAddress"]}}</td>  
-            <td>{{row["EmailAddress"]}}</td>  
-            <td>{{row["ContactNumber1"]}}</td>  
-            <td>{{row["ContactNumber2"]}}</td>  
-            <td>{{row["FamilyPersonsName1"]}}</td>  
-            <td>{{row["FamilyPersonsContactNumber1"]}}</td>
-            <td>{{row["FamilyPersonsRelationWithEmployee1"]}}</td>  
-            <td>{{row["FamilyPersonsName2"]}}</td>  
-            <td>{{row["FamilyPersonsContactNumber2"]}}</td>  
-            <td>{{row["FamilyPersonsRelationWithEmployee2"]}}</td>
-            <td>{{row["AadharCard"]}}</td>  
-            <td>{{row["PanCard"]}}</td>  
-            <td>{{row["EductionalCourseDetail"]}}</td>  
-            <td>{{row["PassingYear"]}}</td>
-            <td>{{row["PassingStatus"]}}</td>  
-            <td>{{row["PFNomineeName"]}}</td>  
-            <td>{{row["PFNomineeRelation"]}}</td>  
-            <td>{{row["PFNomineeDOB"]}}</td>
-            <td>{{row["DateOfJoining"]}}</td>  
-            <td>{{row["DateOfResigning"]}}</td>  
-            <td>{{row["AccountNumber1"]}}</td>  
-            <td>{{row["IFSCcode1"]}}</td>
-            <td>{{row["BankName1"]}}</td>  
-            <td>{{row["AccountType1"]}}</td>  
-            <td>{{row["AccountHolderName1"]}}</td>  
-            <td>{{row["AccountNumber2"]}}</td>
-            <td>{{row["IFSCcode2"]}}</td>  
-            <td>{{row["BankName2"]}}</td>  
-            <td>{{row["AccountType2"]}}</td>  
-            <td>{{row["AccountHolderName2"]}}</td>
+            <th>{{row["EmployeeID"]}}</th>  
+            <th>{{row["FirstName"]}}</th>  
+            <th>{{row["MiddleName"]}}</th>  
+            <th>{{row["LastName"]}}</th>
+            <th>{{row["FatherName"]}}</th>  
+            <th>{{row["MotherName"]}}</th>  
+            <th>{{row["DOB"]}}</th>  
+            <th>{{row["Gender"]}}</th>
+            <th>{{row["MaritialStatus"]}}</th>  
+            <th>{{row["PermanentAddress"]}}</th>  
+            <th>{{row["LocalAddress"]}}</th>  
+            <th>{{row["EmailAddress"]}}</th>  
+            <th>{{row["ContactNumber1"]}}</th>  
+            <th>{{row["ContactNumber2"]}}</th>  
+            <th>{{row["FamilyPersonsName1"]}}</th>  
+            <th>{{row["FamilyPersonsContactNumber1"]}}</th>
+            <th>{{row["FamilyPersonsRelationWithEmployee1"]}}</th>  
+            <th>{{row["FamilyPersonsName2"]}}</th>  
+            <th>{{row["FamilyPersonsContactNumber2"]}}</th>  
+            <th>{{row["FamilyPersonsRelationWithEmployee2"]}}</th>
+            <th>{{row["AadharCard"]}}</th>  
+            <th>{{row["PanCard"]}}</th>  
+            <th>{{row["EductionalCourseDetail"]}}</th>  
+            <th>{{row["PassingYear"]}}</th>
+            <th>{{row["PassingStatus"]}}</th>  
+            <th>{{row["PFNomineeName"]}}</th>  
+            <th>{{row["PFNomineeRelation"]}}</th>  
+            <th>{{row["PFNomineeDOB"]}}</th>
+            <th>{{row["DateOfJoining"]}}</th>  
+            <th>{{row["DateOfResigning"]}}</th>  
+            <th>{{row["AccountNumber1"]}}</th>  
+            <th>{{row["IFSCcode1"]}}</th>
+            <th>{{row["BankName1"]}}</th>  
+            <th>{{row["AccountType1"]}}</th>  
+            <th>{{row["AccountHolderName1"]}}</th>  
+            <th>{{row["AccountNumber2"]}}</th>
+            <th>{{row["IFSCcode2"]}}</th>  
+            <th>{{row["BankName2"]}}</th>  
+            <th>{{row["AccountType2"]}}</th>  
+            <th>{{row["AccountHolderName2"]}}</th>
            
 
         </tr>  
@@ -100,8 +121,8 @@
     {% endfor %}  
 </table>  
 <br><br>  
-  
-<!a href="/">Go back to home page<!/a>  
-  
+<form class = "print">
+ <button type = "button" onClick = "window.print()">Print</button>
+</form>  
 </body>  
 </html>

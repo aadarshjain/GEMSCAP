@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask import *
-from form import userform
+from form import userform, printdata
 #from flaskwebgui import FlaskUI
 from flask import abort
 import sqlite3
@@ -27,13 +27,14 @@ def login1():
 
 @app.route('/form_login',methods=['GET' , 'POST'])
 def login():
+	login_img = os.path.join(app.config['UPLOAD_FOLDER'], 'bglogin.jpg')
 	home_img = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
 	email = request.form['email']
 	password = request.form['password']
 	if email not in database:
-		return render_template('login_page.html' , info="Invalid Username")
+		return render_template('login_page.html' , info="Invalid Username", first_img = login_img)
 	if database[email] != password:
-		return render_template('login_page.html' , info="Invalid Password")
+		return render_template('login_page.html' , info="Invalid Password", first_img = login_img)
 	else:
 		return render_template('home.html', second_img = home_img)
 
@@ -84,7 +85,13 @@ def saveDetails():
             Gender = request.form["Gender"]
             MaritialStatus = request.form["MaritialStatus"]
             PermanentAddress = request.form["PermanentAddress"]
+            City1 = request.form["City1"]
+            Pincode1 = request.form["Pincode1"]
+            Country1 = request.form["Country1"]
             LocalAddress = request.form["LocalAddress"]
+            City2 = request.form["City2"]
+            Pincode2 = request.form["Pincode2"]
+            Country2 = request.form["Country2"]
             EmailAddress = request.form["EmailAddress"]
             ContactNumber1 = request.form["ContactNumber1"]
             ContactNumber2 = request.form["ContactNumber2"]
@@ -127,7 +134,13 @@ def saveDetails():
 				Gender TEXT NOT NULL,
 				MaritialStatus TEXT NOT NULL,
 				PermanentAddress TEXT NOT NULL,
+				City1 TEXT NOT NULL,
+				Pincode1 INTEGER NOT NULL,
+				Country1 TEXT NOT NULL,
 				LocalAddress TEXT NOT NULL,
+				City2 TEXT NOT NULL,
+				Pincode2 INTEGER NOT NULL,
+				Country2 TEXT NOT NULL,
 				EmailAddress TEXT NOT NULL,
 				ContactNumber1 INTEGER,
 				ContactNumber2 INTEGER,
@@ -159,7 +172,7 @@ def saveDetails():
 				AccountHolderName2 TEXT NOT NULL
 				) 
 				''') 
-                cur.execute("INSERT INTO gemscap_table (EmployeeID,FirstName,MiddleName,LastName,FatherName,MotherName,DOB,Gender,MaritialStatus,PermanentAddress,LocalAddress,EmailAddress,ContactNumber1,ContactNumber2,FamilyPersonsName1,FamilyPersonsContactNumber1,FamilyPersonsRelationWithEmployee1,FamilyPersonsName2,FamilyPersonsContactNumber2,FamilyPersonsRelationWithEmployee2,AadharCard,PanCard,EductionalCourseDetail,PassingYear,PassingStatus,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfJoining,DateOfResigning,AccountNumber1,IFSCcode1,BankName1,AccountType1,AccountHolderName1,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (EmployeeID,FirstName,MiddleName,LastName,FatherName,MotherName,DOB,Gender,MaritialStatus,PermanentAddress,LocalAddress,EmailAddress,ContactNumber1,ContactNumber2,FamilyPersonsName1,FamilyPersonsContactNumber1,FamilyPersonsRelationWithEmployee1,FamilyPersonsName2,FamilyPersonsContactNumber2,FamilyPersonsRelationWithEmployee2,AadharCard,PanCard,EductionalCourseDetail,PassingYear,PassingStatus,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfJoining,DateOfResigning,AccountNumber1,IFSCcode1,BankName1,AccountType1,AccountHolderName1,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2))
+                cur.execute("INSERT INTO gemscap_table (EmployeeID,FirstName,MiddleName,LastName,FatherName,MotherName,DOB,Gender,MaritialStatus,PermanentAddress,City1,Pincode1,Country1,LocalAddress,City2,Pincode2,Country2,EmailAddress,ContactNumber1,ContactNumber2,FamilyPersonsName1,FamilyPersonsContactNumber1,FamilyPersonsRelationWithEmployee1,FamilyPersonsName2,FamilyPersonsContactNumber2,FamilyPersonsRelationWithEmployee2,AadharCard,PanCard,EductionalCourseDetail,PassingYear,PassingStatus,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfJoining,DateOfResigning,AccountNumber1,IFSCcode1,BankName1,AccountType1,AccountHolderName1,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (EmployeeID,FirstName,MiddleName,LastName,FatherName,MotherName,DOB,Gender,MaritialStatus,PermanentAddress,City1,Pincode1,Country1,LocalAddress,City2,Pincode2,Country2,EmailAddress,ContactNumber1,ContactNumber2,FamilyPersonsName1,FamilyPersonsContactNumber1,FamilyPersonsRelationWithEmployee1,FamilyPersonsName2,FamilyPersonsContactNumber2,FamilyPersonsRelationWithEmployee2,AadharCard,PanCard,EductionalCourseDetail,PassingYear,PassingStatus,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfJoining,DateOfResigning,AccountNumber1,IFSCcode1,BankName1,AccountType1,AccountHolderName1,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2))
 
                 con.commit()  
                 msg = "Employee successfully Added"  
@@ -169,6 +182,30 @@ def saveDetails():
         finally:
         	return render_template('after_user.html', msg = msg)
         	con.close()
+
+@app.route("/tryprint.html",methods = ["POST","GET"])
+def tryprint():
+    form1 = printdata()
+    #if form1.is_submitted():
+        #result = request.form
+        #print(result['EmployeeAccNo'])
+    return render_template("tryprint.html",form=form1)
+
+@app.route("/trynew",methods = ["POST","GET"])
+def trynew():
+    #form1 = printdata()
+    result = request.form
+    z = result['EmployeeAccNo']
+    print(z)
+    con = sqlite3.connect("GEMSCAP_TABLE.db")  
+    con.row_factory = sqlite3.Row  
+    cur = con.cursor()  
+    script="SELECT * FROM gemscap_table WHERE EmployeeID = '" + str(z) + "'"
+    print(script)
+    cur.execute(script)  
+    rows = cur.fetchall()
+    #print(rows)
+    return render_template("view.html",rows = rows)
 
 
 if __name__ == "__main__":
