@@ -49,8 +49,24 @@ class userform(FlaskForm):
     BankName2 = StringField('Bank Name')
     AccountType2 = StringField('Account Type') 
     AccountHolderName2 = StringField('Account Holder Name')
+    TakionID = StringField('Takion ID')
+    StartingBalance = StringField('Starting Balance')
+    PolicyNumber = StringField('Policy Number')
+    CarryForwardBalance = StringField('Carry Forward Balance')
+    RateOfDollar = StringField('Rate of Dollar')
 
     submit = SubmitField('Submit')
 
 class printdata(FlaskForm):
     EmployeeAccNo = StringField('ENTER EMPLOYEE\'S ACCOUNT NUMBER')
+
+class updateExcel(FlaskForm):
+    Excel = StringField('ENTER FILE NAME')
+
+class paidDetails(FlaskForm):
+    Paid = StringField('ENTER TAKION ID')
+
+class amountToPay(FlaskForm):
+    Paida = StringField('RE-ENTER TAKION ID')
+    PaidAmount = StringField('ENTER AMOUNT TO PAY')
+

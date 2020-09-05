@@ -4,9 +4,6 @@
 
 }
 body{
-	/*background: url(Logo12.png) no-repeat;
-	background-size: ;
-	background-position: center top*/;
 	align-items: center;
 	justify-content: center;
 	display: flex;
@@ -17,7 +14,6 @@ body{
 	margin-top: 100px;
 	width: 450px;
 	height: auto;
-	
 	border-radius: 5px;
 }
 .label{

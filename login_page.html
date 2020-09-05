@@ -9,7 +9,7 @@
 <body>
 	<div class = "container">
 		<h1 class = "label">Admin Login</h1>
-		<!center><!img src = "{{ first_img }}"><!/center>
+		<center><h3 class = "glow" style="color:white;">{{info}}</h3></center>
 		<style>
 		body {
   			background-image: url("{{ first_img }}");
@@ -17,6 +17,24 @@
   			background-size: cover;
   			overflow: auto;
 		}
+		.glow {
+        	font-size: 20px;
+        	color: #ffffff;
+        	text-align: center;
+        	-webkit-animation: glow 1s ease-in-out infinite alternate;
+        	-moz-animation: glow 1s ease-in-out infinite alternate;
+        	animation: glow 1s ease-in-out infinite alternate;
+      	}
+      	@-webkit-keyframes glow {
+      	  from {
+      	    text-shadow: 0 0 10px #eeeeee, 0 0 20px #000000, 0 0 30px #000000, 0 0 40px #000000, 
+                       0 0 50px #9554b3, 0 0 60px #9554b3, 0 0 70px #9554b3;
+        }
+        to {
+          text-shadow: 0 0 20px #eeeeee, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6,
+                       0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+        }
+      }
 		</style>
 		<form class = "login_form" autocomplete = "off" method = "post" name = "form">
 			<div class = "font">Username</div>
@@ -27,7 +45,7 @@
 			
 			<button type = "submit" formaction = "/form_login">Login</button>
 		</form>
-		<h3 style="color:red;">{{info}}</h3>	
+		
 	</div>
 	
 </body>

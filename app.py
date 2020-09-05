@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask import *
-from form import userform, printdata
+from form import userform, printdata, updateExcel, paidDetails, amountToPay
 #from flaskwebgui import FlaskUI
+from calculation import *
 from flask import abort
 import sqlite3
 import os
-
 app = Flask(__name__)
 app.secret_key = 'gemscap'
 #ui = FlaskUI(app)
@@ -40,20 +40,15 @@ def login():
 
 @app.route('/home.html',methods=['GET' , 'POST'])
 def home():
-    return render_template('home.html')
-
-#@app.route('/user_profile.html',methods=['GET','POST'])
-#def user_profile():
-#	return render_template('user_profile.html')
+    home_img = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
+    return render_template('home.html', second_img = home_img)
 
 @app.route('/user_profile.html',methods=['GET','POST'])
 def userprofile():
     form = userform()
-    
-    if form.is_submitted():
+    if request.method == 'POST'and form.is_submitted() and form.validate():
     	result = request.form
     	print(result)
-    ####code for saving too db
     return render_template('user_profile.html',form = form)
 
 @app.route('/after_user.html', methods = ['GET', 'POST'])
@@ -121,6 +116,11 @@ def saveDetails():
             BankName2 = request.form["BankName2"]
             AccountType2 = request.form["AccountType2"]
             AccountHolderName2 = request.form["AccountHolderName2"]
+            TakionID = request.form["TakionID"]
+            StartingBalance = request.form["StartingBalance"]
+            PolicyNumber = request.form["PolicyNumber"]
+            CarryForwardBalance = request.form["CarryForwardBalance"]
+            RateOfDollar = request.form["RateOfDollar"]
             with sqlite3.connect("GEMSCAP_TABLE.db") as con:  
                 cur = con.cursor() 
                 cur.execute('''CREATE TABLE IF NOT EXISTS gemscap_table(   
@@ -169,10 +169,15 @@ def saveDetails():
 				IFSCcode2 TEXT NOT NULL,
 				BankName2 TEXT NOT NULL,
 				AccountType2 TEXT NOT NULL,
-				AccountHolderName2 TEXT NOT NULL
+				AccountHolderName2 TEXT NOT NULL,
+				TakionID TEXT NOT NULL PRIMARY KEY,
+				StartingBalance TEXT NOT NULL,
+				PolicyNumber TEXT NOT NULL,
+				CarryForwardBalance TEXT NOT NULL,
+				RateOfDollar TEXT NOT NULL
 				) 
 				''') 
-                cur.execute("INSERT INTO gemscap_table (EmployeeID,FirstName,MiddleName,LastName,FatherName,MotherName,DOB,Gender,MaritialStatus,PermanentAddress,City1,Pincode1,Country1,LocalAddress,City2,Pincode2,Country2,EmailAddress,ContactNumber1,ContactNumber2,FamilyPersonsName1,FamilyPersonsContactNumber1,FamilyPersonsRelationWithEmployee1,FamilyPersonsName2,FamilyPersonsContactNumber2,FamilyPersonsRelationWithEmployee2,AadharCard,PanCard,EductionalCourseDetail,PassingYear,PassingStatus,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfJoining,DateOfResigning,AccountNumber1,IFSCcode1,BankName1,AccountType1,AccountHolderName1,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (EmployeeID,FirstName,MiddleName,LastName,FatherName,MotherName,DOB,Gender,MaritialStatus,PermanentAddress,City1,Pincode1,Country1,LocalAddress,City2,Pincode2,Country2,EmailAddress,ContactNumber1,ContactNumber2,FamilyPersonsName1,FamilyPersonsContactNumber1,FamilyPersonsRelationWithEmployee1,FamilyPersonsName2,FamilyPersonsContactNumber2,FamilyPersonsRelationWithEmployee2,AadharCard,PanCard,EductionalCourseDetail,PassingYear,PassingStatus,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfJoining,DateOfResigning,AccountNumber1,IFSCcode1,BankName1,AccountType1,AccountHolderName1,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2))
+                cur.execute("INSERT INTO gemscap_table (EmployeeID,FirstName,MiddleName,LastName,FatherName,MotherName,DOB,Gender,MaritialStatus,PermanentAddress,City1,Pincode1,Country1,LocalAddress,City2,Pincode2,Country2,EmailAddress,ContactNumber1,ContactNumber2,FamilyPersonsName1,FamilyPersonsContactNumber1,FamilyPersonsRelationWithEmployee1,FamilyPersonsName2,FamilyPersonsContactNumber2,FamilyPersonsRelationWithEmployee2,AadharCard,PanCard,EductionalCourseDetail,PassingYear,PassingStatus,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfJoining,DateOfResigning,AccountNumber1,IFSCcode1,BankName1,AccountType1,AccountHolderName1,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2,TakionID,StartingBalance,PolicyNumber,CarryForwardBalance,RateOfDollar) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (EmployeeID,FirstName,MiddleName,LastName,FatherName,MotherName,DOB,Gender,MaritialStatus,PermanentAddress,City1,Pincode1,Country1,LocalAddress,City2,Pincode2,Country2,EmailAddress,ContactNumber1,ContactNumber2,FamilyPersonsName1,FamilyPersonsContactNumber1,FamilyPersonsRelationWithEmployee1,FamilyPersonsName2,FamilyPersonsContactNumber2,FamilyPersonsRelationWithEmployee2,AadharCard,PanCard,EductionalCourseDetail,PassingYear,PassingStatus,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfJoining,DateOfResigning,AccountNumber1,IFSCcode1,BankName1,AccountType1,AccountHolderName1,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2,TakionID,StartingBalance,PolicyNumber,CarryForwardBalance,RateOfDollar))
 
                 con.commit()  
                 msg = "Employee successfully Added"  
@@ -207,7 +212,61 @@ def trynew():
     #print(rows)
     return render_template("view.html",rows = rows)
 
+@app.route("/upload.html", methods = ['GET', 'POST'])
+def upload():
+	if request.method == 'POST':
+		file = request.files["file"]
+		file.save(os.path.join("uploads", file.filename))
+	return render_template("/upload.html", message = "Successfully Uploaded")	
+
+@app.route("/excelupdate.html",methods = ["POST","GET"])
+def excelupdate():
+    form2 = updateExcel(request.form)
+    if request.method == 'POST' and form2.is_submitted():
+        result =  request.form.getlist('Excel')
+        x=form2.Excel.data
+        try:
+            openfile(x)
+            createexceltable()
+            updatenetpay()
+            updateCarryForwardBalance()
+            updateCarryForwardBalanceInGemscap()
+            cleardata()
+        except:
+            pass
+    return render_template("excelupdate.html",form=form2)
+
+@app.route("/paid.html",methods = ["POST"])
+def paid():
+    amount = ""
+    form3 = paidDetails()
+    form4 = amountToPay()
+    
+
+    if request.method == 'POST': 
+        if form3.is_submitted():
+            try:
+                x=form3.Paid.data
+                print(x)
+                amount = printpayabledata(x)
+            except:
+                pass
+            if len(amount) > 0:
+                return render_template("paid.html", info=amount, TakionID=x ,form = form4)    
+
+        if form4.is_submitted():
+            try:
+                x = form4.Paida.data
+                y = form4.PaidAmount.data
+                #print(x)
+                print(y)
+                deductamount(x,y)
+            except:
+                pass
+            return render_template("paid.html", form = form3)    
+
+
 
 if __name__ == "__main__":
-    app.run(debug = True)
-    #ui.run()
+    app.run()
+    #ui.run()	
