@@ -9,11 +9,11 @@
 		margin: 0;
 	}
 	body{
-		background: #ade6bb;
 		align-items: center;
 		justify-content: center;
 		display: flex;
 		font-family: sans-serif;
+		background: lightblue;
 	}
 	.details{
 		position: relative;
@@ -57,46 +57,27 @@
 		height: 40px;
 		width: 365px;
 		padding: 0 5px;
-		font-size: 20px;
+		font-size: 18px;
 		outline: none;
 		border: 1px solid silver;
 	}
-	a {
-  text-decoration: none;
-  display: inline-block;
-  padding: 8px 16px;
-  transition: .5s;
-}
 
-a:hover {
-  background-color: #FAFAFA;
-  color: red;
-}
-.previous {
-  
-  color: black;
-  outline: none;
-  cursor: pointer;
-  border-radius: 1px;
-  border: 1px solid #3949AB;
-}    
 	</style>
 	
 </head>
 <body>
 	<div class = "details">	
 		<center><h1 class = "label">UPLOAD EXCEL FILE</h1></center>
-		<form class = "user_form" method = "post" name = "form" >	
+		<form class = "user_form" method = "post" name = "form" action = "/adjust.html" >	
 			<a href = "/home.html" class = "previous">&laquo; Back</a>
-			<center><p>{{form.Month.label}}</p></center>
-			<center><p>{{form.Month}}</p></center>
-            <center><p>{{form.Excel.label}}</p></center> 
-            <center><p>{{form.Excel}}</p><center>
-
-            <!--<center><input type="file" id="myfile" name="myfile"><br></center>-->
-  		
-
-			<center><button  onsubmit=this.value='' value = {{form.submit}} >Submit</button></center>
+			<center><p>{{form.Month.label}}</p></center> 
+            <center><p>{{form.Month}}</p><center>
+            <center><p>{{form.Takionid.label}}</p></center> 
+            <center><p>{{form.Takionid}}</p><center>
+            <center><p>{{form.Amount.label}}</p></center> 
+            <center><p>{{form.Amount}}</p><center>    
+			<center><p>{{info}}</p></center>
+			<button value = {{form.submit}} >Submit</button>
 	    </form>
 	</div>    
 </body>

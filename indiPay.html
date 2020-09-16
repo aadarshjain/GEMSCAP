@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<html lang = "en">
-<head>
-	<meta charset = "UTF-8">
-	<title>VIEW DETAILS</title>
+<html>
 	<style type="text/css">
 	*{
 		padding: 0;
@@ -61,43 +58,24 @@
 		outline: none;
 		border: 1px solid silver;
 	}
-	a {
-  text-decoration: none;
-  display: inline-block;
-  padding: 8px 16px;
-  transition: .5s;
-}
 
-a:hover {
-  background-color: #FAFAFA;
-  color: red;
-}
-.previous {
-  
-  color: black;
-  outline: none;
-  cursor: pointer;
-  border-radius: 1px;
-  border: 1px solid #3949AB;
-}    
 	</style>
-	
+<head>
+	<title>INDIVIDUAL PAYMENT</title>
 </head>
+
 <body>
-	<div class = "details">	
-		<center><h1 class = "label">UPLOAD EXCEL FILE</h1></center>
-		<form class = "user_form" method = "post" name = "form" >	
-			<a href = "/home.html" class = "previous">&laquo; Back</a>
+	<div class = "details">
+	<form class = "user_form" autocomplete = "off" method = "post" name = "form">
+			<center><h2>PAY TO INDIVIDUAL EMPLOYEE</h2></center>
 			<center><p>{{form.Month.label}}</p></center>
 			<center><p>{{form.Month}}</p></center>
-            <center><p>{{form.Excel.label}}</p></center> 
-            <center><p>{{form.Excel}}</p><center>
-
-            <!--<center><input type="file" id="myfile" name="myfile"><br></center>-->
-  		
-
-			<center><button  onsubmit=this.value='' value = {{form.submit}} >Submit</button></center>
-	    </form>
-	</div>    
+			<center><p>{{form.PayAmount.label}}</p></center>
+			<center><p>{{form.PayAmount}}</p></center>
+			<center><button type="submit" action="paid.html">SUBMIT</button></center>
+			<!--<button value = {{form.submit}} formaction="paid.html" >Submit</button>-->
+			
+	</form>
+</div>
 </body>
 </html>

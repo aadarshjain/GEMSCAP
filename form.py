@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, RadioField, DateField, validators, ValidationError
+from wtforms import StringField, PasswordField, SubmitField, RadioField, DateField, validators, ValidationError,SelectField
 from wtforms.fields.html5 import EmailField
 
 class userform(FlaskForm):
@@ -9,7 +9,8 @@ class userform(FlaskForm):
     LastName = StringField('Last Name' , validators = [validators.DataRequired()])
     FatherName = StringField('Father Name' , validators = [validators.DataRequired()])
     MotherName = StringField('Mother Name' , validators = [validators.DataRequired()])
-    DOB = DateField('Date of Birth', format = "%m/%d/%Y", validators = (validators.Optional(),))
+    #DOB = DateField('Date of Birth', format = "%m/%d/%Y", validators = (validators.Optional(),))
+    DOB = StringField('Date Of Birth', validators = [validators.DataRequired()])
     Gender = RadioField('Gender', choices = [('M','Male'), ('F','Female'), ('O','Other')])
     MaritialStatus = RadioField('Maritial Status', choices = [('M','Married'),('U','Unmarried'),('O','Other') ] )
     PermanentAddress = StringField('Permanent Address' , validators = [validators.DataRequired()])
@@ -51,16 +52,30 @@ class userform(FlaskForm):
     AccountHolderName2 = StringField('Account Holder Name')
     TakionID = StringField('Takion ID')
     StartingBalance = StringField('Starting Balance')
-    PolicyNumber = StringField('Policy Number')
+    PolicyNumber = RadioField('PolicyNumber', choices = [('0','70%'), ('1','85%')])
     CarryForwardBalance = StringField('Carry Forward Balance')
     RateOfDollar = StringField('Rate of Dollar')
 
     submit = SubmitField('Submit')
 
 class printdata(FlaskForm):
-    EmployeeAccNo = StringField('ENTER EMPLOYEE\'S ACCOUNT NUMBER')
+    EmployeeAccNo = StringField('ENTER EMPLOYEE\'S GEMSCAP ID')
 
 class updateExcel(FlaskForm):
+    Months = [ ('Jan', 'Jan'), 
+               ('Feb', 'Feb'),
+               ('Mar', 'Mar'),
+               ('Apr', 'Apr'),
+               ('May', 'May'),
+               ('Jun', 'Jun'),
+               ('Jul', 'Jul'),
+               ('Aug', 'Aug'),
+               ('Sep', 'Sep'),
+               ('Oct', 'Oct'),
+               ('Nov', 'Nov'),
+               ('Dec', 'Dec')
+            ]
+    Month = SelectField('MONTHS', choices = Months)
     Excel = StringField('ENTER FILE NAME')
 
 class paidDetails(FlaskForm):
@@ -70,3 +85,45 @@ class amountToPay(FlaskForm):
     Paida = StringField('RE-ENTER TAKION ID')
     PaidAmount = StringField('ENTER AMOUNT TO PAY')
 
+class payToIndividual(FlaskForm):
+    Months = [ ('Jan', 'Jan'), 
+               ('Feb', 'Feb'),
+               ('Mar', 'Mar'),
+               ('Apr', 'Apr'),
+               ('May', 'May'),
+               ('Jun', 'Jun'),
+               ('Jul', 'Jul'),
+               ('Aug', 'Aug'),
+               ('Sep', 'Sep'),
+               ('Oct', 'Oct'),
+               ('Nov', 'Nov'),
+               ('Dec', 'Dec')
+            ]
+    Month = SelectField('MONTHS', choices = Months)
+    PayAmount = StringField('ENTER AMOUNT TO PAY')
+    submit1 = SubmitField('Submit')
+
+class indiMonthlyView(FlaskForm):
+    TakionId = StringField('ENTER EMPLOYEE\'S TAKION ID')
+
+class indiPayView(FlaskForm):
+    TakionId = StringField('ENTER EMPLOYEE\'S TAKION ID')
+
+class adjustform(FlaskForm):
+    Months = [ ('Jan', 'Jan'), 
+               ('Feb', 'Feb'),
+               ('Mar', 'Mar'),
+               ('Apr', 'Apr'),
+               ('May', 'May'),
+               ('Jun', 'Jun'),
+               ('Jul', 'Jul'),
+               ('Aug', 'Aug'),
+               ('Sep', 'Sep'),
+               ('Oct', 'Oct'),
+               ('Nov', 'Nov'),
+               ('Dec', 'Dec')
+            ]
+    Month = SelectField('MONTHS', choices = Months)
+    Takionid = StringField('ENTER TakionID')
+    Amount = StringField('ENTER AMOUNT TO ADJUST')
+    submit = SubmitField('Submit')

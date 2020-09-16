@@ -1,0 +1,107 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>VIEW MONTHLY QUANTITY DETAILS</title>  
+    <style type="text/css">
+    <style type="text/css">
+        *{
+            padding: 5px;
+            margin: 5px;
+        }
+        body{
+
+            margin-left: 17.5%;
+            text-align: left; 
+            background-color: #D3D3D3;
+
+        }
+        td, th {
+            width: auto;
+            height: 2rem;
+            border: 2px solid #ccc;
+            text-align: auto;
+        }
+        th {
+            background: lightblue;
+            border-color: white;
+        }
+        td{
+            background: orange;
+            border-color: white;
+        }           
+        .table{
+            
+            table-layout: fixed;
+            width: 100%;
+            border-spacing: 1rem;
+            border-collapse: collapse;
+            font-family: sans-serif;
+        }
+    .print button{      
+        margin: 30px 0 30px 0;
+        height: 40px;
+        width: 250px;
+        font-size: 20px;
+        color: white;
+        outline: none;
+        cursor: pointer;
+        font-weight: bold;
+        background: #1A237E;
+        border-radius: 3px;
+        border: 1px solid #3949AB;
+        transition: .5s;
+    }
+    .print button:hover{
+        background: #800000;
+    }  
+    </style>
+    </style>
+</head>  
+<body>  
+  
+<h3>EMPLOYEE MONTHLY QUANTITY INFORMATION</h3>  
+<table border=5>  
+    <thead>
+    <tr>  
+        <th>TAKIONID</th>
+        <th>Jan</th>
+        <th>Feb</th>
+        <th>Mar</th>
+        <th>Apr</th>
+        <th>May</th>
+        <th>Jun</th>
+        <th>Jul</th>
+        <th>Aug</th>
+        <th>Sep</th>
+        <th>Oct</th>
+        <th>Nov</th>
+        <th>Dec</th>
+    </tr>
+    </thead>  
+      
+    {% for row in rows %}  
+      
+        <tr>  
+            <th>{{row["TAKIONID"]}}</th>
+            <th>{{row["Jan"]}}</th>
+            <th>{{row["Feb"]}}</th>
+            <th>{{row["Mar"]}}</th>
+            <th>{{row["Apr"]}}</th>
+            <th>{{row["May"]}}</th>
+            <th>{{row["Jun"]}}</th>
+            <th>{{row["Jul"]}}</th>
+            <th>{{row["Aug"]}}</th>
+            <th>{{row["Sep"]}}</th>
+            <th>{{row["Oct"]}}</th>
+            <th>{{row["Nov"]}}</th>
+            <th>{{row["Dec"]}}</th> 
+        </tr>  
+      
+    {% endfor %}  
+</table>  
+<br><br>  
+<form class = "print">
+ <button type = "button" onClick = "window.print()">Print</button>
+</form>  
+</body>  
+</html>
