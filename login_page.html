@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div class = "container">
-		<h1 class = "label">Admin Login</h1>
+		<b><h1 class = "label">Admin Login</h1></b>
 		<center><h3 class = "glow" style="color:white;">{{info}}</h3></center>
 		<style>
 		body {
@@ -35,15 +35,18 @@
                        0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
         }
       }
+      .label{
+      	color: black;
+      }
 		</style>
 		<form class = "login_form" autocomplete = "off" method = "post" name = "form">
-			<div class = "font">Username</div>
+			<b><div class = "font">Username</div></b>
 			<input type = "text" name = "email">
 			
-			<div class = "font font2">Password</div>
+			<b><div class = "font font2">Password</div></b>
 			<input type = "password" name = "password">
 			
-			<button type = "submit" formaction = "/form_login">Login</button>
+			<button type = "submit" formaction = "/form_login">LOGIN</button>
 		</form>
 		
 	</div>

@@ -7,7 +7,7 @@ payable=[]
 qty=[]
 def openfile(x):
     print("INSIDE openfile()")
-    loc=(r'C:/Users/global/Desktop/Gemscap/'+x+'.xls') #loc=(r'.....\downloads\ + file name + .xls')
+    loc=(r'/home/aadarsh/Desktop/GEMSCAP1/'+x+'.xls') #loc=(r'.....\downloads\ + file name + .xls')
     print(loc)
     wb = xlrd.open_workbook(loc)
     sheet = wb.sheet_by_index(0)
@@ -18,6 +18,7 @@ def openfile(x):
     TKID=sheet.col_values(0,1,sheet.nrows-4)
     total_d=sheet.col_values(31, 1, sheet.nrows-4)
     qty=sheet.col_values(4, 1, sheet.nrows-4)
+    qty = [i/1000 for i in qty] 
 
     for i in range (len(TKID)):
         TKID[i]=TKID[i].replace(" ","")
@@ -37,22 +38,22 @@ def createexceltable():
     defaulterstr = ''
     con = sqlite3.connect("GEMSCAP_TABLE.db")   
     cur = con.cursor() 
-    print("checkpoint 1******")
+    print("checkpoint 1****")
     cur.execute('DROP TABLE EXCELTABLE ')
     cur.execute("""CREATE TABLE EXCELTABLE (TAKIONID INT  ,
                 TOTAL_DELTA FLOAT DEFAULT 0 , PolicyNumber INT DEFAULT 0, NetPay FLOAT DEFAULT 0 , PAID FLOAT , TOTAL FLOAT  ,
                 CarryForwardBalance FLOAT DEFAULT 0, StartingBalance FLOAT DEFAULT 0, QUANTITY INT)""")
-    print("checkpoint 2******")
+    print("checkpoint 2****")
     for i in range(len(TKID)):
         
         cur.execute('''INSERT INTO EXCELTABLE (TAKIONID, TOTAL_DELTA, QUANTITY) VALUES (?,?,?)''', (TKID[i], total_d[i], qty[i] ))
-    print("checkpoint 3******")
+    print("checkpoint 3****")
     cur.execute('''UPDATE EXCELTABLE SET (PolicyNumber,CarryForwardBalance,StartingBalance) = (SELECT gemscap_table.PolicyNumber, gemscap_table.CarryForwardBalance,gemscap_table.StartingBalance
                 FROM gemscap_table WHERE gemscap_table.TakionID = EXCELTABLE.TAKIONID)''')
-    print("checkpoint 4******")
+    print("checkpoint 4****")
     
     cur.execute('''SELECT TAKIONID, TOTAL_DELTA, PolicyNumber , CarryForwardBalance, NetPay, StartingBalance FROM EXCELTABLE ''')
-    print("checkpoint 5******")
+    print("checkpoint 5****")
     row = cur.fetchone()
     global payable
     while(row):
@@ -74,7 +75,7 @@ def createexceltable():
             if  abs(row[3]) >= 0.8*(row[5]):
                 payable.append(round(row[1],2))
                 print("defaulter: ",row[0])
-                defaulterstr = defaulterstr + str(row[0])
+                defaulterstr = defaulterstr + str(row[0]) + " "
             else:
                 payable.append(row[1])
         
@@ -103,7 +104,7 @@ def updatenetpay():
     conn.close()
 
 def updateCarryForwardBalance():
-    print("INSIDE CREATE updateCarryForwardBalance()")
+    print("INSIDE  updateCarryForwardBalance()")
     conn = sqlite3.connect("GEMSCAP_TABLE.db")   
     curs = conn.cursor()
     global TKID
@@ -113,7 +114,7 @@ def updateCarryForwardBalance():
     conn.close()
 
 def updateCarryForwardBalanceInGemscap():
-    print("INSIDE CREATE updateCarryForwardBalanceInGemscap()")
+    print("INSIDE  updateCarryForwardBalanceInGemscap()")
     conn = sqlite3.connect("GEMSCAP_TABLE.db")   
     curs = conn.cursor()
     #curs.execute('UPDATE gemscap_table SET CarryForwardBalance = EXCELTABLE.CarryForwardBalance FROM EXCELTABLE WHERE TakionID= EXCELTABLE.TAKIONID')
@@ -129,12 +130,29 @@ WHERE
         WHERE EXCELTABLE.TAKIONID = gemscap_table.TakionID
     )
 ''')
+################ update total in gemscap table
+def updatetotalInGemscap():
+    print("INSIDE  updatetotalInGemscap()")
+    conn = sqlite3.connect("GEMSCAP_TABLE.db")   
+    curs = conn.cursor()
+    #curs.execute('UPDATE gemscap_table SET CarryForwardBalance = EXCELTABLE.CarryForwardBalance FROM EXCELTABLE WHERE TakionID= EXCELTABLE.TAKIONID')
+    curs.execute('''UPDATE gemscap_table
+                    SET
+                    Total = Total + (SELECT EXCELTABLE.TOTAL_DELTA 
+                            FROM EXCELTABLE
+                            WHERE EXCELTABLE.TAKIONID = gemscap_table.TakionID )
+                    WHERE
+                        EXISTS (
+                            SELECT *
+                            FROM EXCELTABLE
+                            WHERE EXCELTABLE.TAKIONID = gemscap_table.TakionID
+                        )''')
 
     conn.commit()
     conn.close()
 
 def updatequantity():
-    print("INSIDE CREATE updatequantity()")
+    print("INSIDE  updatequantity()")
     conn = sqlite3.connect("GEMSCAP_TABLE.db")   
     curs = conn.cursor()
     curs.execute('''UPDATE gemscap_table
@@ -186,6 +204,7 @@ def deductamount(x,y):
     conn.commit()
     conn.close()
     
+
     
 # openfile('sasample2')
 # createexceltable()

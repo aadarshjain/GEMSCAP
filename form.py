@@ -50,11 +50,11 @@ class userform(FlaskForm):
     BankName2 = StringField('Bank Name')
     AccountType2 = StringField('Account Type') 
     AccountHolderName2 = StringField('Account Holder Name')
-    TakionID = StringField('Takion ID')
-    StartingBalance = StringField('Starting Balance')
-    PolicyNumber = RadioField('PolicyNumber', choices = [('0','70%'), ('1','85%')])
+    TakionID = StringField('Takion ID', validators = [validators.DataRequired()])
+    StartingBalance = StringField('Starting Balance', validators = [validators.DataRequired()])
+    PolicyNumber = RadioField('PolicyNumber', choices = [('0','70%'), ('1','85%')], validators = [validators.DataRequired()])
     CarryForwardBalance = StringField('Carry Forward Balance')
-    RateOfDollar = StringField('Rate of Dollar')
+    RateOfDollar = StringField('Rate of Dollar', validators = [validators.DataRequired()])
 
     submit = SubmitField('Submit')
 

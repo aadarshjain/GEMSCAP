@@ -82,6 +82,7 @@ a:hover {
     <thead>
     <tr>  
         <th>TAKIONID</th>
+        <th> SUMMARY </th>
         <th>CarryForwardBalance</th>>
         <th>Jan</th>
         <th>Feb</th>
@@ -102,6 +103,7 @@ a:hover {
       
         <tr>  
             <th> <a href="/pay?tkid={{row['TAKIONID']}}&bal={{row['CarryForwardBalance']}}"> {{row["TAKIONID"]}} </a> </th>
+            <th><a href="/summary.html?tkid={{row['TAKIONID']}}"> SUMMARY </a></th>
             <th>{{row["CarryForwardBalance"]}}</th> 
             <th>{{row["Jan"]}}</th>
             <th>{{row["Feb"]}}</th>

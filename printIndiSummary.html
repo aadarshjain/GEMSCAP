@@ -1,11 +1,9 @@
 <!DOCTYPE html>  
 <html>  
 <head>  
-    <a href = "/home.html" class = "previous">&laquo; Back</a>
-
-    <title>VIEW MONTHLY QUANTITY DETAILS</title>  
+    <title>VIEW MONTHLY PAYMENT DETAILS</title>  
     <style type="text/css">
-    <style type="text/css">
+            <style type="text/css">
         *{
             padding: 5px;
             margin: 5px;
@@ -39,10 +37,10 @@
             border-collapse: collapse;
             font-family: sans-serif;
         }
-    .print button{      
-        margin: 30px 0 30px 0;
+    .print button{
+        margin: 45px 0 30px 0;
         height: 40px;
-        width: 250px;
+        width: 380px;
         font-size: 20px;
         color: white;
         outline: none;
@@ -55,8 +53,8 @@
     }
     .print button:hover{
         background: #800000;
-    } 
-a {
+    }  
+    a {
   text-decoration: none;
   display: inline-block;
   padding: 8px 16px;
@@ -74,17 +72,21 @@ a:hover {
   cursor: pointer;
   border-radius: 1px;
   border: 1px solid #3949AB;
-}     
-    </style>
+}      
     </style>
 </head>  
 <body>  
-  
-<h3>EMPLOYEE MONTHLY QUANTITY INFORMATION</h3>  
+  <a href = "/home.html" class = "previous">&laquo; Back</a>
+<h2>EMPLOYEE MONTHLY PAYMENT INFORMATION</h2> 
+
 <table border=5>  
     <thead>
     <tr>  
         <th>TAKIONID</th>
+        <th>NET PNL</th>
+		<th>NET PAYABLE</th>
+		<th>NET PAID</th>
+        <th>CarryForwardBalance</th>>
         <th>Jan</th>
         <th>Feb</th>
         <th>Mar</th>
@@ -104,6 +106,10 @@ a:hover {
       
         <tr>  
             <th>{{row["TAKIONID"]}}</th>
+            <th>NET PNL</th>
+            <th>NET PAYABLE</th>
+            <th>NET PAID</th>
+            <th>{{row["CarryForwardBalance"]}}</th> 
             <th>{{row["Jan"]}}</th>
             <th>{{row["Feb"]}}</th>
             <th>{{row["Mar"]}}</th>

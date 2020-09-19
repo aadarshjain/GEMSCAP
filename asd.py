@@ -46,6 +46,39 @@ def createQuantitytable():
     con.commit()
     con.close()
 
+########## create total table for month wise display       16 september
+def createtotaltable():
+    con = sqlite3.connect("GEMSCAP_TABLE.db")   
+    cur = con.cursor()
+    #cur.execute('DROP TABLE TOTALTABLE')
+    cur.execute('''CREATE TABLE IF NOT EXISTS TOTALTABLE (TAKIONID INT PRIMARY KEY, Jan FLOAT DEFAULT 0, Feb FLOAT DEFAULT 0, Mar FLOAT DEFAULT 0, Apr FLOAT DEFAULT 0
+    , May FLOAT DEFAULT 0, Jun FLOAT DEFAULT 0, Jul FLOAT DEFAULT 0, Aug FLOAT DEFAULT 0, Sep FLOAT DEFAULT 0, Oct FLOAT DEFAULT 0,
+     Nov FLOAT DEFAULT 0, Dec FLOAT DEFAULT 0)''')
+    try:
+        cur.execute('''INSERT INTO TOTALTABLE (TAKIONID) SELECT TakionID FROM gemscap_table ''')
+    except:
+        print("Takionid primary key constraint")
+    con.commit()
+    con.close()
+
+########## update total table for month wise display        16 september
+def updatetotaltable(month):
+    print("inside updatetotaltable")
+    con = sqlite3.connect("GEMSCAP_TABLE.db")   
+    cur = con.cursor()
+    cur.execute('''UPDATE TOTALTABLE 
+                    SET
+      {} = {} + (SELECT EXCELTABLE.TOTAL_DELTA 
+                            FROM EXCELTABLE
+                            WHERE EXCELTABLE.TAKIONID = TOTALTABLE.TAKIONID )
+    WHERE
+        EXISTS (
+            SELECT *
+            FROM EXCELTABLE
+            WHERE EXCELTABLE.TAKIONID = TOTALTABLE.TAKIONID)'''.format(month,month))
+    con.commit()
+    con.close()
+
 def updateQuantitytable(month):
     print("inside updateQuantitytable")
     con = sqlite3.connect("GEMSCAP_TABLE.db")   
@@ -107,24 +140,27 @@ def updatePAIDTABLE(month,payment,tk):
     con.commit()
     con.close()
 
-##########    15 september for adjusting cfb of a takionid
-def adjustcfbingemscap_adjustmonthlytable(tk,amount,month):
-    print('INSIDE adjustcfbingemscap_adjustmonthlytable')
+def checkamount(month,amount,tkid):
     con = sqlite3.connect("GEMSCAP_TABLE.db")   
     cur = con.cursor()
 
-    cur.execute('UPDATE gemscap_table SET CarryForwardBalance = CarryForwardBalance + {} WHERE Takionid = {}'.format(amount,tk))
-    cur.execute('UPDATE MONTHLYTABLE SET {} = {} + {} WHERE TAKIONID = {}'.format(month,month,amount,tk))
+    cur.execute('SELECT {} FROM MONTHLYTABLE WHERE TAKIONID = {}'.format(month,tkid))
+    month_amt = cur.fetchone()
 
     con.commit()
     con.close()
+    print("amount is",amount," month_amt is",month_amt[0])
+    if(float(amount) <= float(month_amt[0])):
+        return True
+    return False
 
 
-# createMONTHLYTABLE()   figure out how to call this func once
+# createMONTHLYTABLE()   figure out how to call this all create func once
 # createPaidtable()
 # createQuantitytable()
 
-
 # updateMONTHLYTABLE('Feb')
 # updatePAIDTABLE('Feb',200,12324)
+
+# createtotaltable()
 

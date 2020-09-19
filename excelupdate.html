@@ -92,11 +92,15 @@ a:hover {
 			<center><p>{{form.Month}}</p></center>
             <center><p>{{form.Excel.label}}</p></center> 
             <center><p>{{form.Excel}}</p><center>
+            <center><p style = "color: red">Defaulters: {{defaulters}}</p></center>
 
-            <!--<center><input type="file" id="myfile" name="myfile"><br></center>-->
-  		
-
-			<center><button  onsubmit=this.value='' value = {{form.submit}} >Submit</button></center>
+    <script>
+        function myFunction() {
+        confirm("Successfully Submitted!");
+    }
+	</script>
+    
+			<center><button onclick = "myFunction()" value = {{form.submit}} >Submit</button></center>
 	    </form>
 	</div>    
 </body>
