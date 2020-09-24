@@ -5,6 +5,9 @@ TKID = []
 total_d=[]
 payable=[]
 qty=[]
+
+#######################################################################################################
+
 def openfile(x):
     print("INSIDE openfile()")
     loc=(r'/home/aadarsh/Desktop/GEMSCAP1/'+x+'.xls') #loc=(r'.....\downloads\ + file name + .xls')
@@ -33,13 +36,15 @@ def openfile(x):
     print("LENGTH OF qty: ",len(qty))
     print(qty)
 
+#######################################################################################################
+
 def createexceltable():
     print("INSIDE createexceltable()")
     defaulterstr = ''
     con = sqlite3.connect("GEMSCAP_TABLE.db")   
     cur = con.cursor() 
     print("checkpoint 1****")
-    cur.execute('DROP TABLE EXCELTABLE ')
+    #@cur.execute('DROP TABLE EXCELTABLE')
     cur.execute("""CREATE TABLE EXCELTABLE (TAKIONID INT  ,
                 TOTAL_DELTA FLOAT DEFAULT 0 , PolicyNumber INT DEFAULT 0, NetPay FLOAT DEFAULT 0 , PAID FLOAT , TOTAL FLOAT  ,
                 CarryForwardBalance FLOAT DEFAULT 0, StartingBalance FLOAT DEFAULT 0, QUANTITY INT)""")
@@ -86,7 +91,9 @@ def createexceltable():
     con.commit()
     con.close()
     return defaulterstr
-#########################################################################################################
+
+#######################################################################################################
+
 def updatenetpay():
     print("INSIDE CREATE updatenetpay()")
     conn = sqlite3.connect("GEMSCAP_TABLE.db")   
@@ -103,6 +110,8 @@ def updatenetpay():
     conn.commit()
     conn.close()
 
+#######################################################################################################
+
 def updateCarryForwardBalance():
     print("INSIDE  updateCarryForwardBalance()")
     conn = sqlite3.connect("GEMSCAP_TABLE.db")   
@@ -112,6 +121,8 @@ def updateCarryForwardBalance():
         curs.execute('UPDATE EXCELTABLE SET CarryForwardBalance = CarryForwardBalance + NetPay  WHERE TAKIONID= {}'.format(TKID[i])  )
     conn.commit()
     conn.close()
+
+#######################################################################################################
 
 def updateCarryForwardBalanceInGemscap():
     print("INSIDE  updateCarryForwardBalanceInGemscap()")
@@ -130,7 +141,9 @@ WHERE
         WHERE EXCELTABLE.TAKIONID = gemscap_table.TakionID
     )
 ''')
-################ update total in gemscap table
+
+#######################################################################################################
+
 def updatetotalInGemscap():
     print("INSIDE  updatetotalInGemscap()")
     conn = sqlite3.connect("GEMSCAP_TABLE.db")   
@@ -151,6 +164,8 @@ def updatetotalInGemscap():
     conn.commit()
     conn.close()
 
+#######################################################################################################
+
 def updatequantity():
     print("INSIDE  updatequantity()")
     conn = sqlite3.connect("GEMSCAP_TABLE.db")   
@@ -169,6 +184,8 @@ def updatequantity():
 ''')
     conn.commit()
     conn.close()
+
+#######################################################################################################
 
 def cleardata():
     print("INSIDE CREATE cleardata()")
@@ -195,6 +212,8 @@ def printpayabledata(x):
     conn.close()
     return row[0][49]
 
+#######################################################################################################
+
 def deductamount(x,y):
     print("INSIDE Deductamount")
     print('takionid = ',x, 'amount = ',y)
@@ -204,7 +223,7 @@ def deductamount(x,y):
     conn.commit()
     conn.close()
     
-
+#######################################################################################################
     
 # openfile('sasample2')
 # createexceltable()

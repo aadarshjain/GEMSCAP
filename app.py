@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask import *
-from form import userform, printdata, updateExcel, paidDetails, amountToPay, payToIndividual, indiMonthlyView, indiPayView, adjustform
+from form import userform, printdata, updateExcel, paidDetails, amountToPay, payToIndividual, indiMonthlyView, indiPayView, adjustform, updatekyc
 #from flaskwebgui import FlaskUI
 from calculation import *
 from pymsgbox import *
@@ -54,6 +54,14 @@ def userprofile():
         ##render or code to save in dbms    
     return render_template('user_profile.html',form = form)
     
+@app.route('/update_kyc.html',methods=['GET','POST'])
+def updateKYC():
+    form = updatekyc()
+    if form.validate_on_submit():
+        result = request.form
+        print(result)
+        ##render or code to save in dbms    
+    return render_template('update_kyc.html',form = form)
 
 @app.route('/after_user.html', methods = ['GET', 'POST'])
 def afteruser():
@@ -185,7 +193,9 @@ def saveDetails():
 				) 
 				''') 
                 cur.execute("INSERT INTO gemscap_table (EmployeeID,FirstName,MiddleName,LastName,FatherName,MotherName,DOB,Gender,MaritialStatus,PermanentAddress,City1,Pincode1,Country1,LocalAddress,City2,Pincode2,Country2,EmailAddress,ContactNumber1,ContactNumber2,FamilyPersonsName1,FamilyPersonsContactNumber1,FamilyPersonsRelationWithEmployee1,FamilyPersonsName2,FamilyPersonsContactNumber2,FamilyPersonsRelationWithEmployee2,AadharCard,PanCard,EductionalCourseDetail,PassingYear,PassingStatus,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfJoining,DateOfResigning,AccountNumber1,IFSCcode1,BankName1,AccountType1,AccountHolderName1,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2,TakionID,StartingBalance,PolicyNumber,CarryForwardBalance,RateOfDollar) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (EmployeeID,FirstName,MiddleName,LastName,FatherName,MotherName,DOB,Gender,MaritialStatus,PermanentAddress,City1,Pincode1,Country1,LocalAddress,City2,Pincode2,Country2,EmailAddress,ContactNumber1,ContactNumber2,FamilyPersonsName1,FamilyPersonsContactNumber1,FamilyPersonsRelationWithEmployee1,FamilyPersonsName2,FamilyPersonsContactNumber2,FamilyPersonsRelationWithEmployee2,AadharCard,PanCard,EductionalCourseDetail,PassingYear,PassingStatus,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfJoining,DateOfResigning,AccountNumber1,IFSCcode1,BankName1,AccountType1,AccountHolderName1,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2,TakionID,StartingBalance,PolicyNumber,CarryForwardBalance,RateOfDollar))
-
+                con.commit()
+                adduserto4tables(TakionID)                          ## 22 SEP
+                msg = "Employee successfully Added"
                 con.commit()  
                 msg = "Employee successfully Added"  
         except:  
@@ -195,6 +205,49 @@ def saveDetails():
         	return render_template('home.html', msg = msg)
         	con.close()
     return render_template('home.html', msg = msg) 
+
+@app.route("/saveupdate", methods = ["POST", "GET"])
+def saveupdate():
+    msg = "msg" 
+    #print(request.form) 
+    if request.method == "POST":  
+        try:  
+            MaritialStatus = request.form["MaritialStatus"]
+            LocalAddress = request.form["LocalAddress"]
+            City2 = request.form["City2"]
+            Pincode2 = request.form["Pincode2"]
+            Country2 = request.form["Country2"]
+            ContactNumber2 = request.form["ContactNumber2"]
+            PFNomineeName = request.form["PFNomineeName"]
+            PFNomineeRelation = request.form["PFNomineeRelation"]
+            PFNomineeDOB = request.form["PFNomineeDOB"]
+            DateOfResigning = request.form["DateOfResigning"]
+            AccountNumber2 = request.form["AccountNumber2"]
+            IFSCcode2 = request.form["IFSCcode2"]
+            BankName2 = request.form["BankName2"]
+            AccountType2 = request.form["AccountType2"]
+            AccountHolderName2 = request.form["AccountHolderName2"]
+            TakionID = request.form["TakionID"]
+            PolicyNumber = request.form["PolicyNumber"]
+            print(City2, Country2)
+            con = sqlite3.connect("GEMSCAP_TABLE.db")   
+            cur = con.cursor()
+            cur.execute('''UPDATE gemscap_table SET MaritialStatus = {}, ContactNumber2 = {}, LocalAddress = {}, City2 = {},
+              Pincode2 = {}, Country2 = {}, PolicyNumber = {},
+              PFNomineeName = {}, PFNomineeRelation = {}, PFNomineeDOB = {}, 
+              DateOfResigning = {}, AccountNumber2 = {},                   
+              IFSCcode2 = {}, BankName2 = {}, AccountType2 = {}, 
+              AccountHolderName2 = {} WHERE TakionID = {}'''.format(MaritialStatus,ContactNumber2,LocalAddress,City2 ,Pincode2,Country2,PolicyNumber,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfResigning,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2,TakionID)) 
+            con.commit()
+            #adduserto4tables(TakionID)                          ## 22 SEP
+            msg = "Employee data successfully Updated"
+        except:  
+            con.rollback()  
+            msg = "We can not update the employee to the list"  
+        finally:
+            return render_template('home.html', msg = msg)
+            con.close()
+    return render_template('home.html', msg = msg)  
 
 @app.route("/tryprint.html",methods = ["POST","GET"])
 def tryprint():
@@ -241,8 +294,11 @@ def excelupdate():
             updateCarryForwardBalanceInGemscap()
             updateMONTHLYTABLE(m)
             updateQuantitytable(m)
+            updatetotaltable(m)
+            updatetotalInGemscap()
+            updatequantity()
             cleardata()
-            return render_template("excelupdate.html",form=form2,defaulters = defaulterstr  )
+            return render_template("excelupdate.html",form=form2,defaulters = defaulterstr)
         except:
             pass
     return render_template("excelupdate.html",form=form2,defaulters = defaulterstr)

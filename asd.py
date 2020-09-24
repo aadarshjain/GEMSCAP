@@ -1,9 +1,10 @@
 import sqlite3
 
 def createMONTHLYTABLE():
+    print("createMONTHLYTABLE")
     con = sqlite3.connect("GEMSCAP_TABLE.db")   
     cur = con.cursor() 
-    cur.execute('DROP TABLE MONTHLYTABLE')
+    #cur.execute('DROP TABLE MONTHLYTABLE')
     cur.execute('''CREATE TABLE IF NOT EXISTS MONTHLYTABLE (TAKIONID INT PRIMARY KEY, Jan FLOAT DEFAULT 0, Feb FLOAT DEFAULT 0, Mar FLOAT DEFAULT 0, Apr FLOAT DEFAULT 0
     , May FLOAT DEFAULT 0, Jun FLOAT DEFAULT 0, Jul FLOAT DEFAULT 0, Aug FLOAT DEFAULT 0, Sep FLOAT DEFAULT 0, Oct FLOAT DEFAULT 0,
      Nov FLOAT DEFAULT 0, Dec FLOAT DEFAULT 0)''')
@@ -12,16 +13,18 @@ def createMONTHLYTABLE():
     except:
         print("Takionid primary key canstraint")
     
-    cur.execute('UPDATE MONTHLYTABLE SET (Jan,Feb) = ({},{}) where TAKIONID=12324'.format(100,200))
+    #cur.execute('UPDATE MONTHLYTABLE SET (Jan,Feb) = ({},{}) where TAKIONID=12324'.format(100,200))
 
     con.commit()
     con.close()
 
+#######################################################################################################
 
 def createPaidtable():
+    print("createPaidtable")
     con = sqlite3.connect("GEMSCAP_TABLE.db")   
     cur = con.cursor()
-    cur.execute('DROP TABLE PAIDTABLE')
+    #cur.execute('DROP TABLE PAIDTABLE')
     cur.execute('''CREATE TABLE IF NOT EXISTS PAIDTABLE (TAKIONID INT PRIMARY KEY, Jan FLOAT DEFAULT 0, Feb FLOAT DEFAULT 0, Mar FLOAT DEFAULT 0, Apr FLOAT DEFAULT 0
     , May FLOAT DEFAULT 0, Jun FLOAT DEFAULT 0, Jul FLOAT DEFAULT 0, Aug FLOAT DEFAULT 0, Sep FLOAT DEFAULT 0, Oct FLOAT DEFAULT 0,
      Nov FLOAT DEFAULT 0, Dec FLOAT DEFAULT 0)''')
@@ -32,10 +35,13 @@ def createPaidtable():
     con.commit()
     con.close()
 
+#######################################################################################################
+
 def createQuantitytable():
+    print("createQuantitytable")
     con = sqlite3.connect("GEMSCAP_TABLE.db")   
     cur = con.cursor()
-    cur.execute('DROP TABLE QUANTITYTABLE')
+    #cur.execute('DROP TABLE QUANTITYTABLE')
     cur.execute('''CREATE TABLE IF NOT EXISTS QUANTITYTABLE (TAKIONID INT PRIMARY KEY, Jan FLOAT DEFAULT 0, Feb FLOAT DEFAULT 0, Mar FLOAT DEFAULT 0, Apr FLOAT DEFAULT 0
     , May FLOAT DEFAULT 0, Jun FLOAT DEFAULT 0, Jul FLOAT DEFAULT 0, Aug FLOAT DEFAULT 0, Sep FLOAT DEFAULT 0, Oct FLOAT DEFAULT 0,
      Nov FLOAT DEFAULT 0, Dec FLOAT DEFAULT 0)''')
@@ -46,8 +52,10 @@ def createQuantitytable():
     con.commit()
     con.close()
 
-########## create total table for month wise display       16 september
+#######################################################################################################
+
 def createtotaltable():
+    print("createtotaltable")
     con = sqlite3.connect("GEMSCAP_TABLE.db")   
     cur = con.cursor()
     #cur.execute('DROP TABLE TOTALTABLE')
@@ -61,7 +69,8 @@ def createtotaltable():
     con.commit()
     con.close()
 
-########## update total table for month wise display        16 september
+#######################################################################################################
+
 def updatetotaltable(month):
     print("inside updatetotaltable")
     con = sqlite3.connect("GEMSCAP_TABLE.db")   
@@ -78,6 +87,8 @@ def updatetotaltable(month):
             WHERE EXCELTABLE.TAKIONID = TOTALTABLE.TAKIONID)'''.format(month,month))
     con.commit()
     con.close()
+
+#######################################################################################################
 
 def updateQuantitytable(month):
     print("inside updateQuantitytable")
@@ -106,6 +117,8 @@ def updateQuantitytable(month):
     con.commit()
     con.close()
 
+#######################################################################################################
+
 def updateMONTHLYTABLE(month):
     month = str(month)
     print("inside updateMONTHLYTABLE")
@@ -126,6 +139,8 @@ def updateMONTHLYTABLE(month):
     con.commit()
     con.close()
 
+#######################################################################################################
+
 def updatePAIDTABLE(month,payment,tk):
     month = str(month)
     payment=float(payment)
@@ -134,11 +149,13 @@ def updatePAIDTABLE(month,payment,tk):
     con = sqlite3.connect("GEMSCAP_TABLE.db")   
     cur = con.cursor()
 
-    cur.execute('UPDATE PAIDTABLE SET {} = {} where TAKIONID = {}'.format(month,payment,tk) )        #payment works once only + not working
+    cur.execute('UPDATE PAIDTABLE SET {} = {} where TAKIONID = {}'.format(month,payment,tk) )
     cur.execute('UPDATE gemscap_table SET CarryForwardBalance = CarryForwardBalance - {} WHERE TakionID = {}'.format(payment,tk) )
 
     con.commit()
     con.close()
+
+#######################################################################################################
 
 def checkamount(month,amount,tkid):
     con = sqlite3.connect("GEMSCAP_TABLE.db")   
@@ -154,6 +171,17 @@ def checkamount(month,amount,tkid):
         return True
     return False
 
+#######################################################################################################
+
+def adduserto4tables(tkid):     
+    con = sqlite3.connect("GEMSCAP_TABLE.db")   
+    cur = con.cursor()
+    cur.execute('INSERT INTO PAIDTABLE (TAKIONID) VALUES ({})'.format(tkid)) 
+    cur.execute('INSERT INTO TOTALTABLE (TAKIONID) VALUES ({})'.format(tkid))    
+    cur.execute('INSERT INTO MONTHLYTABLE (TAKIONID) VALUES ({})'.format(tkid)) 
+    cur.execute('INSERT INTO QUANTITYTABLE (TAKIONID) VALUES ({})'.format(tkid)) 
+    con.commit()
+    con.close()
 
 # createMONTHLYTABLE()   figure out how to call this all create func once
 # createPaidtable()
