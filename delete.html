@@ -9,11 +9,11 @@
 		margin: 0;
 	}
 	body{
-		background: #ade6bb;
 		align-items: center;
 		justify-content: center;
 		display: flex;
 		font-family: sans-serif;
+		background: lightblue;
 	}
 	.details{
 		position: relative;
@@ -29,11 +29,11 @@
 		color: black;
 	}
 	.user_form input{
-		height: 38px;
-		width: 361px;
-		padding: 1px; 
+		height: 40px;
+		width: 365px;
+		padding: 0 5px;
 		font-size: 18px;
-		border-radius: 20px;
+		outline: none;
 		border: 1px solid silver;
 	}
 	.user_form button{
@@ -57,50 +57,41 @@
 		height: 40px;
 		width: 365px;
 		padding: 0 5px;
-		font-size: 20px;
+		font-size: 18px;
 		outline: none;
 		border: 1px solid silver;
 	}
-	a{
-  		text-decoration: none;
-  		display: inline-block;
-  		padding: 8px 16px;
-  		transition: .5s;
-	}
+	a {
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 16px;
+  transition: .5s;
+}
 
-	a:hover {
-	  	background-color: #FAFAFA;
-	  	color: red;
-	}
-	.previous {
-	  
-	  	color: black;
-	  	outline: none;
-	  	cursor: pointer;
-	  	border-radius: 1px;
-	  	border: 1px solid #3949AB;
-	}    
+a:hover {
+  background-color: #FAFAFA;
+  color: red;
+}
+.previous {
+  
+  color: black;
+  outline: none;
+  cursor: pointer;
+  border-radius: 1px;
+  border: 1px solid #3949AB;
+}
+
 	</style>
 	
 </head>
 <body>
 	<div class = "details">	
-		<center><h1 class = "label">UPLOAD EXCEL FILE</h1></center>
+		<center><h1 class = "label">DELETE</h1></center>
 		<form class = "user_form" method = "post" name = "form" >	
 			<a href = "/home.html" class = "previous">&laquo; Back</a>
-			<center><p>{{form.Month.label}}</p></center>
-			<center><p>{{form.Month}}</p></center>
-            <center><p>{{form.Excel.label}}</p></center> 
-            <center><p>{{form.Excel}}</p><center>
-            <center><p style = "color: red">Defaulters: {{defaulters}}</p></center>
-
-    <script>
-        function myFunction() {
-        confirm("Successfully Submitted!");
-    }
-	</script>
-    
-			<center><button onclick = "myFunction()" value = {{form.submit}} >Submit</button></center>
+            <center><p>{{form.TakionID.label}}</p></center> 
+            <center><p>{{form.TakionID}}</p><center>   
+			<button value = {{form.submit}} >Submit</button>
 	    </form>
 	</div>    
 </body>

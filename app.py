@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask import *
-from form import userform, printdata, updateExcel, paidDetails, amountToPay, payToIndividual, indiMonthlyView, indiPayView, adjustform, updatekyc
+from form import userform, printdata, updateExcel, paidDetails, amountToPay, payToIndividual, indiMonthlyView, indiPayView, adjustform, updatekyc, deleteform
 #from flaskwebgui import FlaskUI
 from calculation import *
 from pymsgbox import *
@@ -18,8 +18,8 @@ app.config['UPLOAD_FOLDER'] = imgFolder
 
 @app.route('/')
 def default():
-    login_img = os.path.join(app.config['UPLOAD_FOLDER'], 'bglogin1.jpg')
-    return render_template('login_page.html', first_img = login_img)
+	login_img = os.path.join(app.config['UPLOAD_FOLDER'], 'bglogin1.jpg')
+	return render_template('login_page.html', first_img = login_img)
 
 database={'admin':'admin'}
 
@@ -43,100 +43,79 @@ def login():
 
 @app.route('/home.html',methods=['GET' , 'POST'])
 def home():
-    return render_template('home.html')
+	return render_template('home.html')
 
 @app.route('/user_profile.html',methods=['GET','POST'])
 def userprofile():
-    form = userform()
-    if form.validate_on_submit():
-    	result = request.form
-    	print(result)
-        ##render or code to save in dbms    
-    return render_template('user_profile.html',form = form)
-    
-@app.route('/update_kyc.html',methods=['GET','POST'])
-def updateKYC():
-    form = updatekyc()
-    if form.validate_on_submit():
-        result = request.form
-        print(result)
-        ##render or code to save in dbms    
-    return render_template('update_kyc.html',form = form)
-
-@app.route('/after_user.html', methods = ['GET', 'POST'])
-def afteruser():
-	home_img = os.path.join(app.config['UPLOAD_FOLDER'], 'logo.png')
-	return render_template('after_user.html', second_img = home_img)
-
-@app.route("/view")  
-def view():  
-    con = sqlite3.connect("GEMSCAP_TABLE.db")  
-    con.row_factory = sqlite3.Row  
-    cur = con.cursor()  
-    cur.execute("select * from gemscap_table")  
-    rows = cur.fetchall()  
-    return render_template("view.html",rows = rows)
-
-@app.route("/savedetails",methods = ["POST","GET"])  
-def saveDetails():  
-    msg = "msg"  
-    if request.method == "POST":  
-        try:  
-            EmployeeID = request.form["EmployeeID"]  
-            FirstName = request.form["FirstName"]  
-            MiddleName = request.form["MiddleName"]
-            LastName = request.form["LastName"]
-            FatherName = request.form["FatherName"]
-            MotherName = request.form["MotherName"]  
-            DOB = request.form["DOB"]
-            Gender = request.form["Gender"]
-            MaritialStatus = request.form["MaritialStatus"]
-            PermanentAddress = request.form["PermanentAddress"]
-            City1 = request.form["City1"]
-            Pincode1 = request.form["Pincode1"]
-            Country1 = request.form["Country1"]
-            LocalAddress = request.form["LocalAddress"]
-            City2 = request.form["City2"]
-            Pincode2 = request.form["Pincode2"]
-            Country2 = request.form["Country2"]
-            EmailAddress = request.form["EmailAddress"]
-            ContactNumber1 = request.form["ContactNumber1"]
-            ContactNumber2 = request.form["ContactNumber2"]
-            FamilyPersonsName1 = request.form["FamilyPersonsName1"]
-            FamilyPersonsContactNumber1 = request.form["FamilyPersonsContactNumber1"]
-            FamilyPersonsRelationWithEmployee1 = request.form["FamilyPersonsRelationWithEmployee1"]
-            FamilyPersonsName2 = request.form["FamilyPersonsName2"]
-            FamilyPersonsContactNumber2 = request.form["FamilyPersonsContactNumber2"]
-            FamilyPersonsRelationWithEmployee2 = request.form["FamilyPersonsRelationWithEmployee2"]
-            AadharCard = request.form["AadharCard"]
-            PanCard = request.form["PanCard"]
-            EductionalCourseDetail = request.form["EductionalCourseDetail"]
-            PassingYear = request.form["PassingYear"]
-            PassingStatus = request.form["PassingStatus"]
-            PFNomineeName = request.form["PFNomineeName"]
-            PFNomineeRelation = request.form["PFNomineeRelation"]
-            PFNomineeDOB = request.form["PFNomineeDOB"]
-            DateOfJoining = request.form["DateOfJoining"]
-            DateOfResigning = request.form["DateOfResigning"]
-            AccountNumber1 = request.form["AccountNumber1"]
-            IFSCcode1 = request.form["IFSCcode1"]
-            BankName1 = request.form["BankName1"]
-            AccountType1 = request.form["AccountType1"]
-            AccountHolderName1 = request.form["AccountHolderName1"]
-            AccountNumber2 = request.form["AccountNumber2"]
-            IFSCcode2 = request.form["IFSCcode2"]
-            BankName2 = request.form["BankName2"]
-            AccountType2 = request.form["AccountType2"]
-            AccountHolderName2 = request.form["AccountHolderName2"]
-            TakionID = request.form["TakionID"]
-            StartingBalance = request.form["StartingBalance"]
-            PolicyNumber = request.form["PolicyNumber"]
-            CarryForwardBalance = request.form["CarryForwardBalance"]
-            RateOfDollar = request.form["RateOfDollar"]
-            with sqlite3.connect("GEMSCAP_TABLE.db") as con:  
-                cur = con.cursor() 
-                #cur.execute('DROP TABLE gemscap_table')
-                cur.execute('''CREATE TABLE IF NOT EXISTS gemscap_table(   
+	form = userform(request.form)
+	print("form.errors is ", form.errors )
+	if form.is_submitted():
+		print("++++submitted+++")
+	if not form.validate():
+		print("++++invalid++++")
+	print("form.errors2 is ", form.errors )
+	
+	if form.validate_on_submit():
+		result = request.form
+		print(result)
+		## save in database here itself
+		try:  
+			EmployeeID = request.form["EmployeeID"]  
+			FirstName = request.form["FirstName"]  
+			MiddleName = request.form["MiddleName"]
+			LastName = request.form["LastName"]
+			FatherName = request.form["FatherName"]
+			MotherName = request.form["MotherName"]  
+			DOB = request.form["DOB"]
+			Gender = request.form["Gender"]
+			MaritialStatus = request.form["MaritialStatus"]
+			PermanentAddress = request.form["PermanentAddress"]
+			City1 = request.form["City1"]
+			Pincode1 = request.form["Pincode1"]
+			Country1 = request.form["Country1"]
+			LocalAddress = request.form["LocalAddress"]
+			City2 = request.form["City2"]
+			Pincode2 = request.form["Pincode2"]
+			Country2 = request.form["Country2"]
+			EmailAddress = request.form["EmailAddress"]
+			ContactNumber1 = request.form["ContactNumber1"]
+			ContactNumber2 = request.form["ContactNumber2"]
+			FamilyPersonsName1 = request.form["FamilyPersonsName1"]
+			FamilyPersonsContactNumber1 = request.form["FamilyPersonsContactNumber1"]
+			FamilyPersonsRelationWithEmployee1 = request.form["FamilyPersonsRelationWithEmployee1"]
+			FamilyPersonsName2 = request.form["FamilyPersonsName2"]
+			FamilyPersonsContactNumber2 = request.form["FamilyPersonsContactNumber2"]
+			FamilyPersonsRelationWithEmployee2 = request.form["FamilyPersonsRelationWithEmployee2"]
+			AadharCard = request.form["AadharCard"]
+			PanCard = request.form["PanCard"]
+			EductionalCourseDetail = request.form["EductionalCourseDetail"]
+			PassingYear = request.form["PassingYear"]
+			PassingStatus = request.form["PassingStatus"]
+			PFNomineeName = request.form["PFNomineeName"]
+			PFNomineeRelation = request.form["PFNomineeRelation"]
+			PFNomineeDOB = request.form["PFNomineeDOB"]
+			DateOfJoining = request.form["DateOfJoining"]
+			DateOfResigning = request.form["DateOfResigning"]
+			AccountNumber1 = request.form["AccountNumber1"]
+			IFSCcode1 = request.form["IFSCcode1"]
+			BankName1 = request.form["BankName1"]
+			AccountType1 = request.form["AccountType1"]
+			AccountHolderName1 = request.form["AccountHolderName1"]
+			AccountNumber2 = request.form["AccountNumber2"]
+			IFSCcode2 = request.form["IFSCcode2"]
+			BankName2 = request.form["BankName2"]
+			AccountType2 = request.form["AccountType2"]
+			AccountHolderName2 = request.form["AccountHolderName2"]
+			TakionID = request.form["TakionID"]
+			StartingBalance = request.form["StartingBalance"]
+			PolicyNumber = request.form["PolicyNumber"]
+			CarryForwardBalance = request.form["CarryForwardBalance"]
+			RateOfDollar = request.form["RateOfDollar"]
+			print("check data: ", TakionID, ContactNumber1)
+			with sqlite3.connect("GEMSCAP_TABLE.db") as con:  
+				cur = con.cursor() 
+				#cur.execute('DROP TABLE gemscap_table')
+				cur.execute('''CREATE TABLE IF NOT EXISTS gemscap_table(   
 				EmployeeID TEXT NOT NULL,
 				FirstName TEXT NOT NULL,
 				MiddleName TEXT NOT NULL,
@@ -188,87 +167,114 @@ def saveDetails():
 				PolicyNumber TEXT NOT NULL,
 				CarryForwardBalance TEXT NOT NULL,
 				RateOfDollar TEXT NOT NULL,
-                Qty INT DEFAULT 0,
-                Total FLOAT DEFAULT 0
+				Qty INT DEFAULT 0,
+				Total FLOAT DEFAULT 0
 				) 
 				''') 
-                cur.execute("INSERT INTO gemscap_table (EmployeeID,FirstName,MiddleName,LastName,FatherName,MotherName,DOB,Gender,MaritialStatus,PermanentAddress,City1,Pincode1,Country1,LocalAddress,City2,Pincode2,Country2,EmailAddress,ContactNumber1,ContactNumber2,FamilyPersonsName1,FamilyPersonsContactNumber1,FamilyPersonsRelationWithEmployee1,FamilyPersonsName2,FamilyPersonsContactNumber2,FamilyPersonsRelationWithEmployee2,AadharCard,PanCard,EductionalCourseDetail,PassingYear,PassingStatus,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfJoining,DateOfResigning,AccountNumber1,IFSCcode1,BankName1,AccountType1,AccountHolderName1,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2,TakionID,StartingBalance,PolicyNumber,CarryForwardBalance,RateOfDollar) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (EmployeeID,FirstName,MiddleName,LastName,FatherName,MotherName,DOB,Gender,MaritialStatus,PermanentAddress,City1,Pincode1,Country1,LocalAddress,City2,Pincode2,Country2,EmailAddress,ContactNumber1,ContactNumber2,FamilyPersonsName1,FamilyPersonsContactNumber1,FamilyPersonsRelationWithEmployee1,FamilyPersonsName2,FamilyPersonsContactNumber2,FamilyPersonsRelationWithEmployee2,AadharCard,PanCard,EductionalCourseDetail,PassingYear,PassingStatus,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfJoining,DateOfResigning,AccountNumber1,IFSCcode1,BankName1,AccountType1,AccountHolderName1,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2,TakionID,StartingBalance,PolicyNumber,CarryForwardBalance,RateOfDollar))
-                con.commit()
-                adduserto4tables(TakionID)                          ## 22 SEP
-                msg = "Employee successfully Added"
-                con.commit()  
-                msg = "Employee successfully Added"  
-        except:  
-            con.rollback()  
-            msg = "We can not add the employee to the list"  
-        finally:
-        	return render_template('home.html', msg = msg)
-        	con.close()
-    return render_template('home.html', msg = msg) 
+				cur.execute("INSERT INTO gemscap_table (EmployeeID,FirstName,MiddleName,LastName,FatherName,MotherName,DOB,Gender,MaritialStatus,PermanentAddress,City1,Pincode1,Country1,LocalAddress,City2,Pincode2,Country2,EmailAddress,ContactNumber1,ContactNumber2,FamilyPersonsName1,FamilyPersonsContactNumber1,FamilyPersonsRelationWithEmployee1,FamilyPersonsName2,FamilyPersonsContactNumber2,FamilyPersonsRelationWithEmployee2,AadharCard,PanCard,EductionalCourseDetail,PassingYear,PassingStatus,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfJoining,DateOfResigning,AccountNumber1,IFSCcode1,BankName1,AccountType1,AccountHolderName1,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2,TakionID,StartingBalance,PolicyNumber,CarryForwardBalance,RateOfDollar) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (EmployeeID,FirstName,MiddleName,LastName,FatherName,MotherName,DOB,Gender,MaritialStatus,PermanentAddress,City1,Pincode1,Country1,LocalAddress,City2,Pincode2,Country2,EmailAddress,ContactNumber1,ContactNumber2,FamilyPersonsName1,FamilyPersonsContactNumber1,FamilyPersonsRelationWithEmployee1,FamilyPersonsName2,FamilyPersonsContactNumber2,FamilyPersonsRelationWithEmployee2,AadharCard,PanCard,EductionalCourseDetail,PassingYear,PassingStatus,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfJoining,DateOfResigning,AccountNumber1,IFSCcode1,BankName1,AccountType1,AccountHolderName1,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2,TakionID,StartingBalance,PolicyNumber,CarryForwardBalance,RateOfDollar))
+				con.commit()
+				adduserto4tables(TakionID)                          ## 22 SEP
+				msg = "Employee successfully Added"
+				con.commit()  
+				msg = "Employee successfully Added"  
+		except:  
+			con.rollback()  
+			msg = "We can not add the employee to the list"  
+		finally:
+			return render_template('home.html', msg = msg)
+			con.close()
+		return redirect(url_for('saveDetails'))
+		##render or code to save in dbms    
+	return render_template('user_profile.html',form = form)
+	
+@app.route('/update_kyc.html',methods=['GET','POST'])
+def updateKYC():
+	form = updatekyc(request.form)
+	
+	try:
+		print("form.errors is ", form.errors )
+		if form.is_submitted():
+			print("++++submitted+++")
+		if not form.validate():
+			print("++++invalid++++")
+		print("form.errors2 is ", form.errors )
+		if request.method == 'POST' and form.validate_on_submit():		#request.method == 'POST' and form.is_submitted()
+			result = request.form
+			print(result)
+			print(len(result))
+			if(len(result) != 0):
+				MaritialStatus = result["MaritialStatus"]
+				LocalAddress = result["LocalAddress"]
+				City2 = result["City2"]
+				Pincode2 = result["Pincode2"]
+				Country2 = result["Country2"]
+				ContactNumber2 = result["ContactNumber2"]
+				PFNomineeName = result["PFNomineeName"]
+				PFNomineeRelation = result["PFNomineeRelation"]
+				PFNomineeDOB = result["PFNomineeDOB"]
+				DateOfResigning = result["DateOfResigning"]
+				AccountNumber2 = result["AccountNumber2"]
+				IFSCcode2 = result["IFSCcode2"]
+				BankName2 = result["BankName2"]
+				AccountType2 = result["AccountType2"]
+				AccountHolderName2 = result["AccountHolderName2"]
+				TakionID = result['TakionID']
+				print("++++++++",MaritialStatus,City2,Pincode2,Country2)
+				con = sqlite3.connect("GEMSCAP_TABLE.db")   
+				cur = con.cursor()
+				cur.execute('''UPDATE gemscap_table SET "MaritialStatus"="{}", ContactNumber2="{}", LocalAddress="{}", City2="{}",
+							Pincode2="{}", Country2="{}", PFNomineeName="{}", PFNomineeRelation="{}", PFNomineeDOB="{}",  DateOfResigning="{}",
+							AccountNumber2="{}",IFSCcode2="{}", BankName2="{}", AccountType2="{}", AccountHolderName2="{}" 
+							WHERE TakionID="{}"'''.format(MaritialStatus,ContactNumber2,LocalAddress,City2 ,Pincode2,Country2,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfResigning,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2,TakionID)) 
+				
+				con.commit()
+				con.close()
+				return redirect(url_for('home'))
+			if request.method == "GET":
+				return render_template('update_kyc.html',form = form)
+			
+	except OSError as e:
+		print(e)
+	except ValueError as e:
+		print(e)
+	except NameError as e:
+		print(e)
+	except sqlite3.OperationalError as e:
+		print(e)
+	
 
-@app.route("/saveupdate", methods = ["POST", "GET"])
-def saveupdate():
-    msg = "msg" 
-    #print(request.form) 
-    if request.method == "POST":  
-        try:  
-            MaritialStatus = request.form["MaritialStatus"]
-            LocalAddress = request.form["LocalAddress"]
-            City2 = request.form["City2"]
-            Pincode2 = request.form["Pincode2"]
-            Country2 = request.form["Country2"]
-            ContactNumber2 = request.form["ContactNumber2"]
-            PFNomineeName = request.form["PFNomineeName"]
-            PFNomineeRelation = request.form["PFNomineeRelation"]
-            PFNomineeDOB = request.form["PFNomineeDOB"]
-            DateOfResigning = request.form["DateOfResigning"]
-            AccountNumber2 = request.form["AccountNumber2"]
-            IFSCcode2 = request.form["IFSCcode2"]
-            BankName2 = request.form["BankName2"]
-            AccountType2 = request.form["AccountType2"]
-            AccountHolderName2 = request.form["AccountHolderName2"]
-            TakionID = request.form["TakionID"]
-            PolicyNumber = request.form["PolicyNumber"]
-            print(City2, Country2)
-            con = sqlite3.connect("GEMSCAP_TABLE.db")   
-            cur = con.cursor()
-            cur.execute('''UPDATE gemscap_table SET MaritialStatus = {}, ContactNumber2 = {}, LocalAddress = {}, City2 = {},
-              Pincode2 = {}, Country2 = {}, PolicyNumber = {},
-              PFNomineeName = {}, PFNomineeRelation = {}, PFNomineeDOB = {}, 
-              DateOfResigning = {}, AccountNumber2 = {},                   
-              IFSCcode2 = {}, BankName2 = {}, AccountType2 = {}, 
-              AccountHolderName2 = {} WHERE TakionID = {}'''.format(MaritialStatus,ContactNumber2,LocalAddress,City2 ,Pincode2,Country2,PolicyNumber,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfResigning,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2,TakionID)) 
-            con.commit()
-            #adduserto4tables(TakionID)                          ## 22 SEP
-            msg = "Employee data successfully Updated"
-        except:  
-            con.rollback()  
-            msg = "We can not update the employee to the list"  
-        finally:
-            return render_template('home.html', msg = msg)
-            con.close()
-    return render_template('home.html', msg = msg)  
+	return render_template('update_kyc.html',form = form)
+
+
+@app.route("/view")  
+def view():  
+	con = sqlite3.connect("GEMSCAP_TABLE.db")  
+	con.row_factory = sqlite3.Row  
+	cur = con.cursor()  
+	cur.execute("select * from gemscap_table")  
+	rows = cur.fetchall()  
+	return render_template("view.html",rows = rows)
 
 @app.route("/tryprint.html",methods = ["POST","GET"])
 def tryprint():
-    form1 = printdata()
-    return render_template("tryprint.html",form=form1)
+	form1 = printdata()
+	return render_template("tryprint.html",form=form1)
 
 @app.route("/trynew",methods = ["POST","GET"])
 def trynew():
-    #form1 = printdata()
-    result = request.form
-    z = result['EmployeeAccNo']
-    print(z)
-    con = sqlite3.connect("GEMSCAP_TABLE.db")  
-    con.row_factory = sqlite3.Row  
-    cur = con.cursor()  
-    script="SELECT * FROM gemscap_table WHERE EmployeeID = '" + str(z) + "'"
-    print(script)
-    cur.execute(script)  
-    rows = cur.fetchall()
-    #print(rows)
-    return render_template("view.html",rows = rows)
+	#form1 = printdata()
+	result = request.form
+	z = result['EmployeeAccNo']
+	print(z)
+	con = sqlite3.connect("GEMSCAP_TABLE.db")  
+	con.row_factory = sqlite3.Row  
+	cur = con.cursor()  
+	script="SELECT * FROM gemscap_table WHERE EmployeeID = '" + str(z) + "'"
+	print(script)
+	cur.execute(script)  
+	rows = cur.fetchall()
+	#print(rows)
+	return render_template("view.html",rows = rows)
 
 @app.route("/upload.html", methods = ['GET', 'POST'])
 def upload():
@@ -279,212 +285,185 @@ def upload():
 
 @app.route("/excelupdate.html",methods = ["POST","GET"])
 def excelupdate():
-    defaulterstr=''
-    form2 = updateExcel(request.form)
-    if request.method == 'POST' and form2.is_submitted():
-        m=form2.Month.data
-        x=form2.Excel.data
-        print(x,m)
-        try:
-            openfile(x)
-            defaulterstr = createexceltable()
-            print("defaulters are ",defaulterstr)
-            updatenetpay()
-            updateCarryForwardBalance()
-            updateCarryForwardBalanceInGemscap()
-            updateMONTHLYTABLE(m)
-            updateQuantitytable(m)
-            updatetotaltable(m)
-            updatetotalInGemscap()
-            updatequantity()
-            cleardata()
-            return render_template("excelupdate.html",form=form2,defaulters = defaulterstr)
-        except:
-            pass
-    return render_template("excelupdate.html",form=form2,defaulters = defaulterstr)
-
-# @app.route("/paid.html",methods = ["POST"])
-# def paid():
-#     amount = ""
-#     form3 = paidDetails()
-#     form4 = amountToPay()
-
-#     if request.method == 'POST': 
-#         if form3.is_submitted():
-#             try:
-#                 x=form3.Paid.data
-#                 print(x)
-#                 amount = printpayabledata(x)
-#             except:
-#                 pass
-#             if len(amount) > 0:
-#                 return render_template("paid.html", info=amount, TakionID=x ,form = form4)    
-
-
-#         if form4.is_submitted():
-#             try:
-#                 x = form4.Paida.data
-#                 y = form4.PaidAmount.data
-#                 #print(x)
-#                 print(y)
-#                 deductamount(x,y)
-#             except:
-#                 pass
-#             return render_template("paid.html", form = form3)  
+	defaulterstr=''
+	form2 = updateExcel(request.form)
+	if request.method == 'POST' and form2.is_submitted():
+		m=form2.Month.data
+		x=form2.Excel.data
+		print(x,m)
+		try:
+			openfile(x)
+			defaulterstr = createexceltable()
+			print("defaulters are ",defaulterstr)
+			updatenetpay()
+			updateCarryForwardBalance()
+			updateCarryForwardBalanceInGemscap()
+			updateMONTHLYTABLE(m)
+			updateQuantitytable(m)
+			updatetotaltable(m)
+			updatetotalInGemscap()
+			updatequantity()
+			cleardata()
+			return render_template("excelupdate.html",form=form2,defaulters = defaulterstr)
+		except:
+			pass
+	return render_template("excelupdate.html",form=form2,defaulters = defaulterstr) 
 
 @app.route("/paid.html", methods = ["POST", "GET"])  
 def paid():  
-    con = sqlite3.connect("GEMSCAP_TABLE.db")  
-    con.row_factory = sqlite3.Row  
-    cur = con.cursor()  
-    #cur.execute("select * from gemscap_table")  
-    cur.execute(''' SELECT gemscap_table.TakionID,CarryForwardBalance,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec
-                    FROM gemscap_table,MONTHLYTABLE WHERE gemscap_table.TakionID = MONTHLYTABLE.TAKIONID ''')
-    rows = cur.fetchall()  
-    return render_template("paid.html",rows = rows)  
+	con = sqlite3.connect("GEMSCAP_TABLE.db")  
+	con.row_factory = sqlite3.Row  
+	cur = con.cursor()  
+	#cur.execute("select * from gemscap_table")  
+	cur.execute(''' SELECT gemscap_table.TakionID,CarryForwardBalance,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec
+					FROM gemscap_table,MONTHLYTABLE WHERE gemscap_table.TakionID = MONTHLYTABLE.TAKIONID ''')
+	rows = cur.fetchall()  
+	return render_template("paid.html",rows = rows)  
 
 @app.route("/pay", methods=["GET","POST"])
 def check():
-    msg=''
-    print("Hello")
-    tkid = request.args.get('tkid')
-    balance = request.args.get('bal')
-    print(tkid,balance)
-    form6 = payToIndividual()
-    if request.method == 'POST' and form6.is_submitted():
-        try:
-            print("form submitted")
-            m=request.form['Month']
-            x=request.form['PayAmount']
-            print(m,x)
-            #check if amount is greater than month                                   ####17 sep
-            check = checkamount(m,x,tkid)
-            print("check is:",check)
-            if check == True:
-                print("inside if")
-                updatePAIDTABLE(m,x,tkid)
-                return redirect(url_for('paid'))
-            else:
-                print("inside else")
-                value = confirm(text='Do you want to pay more than Earned?', title='Attention!!', buttons=['YES', 'NO'])
-                print(value)
-                if value == 'YES':
-                    updatePAIDTABLE(m,x,tkid)
-                    return redirect(url_for('paid'))
-                elif value == 'NO':
-                    return redirect(url_for('paid'))
-        
-        except:
-            pass
-    ##create form accept month and amount to pay then call updatepaidtable() and also update cfb in gemscap_table
-    return render_template('/indiPay.html', form = form6,msg=msg)
-    #return render_template('/paid.html')
-
-
-# @app.route("/indiPay.html", methods = ["POST", "GET"])
-# def IndividualPay():
-#     form5 = payToIndividual()
-#     if form5.is_submitted():
-#         y = request.form.getlist('Month')
-#         x = request.form.getlist('PayAmount')
-        
-#         return render_template('/Paid.html')
-
-#     return render_template('/indiPay.html', form = form5
+	msg=''
+	print("Hello")
+	tkid = request.args.get('tkid')
+	balance = request.args.get('bal')
+	print(tkid,balance)
+	form6 = payToIndividual()
+	if request.method == 'POST' and form6.is_submitted():
+		try:
+			print("form submitted")
+			m=request.form['Month']
+			x=request.form['PayAmount']
+			print(m,x)
+			#check if amount is greater than month                                   ####17 sep
+			check = checkamount(m,x,tkid)
+			print("check is:",check)
+			if check == True:
+				print("inside if")
+				updatePAIDTABLE(m,x,tkid)
+				return redirect(url_for('paid'))
+			else:
+				print("inside else")
+				value = confirm(text='Do you want to pay more than Earned?', title='Attention!!', buttons=['YES', 'NO'])
+				print(value)
+				if value == 'YES':
+					updatePAIDTABLE(m,x,tkid)
+					return redirect(url_for('paid'))
+				elif value == 'NO':
+					return redirect(url_for('paid'))
+		
+		except:
+			pass
+	##create form accept month and amount to pay then call updatepaidtable() and also update cfb in gemscap_table
+	return render_template('/indiPay.html', form = form6,msg=msg)
+	#return render_template('/paid.html')
 
 @app.route("/indiMonthlyView.html",methods = ["POST","GET"])
 def tryprint1():
-    form7 = indiMonthlyView()
-    return render_template("indiMonthlyView.html",form=form7)
+	form7 = indiMonthlyView()
+	return render_template("indiMonthlyView.html",form=form7)
 
 @app.route("/indiMonthly",methods = ["POST","GET"])
 def trynew1():
-    #form1 = printdata()
-    result = request.form
-    z = result['TakionId']
-    print(z)
-    con = sqlite3.connect("GEMSCAP_TABLE.db")  
-    con.row_factory = sqlite3.Row  
-    cur = con.cursor()  
-    script="SELECT * FROM MONTHLYTABLE WHERE TAKIONID = '" + str(z) + "'"
-    print(script)
-    cur.execute(script)  
-    rows = cur.fetchall()
-    #print(rows)
-    return render_template("monthlyview.html",rows = rows)
+	#form1 = printdata()
+	result = request.form
+	z = result['TakionId']
+	print(z)
+	con = sqlite3.connect("GEMSCAP_TABLE.db")  
+	con.row_factory = sqlite3.Row  
+	cur = con.cursor()  
+	script="SELECT * FROM MONTHLYTABLE WHERE TAKIONID = '" + str(z) + "'"
+	print(script)
+	cur.execute(script)  
+	rows = cur.fetchall()
+	#print(rows)
+	return render_template("monthlyview.html",rows = rows)
 
 @app.route("/payview", methods = ["POST","GET"])
 def trynew2():
-    #form1 = printdata()
-    result = request.form
-    z = result['TakionId']
-    print(z)
-    con = sqlite3.connect("GEMSCAP_TABLE.db")  
-    con.row_factory = sqlite3.Row  
-    cur = con.cursor()  
-    script="SELECT * FROM PAIDTABLE WHERE TAKIONID = '" + str(z) + "'"
-    print(script)
-    cur.execute(script)  
-    rows = cur.fetchall()
-    #print(rows)
-    return render_template("indipay.html", rows = rows)
+	#form1 = printdata()
+	result = request.form
+	z = result['TakionId']
+	print(z)
+	con = sqlite3.connect("GEMSCAP_TABLE.db")  
+	con.row_factory = sqlite3.Row  
+	cur = con.cursor()  
+	script="SELECT * FROM PAIDTABLE WHERE TAKIONID = '" + str(z) + "'"
+	print(script)
+	cur.execute(script)  
+	rows = cur.fetchall()
+	#print(rows)
+	return render_template("indipay.html", rows = rows)
 
 @app.route("/paidview.html",methods = ["POST","GET"])
 def tryprint2():
-    form8 = indiPayView()
-    return render_template("paidview.html",form=form8)
+	form8 = indiPayView()
+	return render_template("paidview.html",form=form8)
 
 @app.route("/adjust.html",methods=["GET" , "POST"])
 def adjust():
-    form=adjustform()
-    info=""
-    if form.is_submitted() and request.method == "POST":
-        try:
-            tk = request.form['Takionid']
-            month = request.form['Month']
-            amount = request.form['Amount']
-            print(tk,month,amount)
-            ##function call to update cfb in gemscaptable and monthly tale
-            adjustcfbingemscap_adjustmonthlytable(tk,amount,month)
-            
-            return render_template('/adjust.html',info=info , form=form)
-        except:
-            pass
-    return render_template('/adjust.html', form=form)
+	form=adjustform()
+	info=""
+	if form.is_submitted() and request.method == "POST":
+		try:
+			tk = request.form['Takionid']
+			month = request.form['Month']
+			amount = request.form['Amount']
+			print(tk,month,amount)
+			##function call to update cfb in gemscaptable and monthly tale
+			adjustcfbingemscap_adjustmonthlytable(tk,amount,month)
+			
+			return render_template('/adjust.html',info=info , form=form)
+		except:
+			pass
+	return render_template('/adjust.html', form=form)
 
 @app.route("/quantity.html",methods=["GET","POST"])
 def quantity():
-    con = sqlite3.connect("GEMSCAP_TABLE.db")  
-    con.row_factory = sqlite3.Row  
-    cur = con.cursor()  
-    cur.execute("select * from QUANTITYTABLE")  
-    #cur.execute(''' SELECT gemscap_table.TakionID,CarryForwardBalance,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec FROM gemscap_table,MONTHLYTABLE  ''')
-    rows = cur.fetchall()  
-    return render_template("quantity.html",rows = rows)
+	con = sqlite3.connect("GEMSCAP_TABLE.db")  
+	con.row_factory = sqlite3.Row  
+	cur = con.cursor()  
+	cur.execute("select * from QUANTITYTABLE")  
+	#cur.execute(''' SELECT gemscap_table.TakionID,CarryForwardBalance,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec FROM gemscap_table,MONTHLYTABLE  ''')
+	rows = cur.fetchall()  
+	return render_template("quantity.html",rows = rows)
 
 
 ###################     INDIVIDUAL SUMMARY     16 SEP
 @app.route("/summary.html",methods=["GET","POST"])
 def printIndiSummary():
-    tkid = request.args.get('tkid')
-    conn = sqlite3.connect("GEMSCAP_TABLE.db") 
-    conn.row_factory = sqlite3.Row    
-    curs = conn.cursor()
-    curs.execute(''' SELECT * FROM PAIDTABLE WHERE TAKIONID = {} UNION
-                     SELECT * FROM MONTHLYTABLE WHERE TAKIONID = {} UNION 
-                     SELECT * FROM TOTALTABLE WHERE TAKIONID = {}
-                '''.format(tkid,tkid,tkid))
-    rows = curs.fetchall()           
-    #Name tkid starting_balance cfb  policy joining_date
-    curs.execute(''' SELECT FirstName,StartingBalance,CarryForwardBalance,PolicyNumber,DateOfJoining FROM
-                     gemscap_table WHERE TakionID = {}'''.format(tkid))
-    info = curs.fetchone()
-    
-    conn.commit()                                               ##conn not closed in /paid in route 
-    conn.close()
-    return render_template("summary.html",row1 = rows[0] , row2 = rows[1] , row3 = rows[2],info=info,tkid=tkid)
+	tkid = request.args.get('tkid')
+	conn = sqlite3.connect("GEMSCAP_TABLE.db") 
+	conn.row_factory = sqlite3.Row    
+	curs = conn.cursor()
+	curs.execute(''' SELECT * FROM PAIDTABLE WHERE TAKIONID = {} UNION
+					 SELECT * FROM MONTHLYTABLE WHERE TAKIONID = {} UNION 
+					 SELECT * FROM TOTALTABLE WHERE TAKIONID = {}
+				'''.format(tkid,tkid,tkid))
+	rows = curs.fetchall()           
+	#Name tkid starting_balance cfb  policy joining_date
+	curs.execute(''' SELECT FirstName,StartingBalance,CarryForwardBalance,PolicyNumber,DateOfJoining FROM
+					 gemscap_table WHERE TakionID = {}'''.format(tkid))
+	info = curs.fetchone()
+	
+	conn.commit()                                               ##conn not closed in /paid in route 
+	conn.close()
+	return render_template("summary.html",row1 = rows[2] , row2 = rows[0] , row3 = rows[1],info=info,tkid=tkid)
+
+##########################   delete user 27 SEP
+@app.route('/delete.html' , methods = ["GET" , "POST"])
+def delete():
+	form=deleteform() 	
+	if form.is_submitted() and request.method == "POST":
+		try:
+			tkid = request.form['TakionID']
+			print(tkid)
+			deluser(tkid)
+			return redirect(url_for('home'))
+		except:
+			pass
+	return render_template('/delete.html', form=form)
 
 
 if __name__ == "__main__":
-    app.run(debug = True)
-    #ui.run()	
+	app.run(debug = True)
+	#ui.run()	

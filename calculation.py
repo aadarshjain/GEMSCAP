@@ -44,7 +44,7 @@ def createexceltable():
     con = sqlite3.connect("GEMSCAP_TABLE.db")   
     cur = con.cursor() 
     print("checkpoint 1****")
-    #@cur.execute('DROP TABLE EXCELTABLE')
+    cur.execute('DROP TABLE EXCELTABLE')
     cur.execute("""CREATE TABLE EXCELTABLE (TAKIONID INT  ,
                 TOTAL_DELTA FLOAT DEFAULT 0 , PolicyNumber INT DEFAULT 0, NetPay FLOAT DEFAULT 0 , PAID FLOAT , TOTAL FLOAT  ,
                 CarryForwardBalance FLOAT DEFAULT 0, StartingBalance FLOAT DEFAULT 0, QUANTITY INT)""")
@@ -53,8 +53,10 @@ def createexceltable():
         
         cur.execute('''INSERT INTO EXCELTABLE (TAKIONID, TOTAL_DELTA, QUANTITY) VALUES (?,?,?)''', (TKID[i], total_d[i], qty[i] ))
     print("checkpoint 3****")
-    cur.execute('''UPDATE EXCELTABLE SET (PolicyNumber,CarryForwardBalance,StartingBalance) = (SELECT gemscap_table.PolicyNumber, gemscap_table.CarryForwardBalance,gemscap_table.StartingBalance
-                FROM gemscap_table WHERE gemscap_table.TakionID = EXCELTABLE.TAKIONID)''')
+    cur.execute('''UPDATE EXCELTABLE SET (PolicyNumber,CarryForwardBalance,StartingBalance) = 
+                    (SELECT gemscap_table.PolicyNumber, gemscap_table.CarryForwardBalance,gemscap_table.StartingBalance
+                        FROM gemscap_table WHERE gemscap_table.TakionID = EXCELTABLE.TAKIONID)
+                ''')
     print("checkpoint 4****")
     
     cur.execute('''SELECT TAKIONID, TOTAL_DELTA, PolicyNumber , CarryForwardBalance, NetPay, StartingBalance FROM EXCELTABLE ''')
@@ -141,7 +143,8 @@ WHERE
         WHERE EXCELTABLE.TAKIONID = gemscap_table.TakionID
     )
 ''')
-
+    conn.commit()
+    conn.close()
 #######################################################################################################
 
 def updatetotalInGemscap():

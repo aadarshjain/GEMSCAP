@@ -9,6 +9,7 @@ class userform(FlaskForm):
     LastName = StringField('Last Name' , validators = [validators.DataRequired()])
     FatherName = StringField('Father Name' , validators = [validators.DataRequired()])
     MotherName = StringField('Mother Name' , validators = [validators.DataRequired()])
+    #DOB = DateField('Date of Birth', format = "%m/%d/%Y", validators = (validators.Optional(),))
     DOB = StringField('Date Of Birth', validators = [validators.DataRequired()])
     Gender = RadioField('Gender', choices = [('M','Male'), ('F','Female'), ('O','Other')])
     MaritialStatus = RadioField('Maritial Status', choices = [('M','Married'),('U','Unmarried'),('O','Other') ] )
@@ -22,7 +23,7 @@ class userform(FlaskForm):
     Country2 = StringField('Country', validators = [validators.DataRequired()])
     EmailAddress = EmailField('Email address', [validators.DataRequired(), validators.Email()])
     ContactNumber1 = StringField('Contact Number 1',validators = [validators.DataRequired(), validators.Regexp(regex = r'^(\+91){1}[1-9]{1}[0-9]{9}$', message = "MOBILE NO STARTING WITH +91")])
-    ContactNumber2 = StringField('Contact Number 2',validators = [validators.DataRequired(), validators.Regexp(regex = r'^(\+91){1}[1-9]{1}[0-9]{9}$', message = "MOBILE NO STARTING WITH +91")])
+    ContactNumber2 = StringField('Contact Number 2')
     FamilyPersonsName1 = StringField('Family Person Name 1', validators = [validators.DataRequired()])
     FamilyPersonsContactNumber1 = StringField('Family Persons Contact Number', validators = [validators.DataRequired()])
     FamilyPersonsRelationWithEmployee1 = StringField('Family Persons Relation With Employee', validators = [validators.DataRequired()])
@@ -38,7 +39,7 @@ class userform(FlaskForm):
     PFNomineeRelation = StringField('PF Nominee Relation', validators = [validators.DataRequired()])
     PFNomineeDOB = StringField('PF Nominee DOB', validators = [validators.DataRequired()])
     DateOfJoining = StringField('Date Of Joining', validators = [validators.DataRequired()])
-    DateOfResigning = StringField('Date Of Resigning', validators = [validators.DataRequired()])
+    DateOfResigning = StringField('Date Of Resigning')
     AccountNumber1 = StringField('Account Number 1', validators = [validators.DataRequired(), validators.Regexp(regex = r'^[0-9]{9,18}$', message = "")])
     IFSCcode1 = StringField('IFSC Code', validators = [validators.DataRequired()])
     BankName1 = StringField('Bank Name', validators = [validators.DataRequired()])
@@ -129,14 +130,13 @@ class adjustform(FlaskForm):
 
 class updatekyc(FlaskForm):
     TakionID = StringField('Takion ID', validators = [validators.DataRequired()])
-    
     ContactNumber2 = StringField('Contact Number 2',validators = [validators.DataRequired(), validators.Regexp(regex = r'^(\+91){1}[1-9]{1}[0-9]{9}$', message = "MOBILE NO STARTING WITH +91")])
     MaritialStatus = RadioField('Maritial Status', choices = [('M','Married'),('U','Unmarried'),('O','Other') ] )
     LocalAddress = StringField('Local Address' , validators=[validators.DataRequired()])
     City2 = StringField('City', validators = [validators.DataRequired()])
     Pincode2 = StringField('Pin Code', validators = [validators.DataRequired()])
     Country2 = StringField('Country', validators = [validators.DataRequired()])
-    PolicyNumber = RadioField('PolicyNumber', choices = [('0','70%'), ('1','85%')], validators = [validators.DataRequired()])
+    #PolicyNumber = RadioField('PolicyNumber', choices = [('0','70%'), ('1','85%')], validators = [validators.DataRequired()])
     PFNomineeName = StringField('PF Nominee Name', validators = [validators.DataRequired()])
     PFNomineeRelation = StringField('PF Nominee Relation', validators = [validators.DataRequired()])
     PFNomineeDOB = StringField('PF Nominee DOB', validators = [validators.DataRequired()])
@@ -146,4 +146,8 @@ class updatekyc(FlaskForm):
     BankName2 = StringField('Bank Name')
     AccountType2 = StringField('Account Type') 
     AccountHolderName2 = StringField('Account Holder Name')
+    submit = SubmitField('Submit')
+
+class deleteform(FlaskForm):
+    TakionID = StringField('TakionID', validators = [validators.DataRequired()])
     submit = SubmitField('Submit')

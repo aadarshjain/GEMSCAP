@@ -82,7 +82,7 @@ a:hover {
 <body>
 <div class = "profile">
 
-<form class = "user_profile" action = "/saveupdate" autocomplete = "on" method="post" name = "form">
+<form class = "user_profile"  autocomplete = "on"  method="post" name = "form">
     {{ form.csrf_token }}
     <a href = "/home.html" class = "previous">&laquo; Back</a>
     <a href = "/" class = "logout">Logout</a>
@@ -133,7 +133,7 @@ a:hover {
     </li>
     <hr style = "border: 2px solid gray;"/>
     
-    <h2> PF Nominee Details </h2>
+    <h2>PF Nominee Details</h2>
     <li>
         <b>{{form.PFNomineeName.label}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
         {{form.PFNomineeName}}
@@ -141,12 +141,12 @@ a:hover {
         <b>&nbsp&nbsp&nbsp&nbsp&nbsp{{form.PFNomineeRelation.label}}</b>
         {{form.PFNomineeRelation}}
     
-        <b>{{form.PFNomineeDOB.label}}</b>
+        <b>&nbsp&nbsp&nbsp&nbsp&nbsp{{form.PFNomineeDOB.label}}</b>
         {{form.PFNomineeDOB}}
     </li>
     
     <li>
-       <b>&nbsp&nbsp&nbsp&nbsp&nbsp{{form.DateOfResigning.label}}</b>
+       <b>{{form.DateOfResigning.label}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
         &nbsp&nbsp&nbsp&nbsp&nbsp{{form.DateOfResigning}}
     </li>
     
@@ -164,7 +164,7 @@ a:hover {
     {% endif %}
     
         <b>{{form.IFSCcode2.label}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
-        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.IFSCcode2}}
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.IFSCcode2}}&nbsp&nbsp
     
         <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.BankName2.label}}</b>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.BankName2}}
@@ -183,7 +183,7 @@ a:hover {
         confirm("Successfully Submitted!");
     }
 </script>
-    <button onclick = "myFunction()" value = {{form.submit()}} >Submit</button>
+    <button onclick = "myFunction()" type = "submit" value = {{form.submit()}} >Submit</button>
     <button type = "button" onClick = "window.print()">Print</button>
 </form>
 </div>
