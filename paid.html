@@ -22,14 +22,7 @@
             border: 1px solid #ccc;
             text-align: auto;
         }
-        th {
-            background: #b3d9ff;
-            border-color: white;
-        }
-        td{
-            background: orange;
-            border-color: white;
-        }           
+        
         .table{
             
             table-layout: fixed;
@@ -100,27 +93,53 @@ a:hover {
     </tr>
     </thead>  
       
-    {% for row in rows %}  
-      
-        <tr>  
-            <th> <a href="/pay?tkid={{row['TAKIONID']}}&bal={{row['CarryForwardBalance']}}"> {{row["TAKIONID"]}} </a> </th>
-            <th><a href="/summary.html?tkid={{row['TAKIONID']}}"> SUMMARY </a></th>
-            <th>{{row["CarryForwardBalance"]}}</th> 
-            <th>{{row["Jan"]}}</th>
-            <th>{{row["Feb"]}}</th>
-            <th>{{row["Mar"]}}</th>
-            <th>{{row["Apr"]}}</th>
-            <th>{{row["May"]}}</th>
-            <th>{{row["Jun"]}}</th>
-            <th>{{row["Jul"]}}</th>
-            <th>{{row["Aug"]}}</th>
-            <th>{{row["Sep"]}}</th>
-            <th>{{row["Oct"]}}</th>
-            <th>{{row["Nov"]}}</th>
-            <th>{{row["Dec"]}}</th> 
-        </tr>  
-      
-    {% endfor %}  
+{% for row in rows %}  
+         
+            {% if row['CarryForwardBalance'] >= '0' %}
+            <tr bgcolor = #03fcca>  
+                <th> <a href="/pay?tkid={{row['TAKIONID']}}&bal={{row['CarryForwardBalance']}}"> {{row["TAKIONID"]}} </a> </th>
+                <th><a href="/summary.html?tkid={{row['TAKIONID']}}"> SUMMARY </a></th>
+                
+                    <th>{{row["CarryForwardBalance"]}}</th> 
+                    <th>{{row["Jan"]}}</th>
+                    <th>{{row["Feb"]}}</th>
+                    <th>{{row["Mar"]}}</th>
+                    <th>{{row["Apr"]}}</th>
+                    <th>{{row["May"]}}</th>
+                    <th>{{row["Jun"]}}</th>
+                    <th>{{row["Jul"]}}</th>
+                    <th>{{row["Aug"]}}</th>
+                    <th>{{row["Sep"]}}</th>
+                    <th>{{row["Oct"]}}</th>
+                    <th>{{row["Nov"]}}</th>
+                    <th>{{row["Dec"]}}</th> 
+                
+            </tr>  
+            {% endif %}
+          
+            {% if row['CarryForwardBalance'] <  '0' %}
+            <tr bgcolor = #FF0000>  
+                <th> <a href="/pay?tkid={{row['TAKIONID']}}&bal={{row['CarryForwardBalance']}}"> {{row["TAKIONID"]}} </a> </th>
+                <th><a href="/summary.html?tkid={{row['TAKIONID']}}"> SUMMARY </a></th>
+                
+                    <th>{{row["CarryForwardBalance"]}}</th> 
+                    <th>{{row["Jan"]}}</th>
+                    <th>{{row["Feb"]}}</th>
+                    <th>{{row["Mar"]}}</th>
+                    <th>{{row["Apr"]}}</th>
+                    <th>{{row["May"]}}</th>
+                    <th>{{row["Jun"]}}</th>
+                    <th>{{row["Jul"]}}</th>
+                    <th>{{row["Aug"]}}</th>
+                    <th>{{row["Sep"]}}</th>
+                    <th>{{row["Oct"]}}</th>
+                    <th>{{row["Nov"]}}</th>
+                    <th>{{row["Dec"]}}</th> 
+                
+            </tr>  
+            {% endif %}
+        
+    {% endfor %}
 </table>  
 <br><br>  
 <form class = "print">

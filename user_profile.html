@@ -74,7 +74,10 @@ a:hover {
   cursor: pointer;
   border-radius: 1px;
   border: 1px solid #3949AB;    
-}    
+}  
+.sup{
+    color: red;
+}  
 </style>
 
 </head>
@@ -90,73 +93,73 @@ a:hover {
     <h2>Employee's Personal Information</h2>
     <ul>                        
     <li>
-        <b>{{form.EmployeeID.label}}</b>
+        <b>{{form.EmployeeID.label}}<sup style=color:red>*</sup></b>
         &nbsp{{form.EmployeeID}}
     </li> 
 
     <li>
-        <b>{{form.FirstName.label}}&nbsp&nbsp</b>
+        <b>{{form.FirstName.label}}&nbsp&nbsp<sup style=color:red>*</sup></b>
         &nbsp&nbsp{{form.FirstName}}
     
         <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.MiddleName.label}}</b>
-        &nbsp{{form.MiddleName}}
+        &nbsp&nbsp&nbsp{{form.MiddleName}}
     
-        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.LastName.label}}</b>
+        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.LastName.label}}<sup style=color:red>*</sup></b>
         {{form.LastName}}
     </li> 
     <li>
-        <b>{{form.FatherName.label}}</b>
+        <b>{{form.FatherName.label}}<sup style=color:red>*</sup></b>
         &nbsp{{form.FatherName}}
 
-        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.MotherName.label}}</b>
+        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.MotherName.label}}<sup style=color:red>*</sup></b>
         {{form.MotherName}}
     </li> 
     <li>
-        <b>{{form.DOB.label}}</b>
+        <b>{{form.DOB.label}}<sup style=color:red>*</sup></b>
         {{form.DOB}}
     </li>
     <li>
-        <b>{{form.Gender.label}}<br></b>
+        <b>{{form.Gender.label}}<sup style=color:red>*</sup><br></b>
         {{form.Gender}}
    
-        <b>{{form.MaritialStatus.label}}<br></b>
+        <b>{{form.MaritialStatus.label}}<sup style=color:red>*</sup><br></b>
         {{form.MaritialStatus}}
     </li> 
     <hr style = "border: 2px solid gray;"/>
     <h2>Employee's Contact Information</h2><!--             heading           -->
     <li>
-        <b>{{form.PermanentAddress.label}}</b>
+        <b>{{form.PermanentAddress.label}}<sup style=color:red>*</sup></b>
         {{form.PermanentAddress(size = 45)}}
     
-        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.City1.label}}</b>
-        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.City1}}<br><br>
+        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.City1.label}}<sup style=color:red>*</sup></b>
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.City1}}<br><br>
     
-        <b>{{form.Pincode1.label}}&nbsp&nbsp</b>
+        <b>{{form.Pincode1.label}}<sup style=color:red>*</sup>&nbsp&nbsp</b>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.Pincode1}}
     
-        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.Country1.label}}</b>
+        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.Country1.label}}<sup style=color:red>*</sup></b>
         {{form.Country1}}
         <br>
         <br>
     </li>   
     <li>
-        <b>{{form.LocalAddress.label}}&nbsp&nbsp</b>
+        <b>{{form.LocalAddress.label}}<sup style=color:red>*</sup>&nbsp&nbsp</b>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.LocalAddress(size = 45)}}
     
-        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.City2.label}}</b>
-        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.City2}}<br><br>
+        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.City2.label}}<sup style=color:red>*</sup></b>
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.City2}}<br><br>
     
-        <b>{{form.Pincode2.label}}&nbsp&nbsp</b>
+        <b>{{form.Pincode2.label}}<sup style=color:red>*</sup>&nbsp&nbsp</b>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.Pincode2}}
     
-        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.Country2.label}}</b>
+        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.Country2.label}}<sup style=color:red>*</sup></b>
         {{form.Country2}}
         <br>
         <br>
     </li>   
    
     <li>
-        <b>{{form.EmailAddress.label}}&nbsp</b>
+        <b>{{form.EmailAddress.label}}<sup style=color:red>*</sup>&nbsp</b>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.EmailAddress}}
         {% if form.EmailAddress.errors %}
         <ul class="errors">
@@ -168,10 +171,10 @@ a:hover {
     </li>
     
     <li>
-        <b>{{form.ContactNumber1.label}}</b>
+        <b>{{form.ContactNumber1.label}}<sup style=color:red>*</sup></b>
         {{form.ContactNumber1}}
         {% if form.ContactNumber1.errors %}
-        <ul class="errors">
+        <ul class="errors" style = color: red>
                 {% for error in form.ContactNumber1.errors %}
                     <li>{{ error }}</li>
             {% endfor %}
@@ -179,7 +182,7 @@ a:hover {
     {% endif %}
     
         <b>{{form.ContactNumber2.label}}</b>
-        {{form.ContactNumber2}}
+        &nbsp{{form.ContactNumber2}}
         {% if form.ContactNumber2.errors %}
         <ul class="errors">
                 {% for error in form.ContactNumber2.errors %}
@@ -191,29 +194,29 @@ a:hover {
     <hr style = "border: 2px solid gray;"/>
     <h2> Family Relation Details </h2>
     <li>
-        <b>{{form.FamilyPersonsName1.label}}</b>
+        <b>{{form.FamilyPersonsName1.label}}<sup style=color:red>*</sup></b>
         {{form.FamilyPersonsName1}}
     
-        <b>{{form.FamilyPersonsContactNumber1.label}}</b>
+        <b>{{form.FamilyPersonsContactNumber1.label}}<sup style=color:red>*</sup></b>
         &nbsp&nbsp&nbsp{{form.FamilyPersonsContactNumber1}}
     
-        <b>{{form.FamilyPersonsRelationWithEmployee1.label}}</b>
+        <b>{{form.FamilyPersonsRelationWithEmployee1.label}}<sup style=color:red>*</sup></b>
         &nbsp&nbsp&nbsp{{form.FamilyPersonsRelationWithEmployee1}}
     </li>
     <li>
-        <b>{{form.FamilyPersonsName2.label}}</b>
+        <b>{{form.FamilyPersonsName2.label}}<sup style=color:red>*</sup></b>
         {{form.FamilyPersonsName2}}
     
-        <b>{{form.FamilyPersonsContactNumber2.label}}</b>
+        <b>{{form.FamilyPersonsContactNumber2.label}}<sup style=color:red>*</sup></b>
         {{form.FamilyPersonsContactNumber2}}
     
-        <b>{{form.FamilyPersonsRelationWithEmployee2.label}}</b>
+        <b>{{form.FamilyPersonsRelationWithEmployee2.label}}<sup style=color:red>*</sup></b>
         {{form.FamilyPersonsRelationWithEmployee2}}
     </li>
     <hr style = "border: 2px solid gray;"/>
     <h2>Employee's Documents Information</h2>           <!--        heading       -->
     <li>
-        <b>{{form.AadharCard.label}}</b>
+        <b>{{form.AadharCard.label}}<sup style=color:red>*</sup></b>
         &nbsp&nbsp{{form.AadharCard}}
         {% if form.AadharCard.errors %}
             <ul class="errors">
@@ -224,7 +227,7 @@ a:hover {
         {% endif %}
     </li>
     <li>
-        <b>{{form.PanCard.label}}</b>
+        <b>{{form.PanCard.label}}<sup style=color:red>*</sup></b>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.PanCard}}
         {% if form.PanCard.errors %}
             <ul class="errors">
@@ -237,34 +240,34 @@ a:hover {
     <hr style = "border: 2px solid gray;"/>
     <h2>Employee's Educational Information</h2>           <!--        heading       -->
     <li>
-        <b>{{form.EductionalCourseDetail.label}}</b>
+        <b>{{form.EductionalCourseDetail.label}}<sup style=color:red>*</sup></b>
         &nbsp&nbsp&nbsp&nbsp&nbsp{{form.EductionalCourseDetail}}
     
-        <b>&nbsp&nbsp&nbsp&nbsp&nbsp{{form.PassingYear.label}}</b>
+        <b>&nbsp&nbsp&nbsp&nbsp&nbsp{{form.PassingYear.label}}<sup style=color:red>*</sup></b>
         &nbsp&nbsp&nbsp{{form.PassingYear}}
     
-        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.PassingStatus.label}}</b>
+        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.PassingStatus.label}}<sup style=color:red>*</sup></b>
         &nbsp&nbsp&nbsp&nbsp&nbsp{{form.PassingStatus}}
     </li>
     <hr style = "border: 2px solid gray;"/>
     <h2> PF Nominee Details </h2>
     <li>
-        <b>{{form.PFNomineeName.label}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
+        <b>{{form.PFNomineeName.label}}<sup style=color:red>*</sup>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
         {{form.PFNomineeName}}
     
-        <b>&nbsp&nbsp&nbsp&nbsp&nbsp{{form.PFNomineeRelation.label}}</b>
+        <b>&nbsp&nbsp&nbsp&nbsp&nbsp{{form.PFNomineeRelation.label}}<sup style=color:red>*</sup></b>
         {{form.PFNomineeRelation}}
     
-        <b>{{form.PFNomineeDOB.label}}</b>
+        <b>{{form.PFNomineeDOB.label}}<sup style=color:red>*</sup></b>
         {{form.PFNomineeDOB}}
     </li>
     <hr style = "border: 2px solid gray;"/>
     <h3> Date of Joining and Date of Resigning </h3>
     <li>
-        <b>{{form.DateOfJoining.label}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
+        <b>{{form.DateOfJoining.label}}<sup style=color:red>*</sup>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.DateOfJoining}}
     
-       <b>&nbsp&nbsp&nbsp&nbsp&nbsp{{form.DateOfResigning.label}}</b>
+       <b>&nbsp&nbsp&nbsp&nbsp&nbsp{{form.DateOfResigning.label}}<sup style=color:red>*</sup></b>
         &nbsp&nbsp&nbsp&nbsp&nbsp{{form.DateOfResigning}}
     </li>
     <hr style = "border: 2px solid gray;"/>
@@ -272,7 +275,7 @@ a:hover {
     <h3> Primary Account Details </h3>
     <li>
         <li>
-        <b>{{form.AccountNumber1.label}}&nbsp</b>
+        <b>{{form.AccountNumber1.label}}<sup style=color:red>*</sup>&nbsp</b>
         &nbsp&nbsp&nbsp&nbsp&nbsp{{form.AccountNumber1}}
         {% if form.AccountNumber1.errors %}
         <p class="errors">
@@ -282,17 +285,17 @@ a:hover {
         </p>
     {% endif %}
     
-        <b>{{form.IFSCcode1.label}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
+        <b>{{form.IFSCcode1.label}}<sup style=color:red>*</sup>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.IFSCcode1}}
     
-        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.BankName1.label}}</b>
+        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.BankName1.label}}<sup style=color:red>*</sup></b>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.BankName1}}
     
-        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.AccountType1.label}}</b>
+        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.AccountType1.label}}<sup style=color:red>*</sup></b>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.AccountType1}}
     </li>
     <li>
-        <b>{{form.AccountHolderName1.label}}</b>
+        <b>{{form.AccountHolderName1.label}}<sup style=color:red>*</sup></b>
         {{form.AccountHolderName1}}
     </li>
     <!-------------------------------------------------------------------------------------------->
@@ -324,31 +327,31 @@ a:hover {
    <hr style = "border: 2px solid gray;"/>
    <h3> Other Details </h3>
     <li>
-        <b>{{form.TakionID.label}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
+        <b>{{form.TakionID.label}}<sup style=color:red>*</sup>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
         {{form.TakionID}}
     </li>
     <li>
-        <b>{{form.StartingBalance.label}}</b>
+        <b>{{form.StartingBalance.label}}<sup style=color:red>*</sup></b>
         {{form.StartingBalance}}
     </li>
     <li>
-        <b>{{form.PolicyNumber.label}}</b>
+        <b>{{form.PolicyNumber.label}}<sup style=color:red>*</sup></b>
         {{form.PolicyNumber}}
     </li>
     <li>
-        <b>{{form.CarryForwardBalance.label}}</b>
+        <b>{{form.CarryForwardBalance.label}}<sup style=color:red>*</sup></b>
         {{form.CarryForwardBalance}}
     </li>
     <li>
-        <b>{{form.RateOfDollar.label}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
+        <b>{{form.RateOfDollar.label}}<sup style=color:red>*</sup>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
         {{form.RateOfDollar}}
     </li>
     <hr style = "border: 2px solid gray;"/>
 </ul>
-    <script>
-        function myFunction() {
-        confirm("Successfully Submitted!");
-    }
+<script>
+    function myFunction() {
+    alert("Successfully Submitted!");
+}
 </script>
     <button onclick = "myFunction()" value = {{form.submit()}} >Submit</button>
     <button type = "button" onClick = "window.print()">Print</button>

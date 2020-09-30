@@ -45,6 +45,10 @@ def login():
 def home():
 	return render_template('home.html')
 
+@app.route('/crud.html',methods=['GET' , 'POST'])
+def crud():
+	return render_template('crud.html')
+
 @app.route('/user_profile.html',methods=['GET','POST'])
 def userprofile():
 	form = userform(request.form)
@@ -219,13 +223,14 @@ def updateKYC():
 				AccountType2 = result["AccountType2"]
 				AccountHolderName2 = result["AccountHolderName2"]
 				TakionID = result['TakionID']
+				PolicyNumber = result['PolicyNumber']
 				print("++++++++",MaritialStatus,City2,Pincode2,Country2)
 				con = sqlite3.connect("GEMSCAP_TABLE.db")   
 				cur = con.cursor()
 				cur.execute('''UPDATE gemscap_table SET "MaritialStatus"="{}", ContactNumber2="{}", LocalAddress="{}", City2="{}",
 							Pincode2="{}", Country2="{}", PFNomineeName="{}", PFNomineeRelation="{}", PFNomineeDOB="{}",  DateOfResigning="{}",
-							AccountNumber2="{}",IFSCcode2="{}", BankName2="{}", AccountType2="{}", AccountHolderName2="{}" 
-							WHERE TakionID="{}"'''.format(MaritialStatus,ContactNumber2,LocalAddress,City2 ,Pincode2,Country2,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfResigning,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2,TakionID)) 
+							AccountNumber2="{}",IFSCcode2="{}", BankName2="{}", AccountType2="{}", AccountHolderName2="{}", PolicyNumber="{}" 
+							WHERE TakionID="{}"'''.format(MaritialStatus,ContactNumber2,LocalAddress,City2 ,Pincode2,Country2,PFNomineeName,PFNomineeRelation,PFNomineeDOB,DateOfResigning,AccountNumber2,IFSCcode2,BankName2,AccountType2,AccountHolderName2,PolicyNumber,TakionID)) 
 				
 				con.commit()
 				con.close()
@@ -283,9 +288,35 @@ def upload():
 		file.save(os.path.join("uploads", file.filename))
 	return render_template("/upload.html", message = "Successfully Uploaded")	
 
+#@app.route("/excelupdate.html",methods = ["POST","GET"])
+#def excelupdate():
+#	defaulterstr=''
+#	form2 = updateExcel(request.form)
+#	if request.method == 'POST' and form2.is_submitted():
+#		m=form2.Month.data
+#		x=form2.Excel.data
+#		print(x,m)
+#		try:
+#			openfile(x)
+#			defaulterstr = createexceltable()
+#			print("defaulters are ",defaulterstr)
+#			updatenetpay()
+#			updateCarryForwardBalance()
+#			updateCarryForwardBalanceInGemscap()
+#			updateMONTHLYTABLE(m)
+#			updateQuantitytable(m)
+#			updatetotaltable(m)
+#			updatetotalInGemscap()
+#			updatequantity()
+#			cleardata()
+#			return render_template("excelupdate.html",form=form2,defaulters = defaulterstr)
+#		except:
+#			pass
+#	return render_template("excelupdate.html",form=form2,defaulters = defaulterstr) 
 @app.route("/excelupdate.html",methods = ["POST","GET"])
 def excelupdate():
 	defaulterstr=''
+	rows=[]
 	form2 = updateExcel(request.form)
 	if request.method == 'POST' and form2.is_submitted():
 		m=form2.Month.data
@@ -294,6 +325,18 @@ def excelupdate():
 		try:
 			openfile(x)
 			defaulterstr = createexceltable()
+
+			defaultertkid = defaulterstr.split(' ')				###################### 28 SEP
+			con = sqlite3.connect("GEMSCAP_TABLE.db")    
+			cur = con.cursor()
+			
+			for i in defaultertkid:
+				cur.execute('SELECT TakionID,CarryForwardBalance,StartingBalance FROM gemscap_table WHERE TakionID = {}'.format(i))
+				row = cur.fetchone()			#gives tuple
+				rows.append(row)				#list of tuples
+			con.commit()
+			con.close()
+
 			print("defaulters are ",defaulterstr)
 			updatenetpay()
 			updateCarryForwardBalance()
@@ -304,10 +347,11 @@ def excelupdate():
 			updatetotalInGemscap()
 			updatequantity()
 			cleardata()
-			return render_template("excelupdate.html",form=form2,defaulters = defaulterstr)
+			return render_template("excelupdate.html",form=form2,defaulters = defaulterstr,rows=rows)
 		except:
 			pass
-	return render_template("excelupdate.html",form=form2,defaulters = defaulterstr) 
+	return render_template("excelupdate.html",form=form2,defaulters = defaulterstr,rows=rows)
+
 
 @app.route("/paid.html", methods = ["POST", "GET"])  
 def paid():  

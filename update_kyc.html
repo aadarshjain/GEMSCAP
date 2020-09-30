@@ -164,7 +164,7 @@ a:hover {
     {% endif %}
     
         <b>{{form.IFSCcode2.label}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
-        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.IFSCcode2}}&nbsp&nbsp
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.IFSCcode2}}
     
         <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.BankName2.label}}</b>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.BankName2}}
@@ -176,13 +176,16 @@ a:hover {
         <b>{{form.AccountHolderName2.label}}</b>
         {{form.AccountHolderName2}}
    </li> 
-   
+    <li>
+        <b>{{form.PolicyNumber.label}}</b>
+        {{form.PolicyNumber}}
+    </li>
 </ul>
     <script>
         function myFunction() {
-        confirm("Successfully Submitted!");
+        alert("Successfully Submitted!");
     }
-</script>
+    </script>
     <button onclick = "myFunction()" type = "submit" value = {{form.submit()}} >Submit</button>
     <button type = "button" onClick = "window.print()">Print</button>
 </form>

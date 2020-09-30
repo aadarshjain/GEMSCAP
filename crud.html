@@ -50,15 +50,22 @@
   outline-color: transparent;
   box-shadow: var(--btn-color) 2px 2px 22px;
 }
-.previous{
-	float: right;
-	color: black;
-  	outline: none;
-  	cursor: pointer;
-  	border-radius: 1px;
-  	border: 1px solid #3949AB;
-  	background: lightgray;
+.previous {
+  
+  color: black;
+  outline: none;
+  cursor: pointer;
+  border-radius: 1px;
+  border: 1px solid #3949AB;
 }
+.logout{
+  float: right;  
+  color: black;
+  outline: none;
+  cursor: pointer;
+  border-radius: 1px;
+  border: 1px solid #3949AB;    
+}    
 a {
   	text-decoration: none;
   	display: inline-block;
@@ -73,60 +80,30 @@ a:hover {
 .ab{	
 	float: left;
 }  	
-.ad{
-	
-}
-.ac{
-	float: left;
-}
-.ae{
-
-}
-.af{
-	float: left;
-}	
-.ag{
-	float: right;
-}
-.ah{
-	float: right;
-}
 .ai{
 	float: right;
 }
+
 </style>
 
 </head>
 <body>
 
-<iframe src="http://free.timeanddate.com/clock/i7gpnkkz/n179/fn6/fs17/fc9ff/tc000/ftb/pa8/tt0/tw1/th1/ta1/tb4" frameborder="0" width="220" height="55"></iframe>
-
-
-
 </head>
-<body onload="startTime()">
 <div id="txt"></div>
 
 	<div class = "home">
-		<a href = "/" class = "previous">Log Out</a>
-		<h1 class = "label">Welcome Buddy!</h1>
+		<a href = "/home.html" class = "previous">&laquo; Back</a>
+		<a href = "/" class = "logout">Log Out</a>
+		<h1 class = "label">UPDATE AND DELETE DETAILS OF EMPLOYEE</h1>
 		<form class = "user_form" method = "post" name = "form">
 			
-		<button class = "ab" type = "submit" formaction = "user_profile.html">KYC REGISTRATION</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class = "ad" type = "submit" formaction = "tryprint.html" >KYC VIEW DETAILS</button>
-		<button class = "ai" type = "submit" formaction = "crud.html" >KYC CRUD</button>
+		<button class = "ab" type = "submit" formaction = "update_kyc.html">KYC UPDATE</button>
+		<button class = "ai" type = "submit" formaction = "delete.html" >KYC DELETE</button>
 		<br>
 		<br>
-		<button class = "ac" type = "submit" formaction = "excelupdate.html">EXCEL UPLOAD</button>
-		<button class = "ah" type = "submit" formaction = "adjust.html" >EXCEL ADJUST</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class = "aj" type = "submit" formaction = "quantity.html" >EXCEL QUANTITY</button>
 		<br>
 		<br>
-		<button class = "af" type = "submit" formaction = "indiMonthlyView.html" >VIEW MONTHLY SUMMARY</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class = "ae" type = "submit" formaction = "paid.html" >PAY</button>
-		<button class = "ag" type = "submit" formaction = "paidview.html" >VIEW PAID SUMMARY</button>
 	</form>
-	<br>
-	<!--<img src="{{url_for('static', filename='images/gemscap_name.png')}}" align="middle" width = 100%/>-->
 </body>
 </html>

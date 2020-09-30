@@ -53,10 +53,8 @@ def createexceltable():
         
         cur.execute('''INSERT INTO EXCELTABLE (TAKIONID, TOTAL_DELTA, QUANTITY) VALUES (?,?,?)''', (TKID[i], total_d[i], qty[i] ))
     print("checkpoint 3****")
-    cur.execute('''UPDATE EXCELTABLE SET (PolicyNumber,CarryForwardBalance,StartingBalance) = 
-                    (SELECT gemscap_table.PolicyNumber, gemscap_table.CarryForwardBalance,gemscap_table.StartingBalance
-                        FROM gemscap_table WHERE gemscap_table.TakionID = EXCELTABLE.TAKIONID)
-                ''')
+    cur.execute('''UPDATE EXCELTABLE SET (PolicyNumber,CarryForwardBalance,StartingBalance) = (SELECT gemscap_table.PolicyNumber, gemscap_table.CarryForwardBalance,gemscap_table.StartingBalance
+                FROM gemscap_table WHERE gemscap_table.TakionID = EXCELTABLE.TAKIONID)''')
     print("checkpoint 4****")
     
     cur.execute('''SELECT TAKIONID, TOTAL_DELTA, PolicyNumber , CarryForwardBalance, NetPay, StartingBalance FROM EXCELTABLE ''')
@@ -75,16 +73,37 @@ def createexceltable():
             elif row[2] == 0:
                 payable.append(round(row[1]*0.70,2))
             #else:payable.append(-1)
-        elif row[1] < 0 and row[3] > 0:    # if td is -ve and cfb is +ve
+        elif row[1] < 0 and row[3] >= 0:    # if td is -ve and cfb is +ve
             payable.append(row[1])
-        elif ((row[1] > 0 and row[3] < 0) or (row[1] < 0 and row[3] < 0)):    # if td is +ve and cfb is -ve   or -ve -ve
-            #check if |cfb| is 80% or more of stb raise alert
-            if  abs(row[3]) >= 0.8*(row[5]):
-                payable.append(round(row[1],2))
+
+        
+######################################################      30  SEP
+        elif (row[1] < 0 and row[3] < 0):  ##   -ve -ve
+            if abs(row[3]) >= 0.80*(row[5]):
                 print("defaulter: ",row[0])
                 defaulterstr = defaulterstr + str(row[0]) + " "
-            else:
-                payable.append(row[1])
+            payable.append(round(row[1],2))
+
+
+        ##also check for defaulter in this case
+        elif (row[1] > 0 and row[3] < 0):        # if td is +ve and cfb is -
+
+            if abs(row[3]) >= 0.80*(row[5]):
+                print("defaulter: ",row[0])
+                defaulterstr = defaulterstr + str(row[0]) + " "
+
+            if(row[1] < abs(row[3])):
+                payable.append(round(row[1],2))     ##append 100% eg cfb = -300 td = 100
+                
+            elif(row[1] > abs(row[3])):             ## eg cfb = -300 td = 600  i.e 300 + 300*policy 
+                if(row[2]==1):
+                    res = abs(row[3]) + (row[1] - abs(row[3]))*0.85
+                    payable.append(round(res , 2))
+                elif(row[2]==0):
+                    abs(row[3]) + (row[1] - abs(row[3]))*0.70
+                    payable.append(round(res , 2))
+        
+        
         
         row = cur.fetchone()
     
@@ -145,6 +164,7 @@ WHERE
 ''')
     conn.commit()
     conn.close()
+
 #######################################################################################################
 
 def updatetotalInGemscap():

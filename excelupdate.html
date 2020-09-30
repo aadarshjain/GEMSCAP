@@ -96,12 +96,29 @@
 
     <script>
         function myFunction() {
-        confirm("Successfully Submitted!");
+        alert("Successfully Submitted!");
     }
 	</script>
     
-			<center><button onclick = "myFunction()" value = {{form.submit}} >Submit</button></center>
+			<center><button onclick = "myFunction()"  value = {{form.submit}} >Submit</button></center>
 	    </form>
-	</div>    
+		<table border=3px >
+			<tr bgcolor='red'>
+				<th>TakionID</th>
+				<th>StartingBalance</th>
+				<th>CarryforwardBalance</th>
+			</tr>
+			{% for row in rows %}
+			<tr bgcolor=#03fcca>
+				<th>{{row[0]}}</th>
+				<th>{{row[2]}}</th>
+				<th>{{row[1]}}</th>
+			</tr>
+			{% endfor %}
+	
+	</table>
+
+	</div>   
+
 </body>
 </html>

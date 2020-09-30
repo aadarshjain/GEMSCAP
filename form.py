@@ -130,6 +130,7 @@ class adjustform(FlaskForm):
 
 class updatekyc(FlaskForm):
     TakionID = StringField('Takion ID', validators = [validators.DataRequired()])
+    PolicyNumber = RadioField('PolicyNumber', choices = [('0','70%'), ('1','85%')], validators = [validators.DataRequired()])
     ContactNumber2 = StringField('Contact Number 2',validators = [validators.DataRequired(), validators.Regexp(regex = r'^(\+91){1}[1-9]{1}[0-9]{9}$', message = "MOBILE NO STARTING WITH +91")])
     MaritialStatus = RadioField('Maritial Status', choices = [('M','Married'),('U','Unmarried'),('O','Other') ] )
     LocalAddress = StringField('Local Address' , validators=[validators.DataRequired()])
