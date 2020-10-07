@@ -1,8 +1,48 @@
-<!DOCTYPE html>
-<html lang = "en">
-<head>
-	<meta charset = "UTF-8">
-	<title>VIEW DETAILS</title>
+{% extends "bootstrap.html" %}
+{% block title %}EXCEL UPLOAD{% endblock %}
+{% block content %}
+<center><h1>UPLOAD EXCEL FILE</h1></center>
+
+	
+		<form class = "user_form" method = "post" name = "form" >	
+			<!--<a href = "/home.html" class = "previous">&laquo; Back</a>-->
+			<center><p class="font-weight-bold">{{form.Month.label}}</p></center>
+			<center><p>{{form.Month}}</p></center>
+            <center><p class="font-weight-bold">{{form.Excel.label}}</p></center> 
+            <center><p>{{form.Excel}}</p></center>
+           	<center><p class="font-weight-bold" style = "color: red">Defaulters: {{defaulters}}</p></center>
+
+    		<script>
+    		    function myFunction() {
+    		    alert("Successfully Submitted!");
+    		}
+			</script>
+    
+			<center><button class = "btn btn-primary" onclick = "myFunction()"  value = {{form.submit}} >Upload</button></center>
+	    </form>
+		<table class="table table-responsive">
+
+			<thead class="thead-dark">
+			<tr bgcolor='red'>
+				<th>TakionID</th>
+				<th>StartingBalance</th>
+				<th>CarryforwardBalance</th>
+			</tr>
+		</thead>
+			{% for row in rows %}
+			<tr bgcolor=#03fcca>
+				<th>{{row[0]}}</th>
+				<th>{{row[2]}}</th>
+				<th>{{row[1]}}</th>
+			</tr>
+			{% endfor %}
+	
+	</table>
+	{% endblock %}	
+
+
+
+<!--
 	<style type="text/css">
 	*{
 		padding: 0;
@@ -91,8 +131,8 @@
 			<center><p>{{form.Month.label}}</p></center>
 			<center><p>{{form.Month}}</p></center>
             <center><p>{{form.Excel.label}}</p></center> 
-            <center><p>{{form.Excel}}</p><center>
-            <center><p style = "color: red">Defaulters: {{defaulters}}</p></center>
+            <center><p>{{form.Excel}}</p></center>
+           	<center><p style = "color: red">Defaulters: {{defaulters}}</p></center>
 
     <script>
         function myFunction() {
@@ -118,7 +158,4 @@
 	
 	</table>
 
-	</div>   
-
-</body>
-</html>
+	</div>-->

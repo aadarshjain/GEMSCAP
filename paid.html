@@ -1,4 +1,4 @@
-<!DOCTYPE html>  
+<!--<!DOCTYPE html>  
 <html>  
 <head>  
     <title>VIEW MONTHLY PAYMENT DETAILS</title>  
@@ -70,10 +70,12 @@ a:hover {
     </style>
 </head>  
 <body>  
-  <a href = "/home.html" class = "previous">&laquo; Back</a>
-<h3>EMPLOYEE MONTHLY PAYMENT INFORMATION</h3>  
-<table border=5>  
-    <thead>
+  <a href = "/home.html" class = "previous">&laquo; Back</a>-->
+{% extends "bootstrap.html" %}
+{% block title %}PAYROLL{% endblock %}
+{% block content %}    
+<table class="table table-hover">  
+    <thead class = "thead-dark">
     <tr>  
         <th>TAKIONID</th>
         <th> SUMMARY </th>
@@ -96,7 +98,7 @@ a:hover {
 {% for row in rows %}  
          
             {% if row['CarryForwardBalance'] >= '0' %}
-            <tr bgcolor = #03fcca>  
+            <tr bgcolor = #62dea4>  
                 <th> <a href="/pay?tkid={{row['TAKIONID']}}&bal={{row['CarryForwardBalance']}}"> {{row["TAKIONID"]}} </a> </th>
                 <th><a href="/summary.html?tkid={{row['TAKIONID']}}"> SUMMARY </a></th>
                 
@@ -118,7 +120,7 @@ a:hover {
             {% endif %}
           
             {% if row['CarryForwardBalance'] <  '0' %}
-            <tr bgcolor = #FF0000>  
+            <tr bgcolor = #e64353>  
                 <th> <a href="/pay?tkid={{row['TAKIONID']}}&bal={{row['CarryForwardBalance']}}"> {{row["TAKIONID"]}} </a> </th>
                 <th><a href="/summary.html?tkid={{row['TAKIONID']}}"> SUMMARY </a></th>
                 
@@ -143,7 +145,6 @@ a:hover {
 </table>  
 <br><br>  
 <form class = "print">
- <button type = "button" onClick = "window.print()">Print</button>
+ <button class = "btn btn-primary" type = "button" onClick = "window.print()">Print</button>
 </form>  
-</body>  
-</html>
+{% endblock %}

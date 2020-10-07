@@ -1,5 +1,4 @@
-<!DOCTYPE html>  
-<html>  
+<!--<html>  
 <head>  
     <a href = "/home.html" class = "previous">&laquo; Back</a>
     <a href = "/" class = "logout">Logout</a>
@@ -86,10 +85,12 @@ a:hover {
 }    
     </style>
 </head>  
-<body>  
-  
+<body>-->  
+{% extends "bootstrap.html" %}
+{% block title %}VIEW DETAILS{% endblock %}
+{% block content %}  
 <h3>EMPLOYEE MONTHLY QUANTITY INFORMATION</h3>  
-<table border=5>  
+<table class = "table table-striped">  
     <thead>
     <tr>  
         <th>TAKIONID</th>
@@ -130,7 +131,8 @@ a:hover {
 </table>  
 <br><br>  
 <form class = "print">
- <button type = "button" onClick = "window.print()">Print</button>
+ <button class = "btn btn-primary" type = "button" onClick = "window.print()">Print</button>
 </form>  
-</body>  
-</html>
+{% endblock %}
+<!--</body>  
+</html>-->

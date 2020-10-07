@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang = "en">
 <head>
 	<meta charset = "UTF-8">
@@ -84,15 +84,18 @@ a:hover {
 	</style>
 	
 </head>
-<body>
+<body>-->
+{% extends "bootstrap.html" %}
+{% block title %}VIEW DETAILS{% endblock %}
+{% block content %}
+
 	<div class = "details">	
 		<center><h1 class = "label">DELETE</h1></center>
 		<form class = "user_form" method = "post" name = "form" >	
-			<a href = "/home.html" class = "previous">&laquo; Back</a>
-            <center><p>{{form.TakionID.label}}</p></center> 
-            <center><p>{{form.TakionID}}</p><center>   
-			<button value = {{form.submit}} >Submit</button>
+			
+            <center><p class="font-weight-bold">{{form.TakionID.label}}</p></center> 
+            <center><p>{{form.TakionID}}</p></center>   
+			<button class = "btn btn-primary" value = {{form.submit}} >DELETE</button>
 	    </form>
 	</div>    
-</body>
-</html>
+{% endblock %}

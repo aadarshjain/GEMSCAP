@@ -330,8 +330,8 @@ def excelupdate():
 			con = sqlite3.connect("GEMSCAP_TABLE.db")    
 			cur = con.cursor()
 			
-			for i in defaultertkid:
-				cur.execute('SELECT TakionID,CarryForwardBalance,StartingBalance FROM gemscap_table WHERE TakionID = {}'.format(i))
+			for i in range(len(defaultertkid)-1):
+				cur.execute('SELECT TakionID,CarryForwardBalance,StartingBalance FROM gemscap_table WHERE TakionID = {}'.format(defaultertkid[i]))
 				row = cur.fetchone()			#gives tuple
 				rows.append(row)				#list of tuples
 			con.commit()
@@ -479,8 +479,8 @@ def printIndiSummary():
 	conn = sqlite3.connect("GEMSCAP_TABLE.db") 
 	conn.row_factory = sqlite3.Row    
 	curs = conn.cursor()
-	curs.execute(''' SELECT * FROM PAIDTABLE WHERE TAKIONID = {} UNION
-					 SELECT * FROM MONTHLYTABLE WHERE TAKIONID = {} UNION 
+	curs.execute(''' SELECT * FROM PAIDTABLE WHERE TAKIONID = {} UNION ALL
+					 SELECT * FROM MONTHLYTABLE WHERE TAKIONID = {} UNION ALL
 					 SELECT * FROM TOTALTABLE WHERE TAKIONID = {}
 				'''.format(tkid,tkid,tkid))
 	rows = curs.fetchall()           

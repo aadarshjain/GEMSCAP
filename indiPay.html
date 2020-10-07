@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--!DOCTYPE html>
 <html>
 	<style type="text/css">
 	*{
@@ -64,7 +64,11 @@
 	<title>INDIVIDUAL PAYMENT</title>
 </head>
 
-<body>
+<body>-->
+{% extends "bootstrap.html" %}
+{% block title %}VIEW DETAILS{% endblock %}
+{% block content %}
+
 	<div class = "details">
 	<form class = "user_form" autocomplete = "off" method = "post" name = "form">
 			<center><h2>PAY TO INDIVIDUAL EMPLOYEE</h2></center>
@@ -72,10 +76,9 @@
 			<center><p>{{form.Month}}</p></center>
 			<center><p>{{form.PayAmount.label}}</p></center>
 			<center><p>{{form.PayAmount}}</p></center>
-			<center><button type="submit" action="paid.html">SUBMIT</button></center>
+			<center><button class = "btn btn-primary" type="submit" action="paid.html">SUBMIT</button></center>
 			<!--<button value = {{form.submit}} formaction="paid.html" >Submit</button>-->
 			
 	</form>
 </div>
-</body>
-</html>
+{% endblock %}

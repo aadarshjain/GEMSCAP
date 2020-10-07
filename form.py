@@ -76,10 +76,10 @@ class updateExcel(FlaskForm):
                ('Dec', 'Dec')
             ]
     Month = SelectField('MONTHS', choices = Months)
-    Excel = StringField('ENTER FILE NAME')
+    Excel = StringField('FILE NAME')
 
 class paidDetails(FlaskForm):
-    Paid = StringField('ENTER TAKION ID')
+    Paid = StringField('TAKION ID')
 
 class amountToPay(FlaskForm):
     Paida = StringField('RE-ENTER TAKION ID')
@@ -100,14 +100,14 @@ class payToIndividual(FlaskForm):
                ('Dec', 'Dec')
             ]
     Month = SelectField('MONTHS', choices = Months)
-    PayAmount = StringField('ENTER AMOUNT TO PAY')
+    PayAmount = StringField('AMOUNT TO PAY')
     submit1 = SubmitField('Submit')
 
 class indiMonthlyView(FlaskForm):
-    TakionId = StringField('ENTER EMPLOYEE\'S TAKION ID')
+    TakionId = StringField('TAKION ID')
 
 class indiPayView(FlaskForm):
-    TakionId = StringField('ENTER EMPLOYEE\'S TAKION ID')
+    TakionId = StringField('TAKION ID')
 
 class adjustform(FlaskForm):
     Months = [ ('Jan', 'Jan'), 
@@ -124,8 +124,8 @@ class adjustform(FlaskForm):
                ('Dec', 'Dec')
             ]
     Month = SelectField('MONTHS', choices = Months)
-    Takionid = StringField('ENTER TakionID')
-    Amount = StringField('ENTER AMOUNT TO ADJUST')
+    Takionid = StringField('TAKION ID')
+    Amount = StringField('AMOUNT TO ADJUST')
     submit = SubmitField('Submit')
 
 class updatekyc(FlaskForm):
@@ -150,5 +150,5 @@ class updatekyc(FlaskForm):
     submit = SubmitField('Submit')
 
 class deleteform(FlaskForm):
-    TakionID = StringField('TakionID', validators = [validators.DataRequired()])
+    TakionID = StringField('TAKION ID', validators = [validators.DataRequired()])
     submit = SubmitField('Submit')

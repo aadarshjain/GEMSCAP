@@ -10,7 +10,7 @@ qty=[]
 
 def openfile(x):
     print("INSIDE openfile()")
-    loc=(r'/home/aadarsh/Desktop/GEMSCAP1/'+x+'.xls') #loc=(r'.....\downloads\ + file name + .xls')
+    loc=(r'/home/aadarsh/Desktop/GEMSCAP_boot/'+x+'.xls') #loc=(r'.....\downloads\ + file name + .xls')
     print(loc)
     wb = xlrd.open_workbook(loc)
     sheet = wb.sheet_by_index(0)

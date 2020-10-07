@@ -1,4 +1,4 @@
-<!DOCTYPE html>  
+<!--<!DOCTYPE html>  
 <html>  
 <head>  
     <title>VIEW DETAILS</title> 
@@ -79,9 +79,13 @@ a:hover {
 
 </head>  
  
-<body>
-  
-  <div class = "table">
+<body>-->
+{% extends "bootstrap.html" %}
+{% block title %}VIEW DETAILS{% endblock %}
+{% block content %}
+<center><h1></h1></center>
+
+  <div class = "table table-bordered">
   <h2>EMPLOYEE'S INFORMATION</h2>
 <table>  
 
@@ -283,10 +287,12 @@ a:hover {
   
 </table>  
 </div>    
-<br><br>  
+<br>
 <form class = "print">
- <button type = "button" onClick = "window.print()">PRINT</button>
- <button type = "submit" formaction="tryprint.html">VIEW ANOTHER DETAIL</button>
+ <button class = "btn btn-primary" type = "button" onClick = "window.print()">PRINT</button>
+ <button class = "btn btn-primary" type = "submit" formaction="tryprint.html">VIEW ANOTHER DETAIL</button>
 </form>  
-</body>  
-</html>
+
+ {% endblock %}    
+<!--</body>  
+</html>-->
