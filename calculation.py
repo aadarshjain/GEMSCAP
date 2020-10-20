@@ -51,7 +51,7 @@ def createexceltable():
     print("checkpoint 2****")
     for i in range(len(TKID)):
         
-        cur.execute('''INSERT INTO EXCELTABLE (TAKIONID, TOTAL_DELTA, QUANTITY) VALUES (?,?,?)''', (TKID[i], total_d[i], qty[i] ))
+        cur.execute('''INSERT INTO EXCELTABLE (TAK0.70,2))IONID, TOTAL_DELTA, QUANTITY) VALUES (?,?,?)''', (TKID[i], total_d[i], qty[i] ))
     print("checkpoint 3****")
     cur.execute('''UPDATE EXCELTABLE SET (PolicyNumber,CarryForwardBalance,StartingBalance) = (SELECT gemscap_table.PolicyNumber, gemscap_table.CarryForwardBalance,gemscap_table.StartingBalance
                 FROM gemscap_table WHERE gemscap_table.TakionID = EXCELTABLE.TAKIONID)''')
@@ -74,7 +74,7 @@ def createexceltable():
                 payable.append(round(row[1]*0.70,2))
             #else:payable.append(-1)
         elif row[1] < 0 and row[3] >= 0:    # if td is -ve and cfb is +ve
-            payable.append(row[1])
+            payable.append(round(row[1],2))
 
         
 ######################################################      30  SEP

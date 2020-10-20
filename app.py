@@ -21,7 +21,7 @@ def default():
 	login_img = os.path.join(app.config['UPLOAD_FOLDER'], 'bglogin1.jpg')
 	return render_template('login_page.html', first_img = login_img)
 
-database={'admin':'admin'}
+database={'admin':'gemscap'}
 
 @app.route('/login_page.html', methods = ['GET', 'POST'])
 def login1():
@@ -278,6 +278,11 @@ def trynew():
 	print(script)
 	cur.execute(script)  
 	rows = cur.fetchall()
+	if len(rows) == 0:
+		info="No such Employee ID Exists!"
+		form = printdata()
+		form.EmployeeAccNo.data = ""
+		return render_template("tryprint.html",form=form,info=info)
 	#print(rows)
 	return render_template("view.html",rows = rows)
 
@@ -347,9 +352,12 @@ def excelupdate():
 			updatetotalInGemscap()
 			updatequantity()
 			cleardata()
+
+			form2.Excel.data=""
 			return render_template("excelupdate.html",form=form2,defaulters = defaulterstr,rows=rows)
 		except:
 			pass
+	form2.Excel.data=""		
 	return render_template("excelupdate.html",form=form2,defaulters = defaulterstr,rows=rows)
 
 
@@ -496,15 +504,20 @@ def printIndiSummary():
 ##########################   delete user 27 SEP
 @app.route('/delete.html' , methods = ["GET" , "POST"])
 def delete():
-	form=deleteform() 	
+	form=deleteform()
+	info = "" 	
 	if form.is_submitted() and request.method == "POST":
 		try:
 			tkid = request.form['TakionID']
 			print(tkid)
-			deluser(tkid)
-			return redirect(url_for('home'))
+			ans = deluser(tkid)
+			if ans == False:
+				info = "No such Takion ID Exists!"
+			form.TakionID.data=""
+			return render_template('/delete.html', form=form, info = info)
 		except:
 			pass
+	form.TakionID.data=""
 	return render_template('/delete.html', form=form)
 
 

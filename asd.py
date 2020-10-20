@@ -249,6 +249,13 @@ def deluser(tkid):
     print("inside deluser takionid is: ",tkid)
     con = sqlite3.connect("GEMSCAP_TABLE.db")   
     cur = con.cursor()
+
+    cur.execute('SELECT * FROM gemscap_table WHERE TakionID = {}'.format(tkid))
+    row = cur.fetchone()
+    #if row == None:
+    #    return False
+    print(row)
+
     cur.execute('INSERT INTO deluser SELECT * FROM gemscap_table WHERE TakionID={}'.format(tkid))
     cur.execute('DELETE FROM gemscap_table WHERE TakionID={}'.format(tkid))
     cur.execute('DELETE FROM MONTHLYTABLE WHERE TAKIONID={}'.format(tkid))
@@ -257,6 +264,7 @@ def deluser(tkid):
     cur.execute('DELETE FROM TOTALTABLE WHERE TAKIONID={}'.format(tkid))
     con.commit()
     con.close()
+    return True
 
 ##########    15 september for adjusting cfb of a takionid
 def adjustcfbingemscap_adjustmonthlytable(tk,amount,month):

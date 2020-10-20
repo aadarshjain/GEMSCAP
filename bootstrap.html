@@ -2,9 +2,11 @@
 <html>
 <head>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-	<title>{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="css/custom.css">
+  <title>{% block title %}{% endblock %}</title>
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+     <img src="https://res.cloudinary.com/mhmd/image/upload/v1557368579/logo_iqjuay.png" width="45" alt="" class="d-inline-block align-middle mr-2">
       <a class="navbar-brand" href="home.html">HOME</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -12,7 +14,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown active">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           REGISTRATION
         </a>
@@ -25,10 +27,10 @@
         </div>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="excelupdate.html">EXCEL UPLOAD <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="excelupdate.html">EXCEL UPLOAD<span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="quantity.html">EXCEL QUANTITY</a>
+      <li class="nav-item active">
+        <a class="nav-link" href="quantity.html">EXCEL QUANTITY<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
         <a class="nav-link" href="paid.html">PAYROLL<span class="sr-only">(current)</span></a>
@@ -38,7 +40,7 @@
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-          <li><a href="/"><span class="glyphicon glyphicon-log-in"></span>LOGOUT</a></li>
+          <li><a style="color:white" href="/"><span class="glyphicon glyphicon-log-out"></span>LOGOUT</a></li>
     </ul>    
   </div>
   </nav>
