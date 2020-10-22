@@ -6,7 +6,7 @@
   <title>{% block title %}{% endblock %}</title>
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-     <img src="https://res.cloudinary.com/mhmd/image/upload/v1557368579/logo_iqjuay.png" width="45" alt="" class="d-inline-block align-middle mr-2">
+     <img src="{{ url_for('static', filename='images/logo_trans.png' ) }}" alt="Responsive image" width="46" alt="" class="img-fluid">
       <a class="navbar-brand" href="home.html">HOME</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -24,6 +24,7 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="update_kyc.html">KYC UPDATE</a>
           <a class="dropdown-item" href="delete.html">KYC DELETE</a>
+          <a class="dropdown-item" href="tryprintdel.html">VIEW DELETE</a>
         </div>
       </li>
       <li class="nav-item active">

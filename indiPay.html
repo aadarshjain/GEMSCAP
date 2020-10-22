@@ -72,11 +72,59 @@
 	<div class = "details">
 	<form class = "user_form" autocomplete = "off" method = "post" name = "form">
 			<center><h2>PAY TO INDIVIDUAL EMPLOYEE</h2></center>
+			<center><p>
+			
+				<br>
+				<table class="table-bordered">
+					<tr>
+						<th>TAKIONID</th>
+						<th>Jan</th>
+						<th>Feb</th>
+						<th>Mar</th>
+						<th>Apr</th>
+						<th>May</th>
+						<th>Jun</th>
+						<th>Jul</th>
+						<th>Aug</th>
+						<th>Sep</th>
+						<th>Oct</th>
+						<th>Nov</th>
+						<th>Dec</th>
+					</tr>
+				
+						
+					<tr>  
+						<th>{{row[0]}}</th> 
+						<th>{{row[1]}}</th>
+						<th>{{row[2]}}</th>
+						<th>{{row[3]}}</th>
+						<th>{{row[4]}}</th>
+						<th>{{row[5]}}</th>
+						<th>{{row[6]}}</th>
+						<th>{{row[7]}}</th>
+						<th>{{row[8]}}</th>
+						<th>{{row[9]}}</th>
+						<th>{{row[10]}}</th>
+						<th>{{row[11]}}</th>
+						<th>{{row[12]}}</th> 
+					</tr>  
+      
+				</table>
+				<br>
+				<br>
+				</p></center>
+
+<script>
+    function myFunction() {
+    alert("Successfully Paid!");
+}
+</script>
+
 			<center><p>{{form.Month.label}}</p></center>
 			<center><p>{{form.Month}}</p></center>
 			<center><p>{{form.PayAmount.label}}</p></center>
 			<center><p>{{form.PayAmount}}</p></center>
-			<center><button class = "btn btn-primary" type="submit" action="paid.html">SUBMIT</button></center>
+			<center><button onclick = "myFunction()" class = "btn btn-primary" type="submit" action="paid.html">PAY</button></center>
 			<!--<button value = {{form.submit}} formaction="paid.html" >Submit</button>-->
 			
 	</form>

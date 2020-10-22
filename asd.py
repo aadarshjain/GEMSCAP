@@ -252,8 +252,8 @@ def deluser(tkid):
 
     cur.execute('SELECT * FROM gemscap_table WHERE TakionID = {}'.format(tkid))
     row = cur.fetchone()
-    #if row == None:
-    #    return False
+    if row == None:
+        return False
     print(row)
 
     cur.execute('INSERT INTO deluser SELECT * FROM gemscap_table WHERE TakionID={}'.format(tkid))

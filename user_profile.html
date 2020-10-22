@@ -221,7 +221,7 @@ a:hover {
         {% if form.AadharCard.errors %}
             <ul class="errors">
                     {% for error in form.AadharCard.errors %}
-                        <li>{{ error }}</li>
+                        <li style=color:red>{{ error }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
@@ -244,9 +244,9 @@ a:hover {
         &nbsp&nbsp&nbsp&nbsp&nbsp{{form.EductionalCourseDetail}}
     
         <b>&nbsp&nbsp&nbsp&nbsp&nbsp{{form.PassingYear.label}}<sup style=color:red>*</sup></b>
-        &nbsp&nbsp&nbsp{{form.PassingYear}}
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.PassingYear}}
     
-        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.PassingStatus.label}}<sup style=color:red>*</sup></b>
+        <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.PassingStatus.label}}<sup style=color:red>*</sup></b>
         &nbsp&nbsp&nbsp&nbsp&nbsp{{form.PassingStatus}}
     </li>
     <hr style = "border: 2px solid gray;"/>
@@ -258,7 +258,7 @@ a:hover {
         <b>&nbsp&nbsp&nbsp&nbsp&nbsp{{form.PFNomineeRelation.label}}<sup style=color:red>*</sup></b>
         {{form.PFNomineeRelation}}
     
-        <b>{{form.PFNomineeDOB.label}}<sup style=color:red>*</sup></b>
+        <b>&nbsp&nbsp&nbsp&nbsp&nbsp{{form.PFNomineeDOB.label}}<sup style=color:red>*</sup></b>
         {{form.PFNomineeDOB}}
     </li>
     <hr style = "border: 2px solid gray;"/>
@@ -267,8 +267,8 @@ a:hover {
         <b>{{form.DateOfJoining.label}}<sup style=color:red>*</sup>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.DateOfJoining}}
     
-       <b>&nbsp&nbsp&nbsp&nbsp&nbsp{{form.DateOfResigning.label}}<sup style=color:red>*</sup></b>
-        &nbsp&nbsp&nbsp&nbsp&nbsp{{form.DateOfResigning}}
+       <b>&nbsp&nbsp&nbsp&nbsp&nbsp{{form.DateOfResigning.label}}</b>
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.DateOfResigning}}
     </li>
     <hr style = "border: 2px solid gray;"/>
     <h2>Employee's Bank Account Details</h2>           <!--        heading       -->
@@ -299,30 +299,26 @@ a:hover {
         {{form.AccountHolderName1}}
     </li>
     <!-------------------------------------------------------------------------------------------->
+    <hr style = "border: 0.5px solid gray;"/>
     <h3> Secondary Account Details </h3>
         <li>
-        <b>{{form.AccountNumber2.label}}&nbsp</b>
+        <b>{{form.AccountNumber2.label}}&nbsp&nbsp</b>
         &nbsp&nbsp&nbsp&nbsp&nbsp{{form.AccountNumber2}}
-        {% if form.AccountNumber2.errors %}
-        <p class="errors">
-                {% for error in form.AccountNumber2.errors %}
-                    {{ error }}
-            {% endfor %}
-        </p>
-    {% endif %}
     
-        <b>{{form.IFSCcode2.label}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
-        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.IFSCcode2}}
+        <b>
+          <br><br>
+        {{form.IFSCcode2.label}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
+        {{form.IFSCcode2}}
     
         <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.BankName2.label}}</b>
-        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.BankName2}}
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.BankName2}}
     
         <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.AccountType2.label}}</b>
-        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.AccountType2}}
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.AccountType2}}
     </li>
     <li>
         <b>{{form.AccountHolderName2.label}}</b>
-        {{form.AccountHolderName2}}
+        &nbsp{{form.AccountHolderName2}}
    </li> 
    <hr style = "border: 2px solid gray;"/>
    <h3> Other Details </h3>

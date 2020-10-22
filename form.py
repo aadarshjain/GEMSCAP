@@ -45,7 +45,7 @@ class userform(FlaskForm):
     BankName1 = StringField('Bank Name', validators = [validators.DataRequired()])
     AccountType1 = StringField('Account Type' , validators = [validators.DataRequired()])
     AccountHolderName1 = StringField('Account Holder Name', validators = [validators.DataRequired()])
-    AccountNumber2 = StringField('Account Number 2', [validators.Regexp(regex = r'^[0-9]{9,18}$', message="")])
+    AccountNumber2 = StringField('Account Number 2')
     IFSCcode2 = StringField('IFSC Code')
     BankName2 = StringField('Bank Name')
     AccountType2 = StringField('Account Type') 
@@ -59,6 +59,9 @@ class userform(FlaskForm):
     submit = SubmitField('Submit')
 
 class printdata(FlaskForm):
+    EmployeeAccNo = StringField('ENTER EMPLOYEE\'S GEMSCAP ID')
+
+class printdeldata(FlaskForm):
     EmployeeAccNo = StringField('ENTER EMPLOYEE\'S GEMSCAP ID')
 
 class updateExcel(FlaskForm):

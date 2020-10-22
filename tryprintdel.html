@@ -1,45 +1,17 @@
 {% extends "bootstrap.html" %}
-{% block title %}EXCEL UPLOAD{% endblock %}
+{% block title %}VIEW DELETED DETAILS{% endblock %}
 {% block content %}
-<center><h1>UPLOAD EXCEL FILE</h1></center>
+<center><h1>VIEW DELETED EMPLOYEE'S DETAILS</h1></center>
 
 	
 		<form class = "user_form" method = "post" name = "form" >	
 			<!--<a href = "/home.html" class = "previous">&laquo; Back</a>-->
-			<center><p class="font-weight-bold">{{form.Month.label}}</p></center>
-			<center><p>{{form.Month}}</p></center>
-            <center><p class="font-weight-bold">{{form.Excel.label}}</p></center> 
-            <center><p>{{form.Excel}}</p></center>
-           	<center><p class="font-weight-bold" style = "color: red">Defaulters: {{defaulters}}</p></center>
-
-    		<script>
-    		    function myFunction() {
-    		    alert("Successfully Submitted!");
-    		}
-			</script>
-    
-			<center><button class = "btn btn-primary" onclick = "myFunction()"  value = {{form.submit}} >Upload</button></center>
+			<center><p class="font-weight-bold">{{form.EmployeeAccNo.label}}</p></center>
+			<center><p>{{form.EmployeeAccNo}}</p></center>
+			<center><button formaction="trynewdel" class = "btn btn-primary" value = {{form.submit}} >VIEW</button></center>
+	    	<br>
+	    	<center><p class="font-weight-bold" style = "color: red">{{ info }}</p></center>
 	    </form>
-
-		<br>
-		<center><table class="table-bordered">
-		<thead class="thead-dark">
-			<tr bgcolor=''>
-				<th>TakionID</th>
-				<th>StartingBalance</th>
-				<th>CarryforwardBalance</th>
-			</tr>
-		</thead>
-			{% for row in rows %}
-			<tr bgcolor=#03fcca>
-				<th>{{row[0]}}</th>
-				<th>{{row[2]}}</th>
-				<th>{{row[1]}}</th>
-			</tr>
-			{% endfor %}
-	
-	</table></center>
-	
 	{% endblock %}	
 
 
