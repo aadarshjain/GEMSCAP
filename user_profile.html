@@ -75,9 +75,6 @@ a:hover {
   border-radius: 1px;
   border: 1px solid #3949AB;    
 }  
-.sup{
-    color: red;
-}  
 </style>
 
 </head>
@@ -98,7 +95,7 @@ a:hover {
     </li> 
 
     <li>
-        <b>{{form.FirstName.label}}&nbsp&nbsp<sup style=color:red>*</sup></b>
+        <b>{{form.FirstName.label}}<sup style=color:red>*</sup>&nbsp&nbsp</b>
         &nbsp&nbsp{{form.FirstName}}
     
         <b>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.MiddleName.label}}</b>
@@ -265,7 +262,7 @@ a:hover {
     <h3> Date of Joining and Date of Resigning </h3>
     <li>
         <b>{{form.DateOfJoining.label}}<sup style=color:red>*</sup>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
-        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.DateOfJoining}}
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.DateOfJoining}}
     
        <b>&nbsp&nbsp&nbsp&nbsp&nbsp{{form.DateOfResigning.label}}</b>
         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{form.DateOfResigning}}

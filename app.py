@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask import *
-from form import userform, printdata, updateExcel, paidDetails, amountToPay, payToIndividual, indiMonthlyView, indiPayView, adjustform, updatekyc, deleteform
+from form import userform, printdata, updateExcel, paidDetails, amountToPay, payToIndividual, indiMonthlyView, indiPayView, adjustform, updatekyc, deleteform, printdeldata
 #from flaskwebgui import FlaskUI
+import tkinter as tk
+from tkinter import messagebox as mb
 from calculation import *
 from pymsgbox import *
 from flask import abort
@@ -260,10 +262,24 @@ def view():
 	rows = cur.fetchall()  
 	return render_template("view.html",rows = rows)
 
+@app.route("/viewdel")  
+def viewdel():  
+	con = sqlite3.connect("GEMSCAP_TABLE.db")  
+	con.row_factory = sqlite3.Row  
+	cur = con.cursor()  
+	cur.execute("select * from deluser")  
+	rows = cur.fetchall()  
+	return render_template("viewdel.html",rows = rows)
+
 @app.route("/tryprint.html",methods = ["POST","GET"])
 def tryprint():
 	form1 = printdata()
 	return render_template("tryprint.html",form=form1)
+
+@app.route("/tryprintdel.html",methods = ["POST","GET"])
+def tryprintdel():
+	form1 = printdata()
+	return render_template("tryprintdel.html",form=form1)
 
 @app.route("/trynew",methods = ["POST","GET"])
 def trynew():
@@ -284,7 +300,30 @@ def trynew():
 		form.EmployeeAccNo.data = ""
 		return render_template("tryprint.html",form=form,info=info)
 	#print(rows)
-	return render_template("view.html",rows = rows)
+	age = calculateage(z)
+	return render_template("view.html",rows = rows, age = age)
+
+@app.route("/trynewdel",methods = ["POST","GET"])
+def trynewdel():
+	#form1 = printdata()
+	result = request.form
+	z = result['EmployeeAccNo']
+	print(z)
+	con = sqlite3.connect("GEMSCAP_TABLE.db")  
+	con.row_factory = sqlite3.Row  
+	cur = con.cursor()  
+	script="SELECT * FROM deluser WHERE EmployeeID = '" + str(z) + "'"
+	print(script)
+	cur.execute(script)  
+	rows = cur.fetchall()
+	if len(rows) == 0:
+		info="No such Employee ID Exists!"
+		form = printdeldata()
+		form.EmployeeAccNo.data = ""
+		return render_template("tryprintdel.html",form=form,info=info)
+	#print(rows)
+	age = calculateage(z)
+	return render_template("viewdel.html",rows = rows, age = age)
 
 @app.route("/upload.html", methods = ['GET', 'POST'])
 def upload():
@@ -367,9 +406,13 @@ def paid():
 	con.row_factory = sqlite3.Row  
 	cur = con.cursor()  
 	#cur.execute("select * from gemscap_table")  
-	cur.execute(''' SELECT gemscap_table.TakionID,CarryForwardBalance,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec
-					FROM gemscap_table,MONTHLYTABLE WHERE gemscap_table.TakionID = MONTHLYTABLE.TAKIONID ''')
+	cur.execute(''' SELECT gemscap_table.TakionID, round(CarryForwardBalance,2) as CarryForwardBalance, round(Jan,2) as Jan, round(Feb,2) as Feb,
+					round(Mar,2) as Mar, round(Apr,2) as Apr, round(May,2) as May, round(Jun,2) as Jun, round(Jul,2) as Jul, round(Aug,2) as Aug, round(Sep,2) as Sep,
+					round(Oct,2) as Oct, round(Nov,2) as Nov, round(Dec,2) as Dec FROM gemscap_table,MONTHLYTABLE WHERE gemscap_table.TakionID = MONTHLYTABLE.TAKIONID ''')
+
 	rows = cur.fetchall()  
+	con.commit()
+	con.close()
 	return render_template("paid.html",rows = rows)  
 
 @app.route("/pay", methods=["GET","POST"])
@@ -378,6 +421,17 @@ def check():
 	print("Hello")
 	tkid = request.args.get('tkid')
 	balance = request.args.get('bal')
+	print(tkid)
+
+	con = sqlite3.connect("GEMSCAP_TABLE.db")    
+	cur = con.cursor()  
+	cur.execute('''SELECT TAKIONID ,round(Jan,2) as Jan , round(Feb,2) as Feb , round(Mar,2) as Mar , round(Apr,2) as Apr , round(May,2) as May , round(Jun,2) 
+					 as Jun , round(Jul,2) as Jul , round(Aug,2) as Aug , round(Sep,2) as Sep , round(Oct,2) as Oct , round(Nov,2) as Nov, round(Dec,2)
+					 as Dec FROM MONTHLYTABLE WHERE MONTHLYTABLE.TAKIONID={}'''.format(tkid))
+	row = cur.fetchone()
+	con.commit()
+	con.close()
+
 	print(tkid,balance)
 	form6 = payToIndividual()
 	if request.method == 'POST' and form6.is_submitted():
@@ -395,6 +449,22 @@ def check():
 				return redirect(url_for('paid'))
 			else:
 				print("inside else")
+				
+				root= tk.Tk()
+				canvas1 = tk.Canvas(root, width = 3, height = 3)
+				canvas1.pack()
+				
+				
+				if mb.askyesno('Verify', 'Do you want to pay more than Earned?'):
+					print("selected yes")
+					updatePAIDTABLE(m,x,tkid)
+				else:
+					print("selected no")
+				root.destroy()
+				tk.mainloop()
+				form6.PayAmount.data = ""
+				#print("checkvalue = ",value)
+				'''
 				value = confirm(text='Do you want to pay more than Earned?', title='Attention!!', buttons=['YES', 'NO'])
 				print(value)
 				if value == 'YES':
@@ -402,11 +472,12 @@ def check():
 					return redirect(url_for('paid'))
 				elif value == 'NO':
 					return redirect(url_for('paid'))
+				'''
 		
 		except:
 			pass
 	##create form accept month and amount to pay then call updatepaidtable() and also update cfb in gemscap_table
-	return render_template('/indiPay.html', form = form6,msg=msg)
+	return render_template('/indiPay.html', form = form6,msg=msg,row=row)
 	#return render_template('/paid.html')
 
 @app.route("/indiMonthlyView.html",methods = ["POST","GET"])
@@ -474,7 +545,9 @@ def quantity():
 	con = sqlite3.connect("GEMSCAP_TABLE.db")  
 	con.row_factory = sqlite3.Row  
 	cur = con.cursor()  
-	cur.execute("select * from QUANTITYTABLE")  
+	cur.execute(''' SELECT  TAKIONID ,round(Jan,2) as Jan , round(Feb,2) as Feb , round(Mar,2) as Mar , round(Apr,2) as Apr , round(May,2) as May , round(Jun,2) 
+					 as Jun , round(Jul,2) as Jul , round(Aug,2) as Aug , round(Sep,2) as Sep , round(Oct,2) as Oct , round(Nov,2) as Nov, round(Dec,2)
+					 as Dec FROM QUANTITYTABLE''')  
 	#cur.execute(''' SELECT gemscap_table.TakionID,CarryForwardBalance,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec FROM gemscap_table,MONTHLYTABLE  ''')
 	rows = cur.fetchall()  
 	return render_template("quantity.html",rows = rows)
@@ -487,13 +560,21 @@ def printIndiSummary():
 	conn = sqlite3.connect("GEMSCAP_TABLE.db") 
 	conn.row_factory = sqlite3.Row    
 	curs = conn.cursor()
-	curs.execute(''' SELECT * FROM PAIDTABLE WHERE TAKIONID = {} UNION ALL
-					 SELECT * FROM MONTHLYTABLE WHERE TAKIONID = {} UNION ALL
-					 SELECT * FROM TOTALTABLE WHERE TAKIONID = {}
+	curs.execute(''' SELECT  TAKIONID ,round(Jan,2) as Jan , round(Feb,2) as Feb , round(Mar,2) as Mar , round(Apr,2) as Apr , round(May,2) as May , round(Jun,2) 
+					 as Jun , round(Jul,2) as Jul , round(Aug,2) as Aug , round(Sep,2) as Sep , round(Oct,2) as Oct , round(Nov,2) as Nov, round(Dec,2)
+					 as Dec FROM PAIDTABLE WHERE TAKIONID = {} 
+					 UNION ALL
+					 SELECT TAKIONID ,round(Jan,2) as Jan , round(Feb,2) as Feb , round(Mar,2) as Mar , round(Apr,2) as Apr , round(May,2) as May , round(Jun,2) 
+					 as Jun , round(Jul,2) as Jul , round(Aug,2) as Aug , round(Sep,2) as Sep , round(Oct,2) as Oct , round(Nov,2) as Nov, round(Dec,2)
+					 as Dec FROM MONTHLYTABLE WHERE TAKIONID = {} 
+					 UNION ALL
+					 SELECT TAKIONID ,round(Jan,2) as Jan , round(Feb,2) as Feb , round(Mar,2) as Mar , round(Apr,2) as Apr , round(May,2) as May , round(Jun,2) 
+					 as Jun , round(Jul,2) as Jul , round(Aug,2) as Aug , round(Sep,2) as Sep , round(Oct,2) as Oct , round(Nov,2) as Nov, round(Dec,2)
+					 as Dec FROM TOTALTABLE WHERE TAKIONID = {}
 				'''.format(tkid,tkid,tkid))
 	rows = curs.fetchall()           
 	#Name tkid starting_balance cfb  policy joining_date
-	curs.execute(''' SELECT FirstName,StartingBalance,CarryForwardBalance,PolicyNumber,DateOfJoining FROM
+	curs.execute(''' SELECT FirstName,round(StartingBalance,2) as StartingBalance,round(CarryForwardBalance,2) as CarryForwardBalance,PolicyNumber,DateOfJoining FROM
 					 gemscap_table WHERE TakionID = {}'''.format(tkid))
 	info = curs.fetchone()
 	

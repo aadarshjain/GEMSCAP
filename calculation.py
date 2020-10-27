@@ -1,5 +1,6 @@
 import xlrd
 import sqlite3
+from datetime import date
 
 TKID = []
 total_d=[]
@@ -51,7 +52,7 @@ def createexceltable():
     print("checkpoint 2****")
     for i in range(len(TKID)):
         
-        cur.execute('''INSERT INTO EXCELTABLE (TAK0.70,2))IONID, TOTAL_DELTA, QUANTITY) VALUES (?,?,?)''', (TKID[i], total_d[i], qty[i] ))
+        cur.execute('''INSERT INTO EXCELTABLE (TAKIONID, TOTAL_DELTA, QUANTITY) VALUES (?,?,?)''', (TKID[i], total_d[i], qty[i] ))
     print("checkpoint 3****")
     cur.execute('''UPDATE EXCELTABLE SET (PolicyNumber,CarryForwardBalance,StartingBalance) = (SELECT gemscap_table.PolicyNumber, gemscap_table.CarryForwardBalance,gemscap_table.StartingBalance
                 FROM gemscap_table WHERE gemscap_table.TakionID = EXCELTABLE.TAKIONID)''')
@@ -247,6 +248,39 @@ def deductamount(x,y):
     conn.close()
     
 #######################################################################################################
+
+#################################     24 oct     ##############################
+def calculateage(eid):                     ## works for tuype dd/mm/yyyy in database else fails
+    conn = sqlite3.connect("GEMSCAP_TABLE.db")   
+    curs = conn.cursor()
+    curs.execute("SELECT DOB from gemscap_table WHERE EmployeeID = '" + str(eid) + "'")
+    BirthDate = curs.fetchone()
+    #print(BirthDate[0])
+    born = BirthDate[0]
+    conn.commit()
+    conn.close()
+
+    born = born.split("/")
+    day=int(born[0])
+    month=int(born[1])
+    year=int(born[2])
+    born=(date(year,month,day))
+    print(born,"datetype data")
+
+    today = date.today() 
+    try:  
+        birthday = born.replace(year = today.year) 
+  
+    # raised when birth date is February 29 
+    # and the current year is not a leap year 
+    except ValueError:  
+        birthday = born.replace(year = today.year, 
+                  month = born.month + 1, day = 1) 
+  
+    if birthday > today: 
+        return today.year - born.year - 1
+    else: 
+        return today.year - born.year
     
 # openfile('sasample2')
 # createexceltable()

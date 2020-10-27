@@ -97,7 +97,7 @@ a:hover {
       
 {% for row in rows %}  
          
-            {% if row['CarryForwardBalance'] >= '0' %}
+            {% if row['CarryForwardBalance'] >= 0 %}
             <tr bgcolor = #62dea4>  
                 <th> <a href="/pay?tkid={{row['TAKIONID']}}&bal={{row['CarryForwardBalance']}}"> {{row["TAKIONID"]}} </a> </th>
                 <th><a href="/summary.html?tkid={{row['TAKIONID']}}"> SUMMARY </a></th>
@@ -119,7 +119,7 @@ a:hover {
             </tr>  
             {% endif %}
           
-            {% if row['CarryForwardBalance'] <  '0' %}
+            {% if row['CarryForwardBalance'] < 0 %}
             <tr bgcolor = #e64353>  
                 <th> <a href="/pay?tkid={{row['TAKIONID']}}&bal={{row['CarryForwardBalance']}}"> {{row["TAKIONID"]}} </a> </th>
                 <th><a href="/summary.html?tkid={{row['TAKIONID']}}"> SUMMARY </a></th>
