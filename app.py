@@ -1,3 +1,5 @@
+################################## IMPORT LIBRARIES ##################################
+
 from flask import Flask, render_template, request, redirect, url_for
 from flask import *
 from form import userform, printdata, updateExcel, paidDetails, amountToPay, payToIndividual, indiMonthlyView, indiPayView, adjustform, updatekyc, deleteform, printdeldata, adjustpaymentform
@@ -11,12 +13,16 @@ from asd import *
 import sqlite3
 import os
 
+################################## FLASK ##################################
+
 app = Flask(__name__)
 app.secret_key = 'gemscap'
 #ui = FlaskUI(app)
 
 imgFolder = os.path.join('static', 'images')
 app.config['UPLOAD_FOLDER'] = imgFolder
+
+################################## ROUTE DEFAULT ##################################
 
 @app.route('/')
 def default():
@@ -25,10 +31,14 @@ def default():
 
 database={'admin':'gemscap'}
 
+################################## ROUTE LOGIN PAGE ##################################
+
 @app.route('/login_page.html', methods = ['GET', 'POST'])
 def login1():
 	login_img = os.path.join(app.config['UPLOAD_FOLDER'], 'bglogin1.jpg')
 	return render_template('login_page.html', first_img = login_img)
+
+################################## ROUTE FORM PAGE ##################################
 
 @app.route('/form_login',methods=['GET' , 'POST'])
 def login():
@@ -43,13 +53,13 @@ def login():
 	else:
 		return render_template('home.html', second_img = home_img)
 
+################################## ROUTE HOME PAGE ##################################
+
 @app.route('/home.html',methods=['GET' , 'POST'])
 def home():
 	return render_template('home.html')
 
-@app.route('/crud.html',methods=['GET' , 'POST'])
-def crud():
-	return render_template('crud.html')
+################################## ROUTE USER PROFILE PAGE ##################################
 
 @app.route('/user_profile.html',methods=['GET','POST'])
 def userprofile():
@@ -192,6 +202,8 @@ def userprofile():
 		return redirect(url_for('saveDetails'))
 		##render or code to save in dbms    
 	return render_template('user_profile.html',form = form)
+
+################################## ROUTE UPDATE PROFILE PAGE ##################################
 	
 @app.route('/update_kyc.html',methods=['GET','POST'])
 def updateKYC():
@@ -252,6 +264,7 @@ def updateKYC():
 
 	return render_template('update_kyc.html',form = form)
 
+################################## ROUTE VIEW PAGE ##################################
 
 @app.route("/view")  
 def view():  
@@ -262,6 +275,8 @@ def view():
 	rows = cur.fetchall()  
 	return render_template("view.html",rows = rows)
 
+################################## ROUTE VIEW DEL PAGE ##################################
+
 @app.route("/viewdel")  
 def viewdel():  
 	con = sqlite3.connect("GEMSCAP_TABLE.db")  
@@ -271,15 +286,21 @@ def viewdel():
 	rows = cur.fetchall()  
 	return render_template("viewdel.html",rows = rows)
 
+################################## ROUTE EMPLOYEE DETAILS PAGE ##################################
+
 @app.route("/tryprint.html",methods = ["POST","GET"])
 def tryprint():
 	form1 = printdata()
 	return render_template("tryprint.html",form=form1)
 
+################################## ROUTE DELETED EMPLOYEE PAGE ##################################
+
 @app.route("/tryprintdel.html",methods = ["POST","GET"])
 def tryprintdel():
 	form1 = printdata()
 	return render_template("tryprintdel.html",form=form1)
+
+################################## ROUTE VIEW INFORAMTION PAGE ##################################
 
 @app.route("/trynew",methods = ["POST","GET"])
 def trynew():
@@ -302,6 +323,8 @@ def trynew():
 	#print(rows)
 	age = calculateage(z)
 	return render_template("view.html",rows = rows, age = age)
+
+################################## ROUTE DELETED INFORMATION PAGE ##################################
 
 @app.route("/trynewdel",methods = ["POST","GET"])
 def trynewdel():
@@ -332,31 +355,8 @@ def upload():
 		file.save(os.path.join("uploads", file.filename))
 	return render_template("/upload.html", message = "Successfully Uploaded")	
 
-#@app.route("/excelupdate.html",methods = ["POST","GET"])
-#def excelupdate():
-#	defaulterstr=''
-#	form2 = updateExcel(request.form)
-#	if request.method == 'POST' and form2.is_submitted():
-#		m=form2.Month.data
-#		x=form2.Excel.data
-#		print(x,m)
-#		try:
-#			openfile(x)
-#			defaulterstr = createexceltable()
-#			print("defaulters are ",defaulterstr)
-#			updatenetpay()
-#			updateCarryForwardBalance()
-#			updateCarryForwardBalanceInGemscap()
-#			updateMONTHLYTABLE(m)
-#			updateQuantitytable(m)
-#			updatetotaltable(m)
-#			updatetotalInGemscap()
-#			updatequantity()
-#			cleardata()
-#			return render_template("excelupdate.html",form=form2,defaulters = defaulterstr)
-#		except:
-#			pass
-#	return render_template("excelupdate.html",form=form2,defaulters = defaulterstr) 
+################################## ROUTE EXCELUPDATE PAGE ##################################
+
 @app.route("/excelupdate.html",methods = ["POST","GET"])
 def excelupdate():
 	defaulterstr=''
@@ -399,6 +399,7 @@ def excelupdate():
 	form2.Excel.data=""		
 	return render_template("excelupdate.html",form=form2,defaulters = defaulterstr,rows=rows)
 
+################################## ROUTE PAID PAGE ##################################
 
 @app.route("/paid.html", methods = ["POST", "GET"])  
 def paid():  
@@ -414,6 +415,8 @@ def paid():
 	con.commit()
 	con.close()
 	return render_template("paid.html",rows = rows)  
+
+################################## ROUTE PAYMENT PAGE ##################################	
 
 @app.route("/pay", methods=["GET","POST"])
 def check():
@@ -480,26 +483,23 @@ def check():
 	return render_template('/indiPay.html', form = form6,msg=msg,row=row)
 	#return render_template('/paid.html')
 
-@app.route("/indiMonthlyView.html",methods = ["POST","GET"])
-def tryprint1():
-	form7 = indiMonthlyView()
-	return render_template("indiMonthlyView.html",form=form7)
+#@app.route("/indiMonthly",methods = ["POST","GET"])
+#def trynew1():
+#	#form1 = printdata()
+#	result = request.form
+#	z = result['TakionId']
+#	print(z)
+#	con = sqlite3.connect("GEMSCAP_TABLE.db")  
+#	con.row_factory = sqlite3.Row  
+#	cur = con.cursor()  
+#	script="SELECT * FROM MONTHLYTABLE WHERE TAKIONID = '" + str(z) + "'"
+#	print(script)
+#	cur.execute(script)  
+#	rows = cur.fetchall()
+#	#print(rows)
+#	return render_template("monthlyview.html",rows = rows)
 
-@app.route("/indiMonthly",methods = ["POST","GET"])
-def trynew1():
-	#form1 = printdata()
-	result = request.form
-	z = result['TakionId']
-	print(z)
-	con = sqlite3.connect("GEMSCAP_TABLE.db")  
-	con.row_factory = sqlite3.Row  
-	cur = con.cursor()  
-	script="SELECT * FROM MONTHLYTABLE WHERE TAKIONID = '" + str(z) + "'"
-	print(script)
-	cur.execute(script)  
-	rows = cur.fetchall()
-	#print(rows)
-	return render_template("monthlyview.html",rows = rows)
+################################## ROUTE PAYVIEW PAGE ##################################
 
 @app.route("/payview", methods = ["POST","GET"])
 def trynew2():
@@ -517,10 +517,14 @@ def trynew2():
 	#print(rows)
 	return render_template("indipay.html", rows = rows)
 
+################################## ROUTE PAIDVIEW PAGE ##################################
+
 @app.route("/paidview.html",methods = ["POST","GET"])
 def tryprint2():
 	form8 = indiPayView()
 	return render_template("paidview.html",form=form8)
+
+################################## ROUTE ADJUST PAGE ##################################
 
 @app.route("/adjust.html",methods=["GET" , "POST"])
 def adjust():
@@ -540,6 +544,8 @@ def adjust():
 			pass
 	return render_template('/adjust.html', form=form)
 
+################################## ROUTE QUANTITY PAGE ##################################
+
 @app.route("/quantity.html",methods=["GET","POST"])
 def quantity():
 	con = sqlite3.connect("GEMSCAP_TABLE.db")  
@@ -552,8 +558,8 @@ def quantity():
 	rows = cur.fetchall()  
 	return render_template("quantity.html",rows = rows)
 
+################################## ROUTE SUMMARY PAGE ##################################
 
-###################     INDIVIDUAL SUMMARY     16 SEP
 @app.route("/summary.html",methods=["GET","POST"])
 def printIndiSummary():
 	tkid = request.args.get('tkid')
@@ -582,7 +588,8 @@ def printIndiSummary():
 	conn.close()
 	return render_template("summary.html",row1 = rows[0] , row2 = rows[1] , row3 = rows[2],info=info,tkid=tkid)
 
-##########################   delete user 27 SEP
+################################## ROUTE DELETE PAGE ##################################
+
 @app.route('/delete.html' , methods = ["GET" , "POST"])
 def delete():
 	form=deleteform()
@@ -601,6 +608,8 @@ def delete():
 	form.TakionID.data=""
 	return render_template('/delete.html', form=form)
 
+################################## ROUTE PAYMENT ADJUST PAGE ##################################
+
 @app.route("/tryprintadjustpay.html",methods=["GET" , "POST"])   ########1/11/2020 Adjust Payment (tryprintadjustpay.html)########
 def adjustpay():
 	form=adjustpaymentform()
@@ -618,6 +627,8 @@ def adjustpay():
 		except:
 			pass
 	return render_template('/tryprintadjustpay.html', form=form)
+
+################################## MAIN ##################################
 
 if __name__ == "__main__":
 	app.run(debug = True)
