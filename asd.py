@@ -278,6 +278,16 @@ def adjustcfbingemscap_adjustmonthlytable(tk,amount,month):
     con.commit()
     con.close()
 
+##########    1 November for adjusting payment of a takionid
+def adjustpaymentinpaymenttable(tk,amount,month):
+    print('INSIDE adjustpaymentform')
+    con = sqlite3.connect("GEMSCAP_TABLE.db")   
+    cur = con.cursor()
+    cur.execute('UPDATE PAIDTABLE SET {} = {} + {} WHERE TAKIONID = {}'.format(month,month,amount,tk))
+
+    con.commit()
+    con.close()
+
 # createMONTHLYTABLE()   figure out how to call this all create func once
 # createPaidtable()
 # createQuantitytable()

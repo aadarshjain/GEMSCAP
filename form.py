@@ -155,3 +155,22 @@ class updatekyc(FlaskForm):
 class deleteform(FlaskForm):
     TakionID = StringField('TAKION ID', validators = [validators.DataRequired()])
     submit = SubmitField('Submit')
+
+class adjustpaymentform(FlaskForm):
+    Months = [ ('Jan', 'Jan'), 
+               ('Feb', 'Feb'),
+               ('Mar', 'Mar'),
+               ('Apr', 'Apr'),
+               ('May', 'May'),
+               ('Jun', 'Jun'),
+               ('Jul', 'Jul'),
+               ('Aug', 'Aug'),
+               ('Sep', 'Sep'),
+               ('Oct', 'Oct'),
+               ('Nov', 'Nov'),
+               ('Dec', 'Dec')
+            ]
+    Month = SelectField('MONTHS', choices = Months)
+    Takionid = StringField('TAKION ID')
+    Amount = StringField('AMOUNT TO ADJUST')
+    submit = SubmitField('Submit')

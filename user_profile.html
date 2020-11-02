@@ -218,7 +218,7 @@ a:hover {
         {% if form.AadharCard.errors %}
             <ul class="errors">
                     {% for error in form.AadharCard.errors %}
-                        <li style=color:red>{{ error }}</li>
+                        <li>{{ error }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
@@ -341,6 +341,7 @@ a:hover {
     </li>
     <hr style = "border: 2px solid gray;"/>
 </ul>
+
 <script>
     function myFunction() {
     alert("Successfully Submitted!");
@@ -348,7 +349,19 @@ a:hover {
 </script>
     <button onclick = "myFunction()" value = {{form.submit()}} >Submit</button>
     <button type = "button" onClick = "window.print()">Print</button>
+    <!-- Footer -->
+<footer class="page-footer font-small blue">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="https://github.com/aadarshjain/GEMSCAP"> DUA TECH SOLUTIONS</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
 </form>
+
 </div>
 </body>
 </html>

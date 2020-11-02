@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask import *
-from form import userform, printdata, updateExcel, paidDetails, amountToPay, payToIndividual, indiMonthlyView, indiPayView, adjustform, updatekyc, deleteform, printdeldata
+from form import userform, printdata, updateExcel, paidDetails, amountToPay, payToIndividual, indiMonthlyView, indiPayView, adjustform, updatekyc, deleteform, printdeldata, adjustpaymentform
 #from flaskwebgui import FlaskUI
 import tkinter as tk
 from tkinter import messagebox as mb
@@ -323,7 +323,7 @@ def trynewdel():
 		return render_template("tryprintdel.html",form=form,info=info)
 	#print(rows)
 	age = calculateage(z)
-	return render_template("viewdel.html",rows = rows, age = age)
+	return render_template("viewdel.html",rows = rows)
 
 @app.route("/upload.html", methods = ['GET', 'POST'])
 def upload():
@@ -562,7 +562,7 @@ def printIndiSummary():
 	curs = conn.cursor()
 	curs.execute(''' SELECT  TAKIONID ,round(Jan,2) as Jan , round(Feb,2) as Feb , round(Mar,2) as Mar , round(Apr,2) as Apr , round(May,2) as May , round(Jun,2) 
 					 as Jun , round(Jul,2) as Jul , round(Aug,2) as Aug , round(Sep,2) as Sep , round(Oct,2) as Oct , round(Nov,2) as Nov, round(Dec,2)
-					 as Dec FROM PAIDTABLE WHERE TAKIONID = {} 
+					 as Dec FROM TOTALTABLE WHERE TAKIONID = {} 
 					 UNION ALL
 					 SELECT TAKIONID ,round(Jan,2) as Jan , round(Feb,2) as Feb , round(Mar,2) as Mar , round(Apr,2) as Apr , round(May,2) as May , round(Jun,2) 
 					 as Jun , round(Jul,2) as Jul , round(Aug,2) as Aug , round(Sep,2) as Sep , round(Oct,2) as Oct , round(Nov,2) as Nov, round(Dec,2)
@@ -570,7 +570,7 @@ def printIndiSummary():
 					 UNION ALL
 					 SELECT TAKIONID ,round(Jan,2) as Jan , round(Feb,2) as Feb , round(Mar,2) as Mar , round(Apr,2) as Apr , round(May,2) as May , round(Jun,2) 
 					 as Jun , round(Jul,2) as Jul , round(Aug,2) as Aug , round(Sep,2) as Sep , round(Oct,2) as Oct , round(Nov,2) as Nov, round(Dec,2)
-					 as Dec FROM TOTALTABLE WHERE TAKIONID = {}
+					 as Dec FROM PAIDTABLE WHERE TAKIONID = {}
 				'''.format(tkid,tkid,tkid))
 	rows = curs.fetchall()           
 	#Name tkid starting_balance cfb  policy joining_date
@@ -580,7 +580,7 @@ def printIndiSummary():
 	
 	conn.commit()                                               ##conn not closed in /paid in route 
 	conn.close()
-	return render_template("summary.html",row1 = rows[2] , row2 = rows[0] , row3 = rows[1],info=info,tkid=tkid)
+	return render_template("summary.html",row1 = rows[0] , row2 = rows[1] , row3 = rows[2],info=info,tkid=tkid)
 
 ##########################   delete user 27 SEP
 @app.route('/delete.html' , methods = ["GET" , "POST"])
@@ -601,6 +601,23 @@ def delete():
 	form.TakionID.data=""
 	return render_template('/delete.html', form=form)
 
+@app.route("/tryprintadjustpay.html",methods=["GET" , "POST"])   ########1/11/2020 Adjust Payment (tryprintadjustpay.html)########
+def adjustpay():
+	form=adjustpaymentform()
+	info=""
+	if form.is_submitted() and request.method == "POST":
+		try:
+			tk = request.form['Takionid']
+			month = request.form['Month']
+			amount = request.form['Amount']
+			print(tk,month,amount)
+			##function call to update cfb in gemscaptable and monthly tale
+			adjustpaymentinpaymenttable(tk,amount,month)
+			
+			return render_template('/tryprintadjustpay.html',info=info , form=form)
+		except:
+			pass
+	return render_template('/tryprintadjustpay.html', form=form)
 
 if __name__ == "__main__":
 	app.run(debug = True)
