@@ -1,0 +1,219 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>VIEW MONTHLY PAYMENT DETAILS</title>  
+    <style type="text/css">
+         *{
+            padding: 5px;
+            margin: 5px;
+        }
+        body{
+
+            margin-left: 17.5%;
+            text-align: left; 
+            background-color: #D3D3D3;
+            
+            padding: 50px;
+            margin: 50px;
+            border: 6px solid #305A72;
+            border-radius: 10px;
+            transition: 0.5s;
+        }
+        td, th {
+            width: auto;
+            height: 2rem;
+            border: 2px solid #ccc;
+            text-align: auto;
+        }
+        th {
+            background: lightblue;
+            border-color: white;
+        }
+        td{
+            background: orange;
+            border-color: white;
+        }           
+        .table{
+            
+            table-layout: fixed;
+            width: 100%;
+            border-spacing: 1rem;
+            border-collapse: collapse;
+            font-family: sans-serif;
+        }
+    .print button{
+        margin: 45px 0 30px 0;
+        height: 40px;
+        width: 380px;
+        font-size: 20px;
+        color: white;
+        outline: none;
+        cursor: pointer;
+        font-weight: bold;
+        background: #1A237E;
+        border-radius: 3px;
+        border: 1px solid #3949AB;
+        transition: .5s;
+    }
+    .print button:hover{
+        background: #800000;
+    }  
+    a {
+        text-decoration: none;
+        display: inline-block;
+        padding: 8px 16px;
+        transition: .5s;
+    }
+
+    a:hover {
+        background-color: #FAFAFA;
+        color: red;
+    }
+    .previous {
+  
+        color: black;
+        outline: none;
+        cursor: pointer;
+        border-radius: 1px;
+        border: 1px solid #3949AB;
+    }
+    .style{
+        padding: 20px 30px;
+        float: left;
+        border-radius: 10px;
+        border: 3px solid #305A72;
+        color: solid gray;
+    }
+    .logout{
+        float: right;  
+        color: black;
+        outline: none;
+        cursor: pointer;
+        border-radius: 1px;
+        border: 1px solid #3949AB;    
+}         
+    </style>
+
+</head>  
+<body>  
+<a href = "/paid.html" class = "previous">&laquo; Back</a>
+    <a href = "/" class = "logout">Logout</a>
+<h2>EMPLOYEE MONTHLY PAYMENT INFORMATION</h2> 
+<div class = "style">
+<h3>Name: {{info["FirstName"]}} </h3>
+<h3>Takion ID: {{tkid}}</h3>
+<h3>Starting Balance: {{info["StartingBalance"]}} </h3>
+<h3>Date Of Joining: {{info["DateOfJoining"]}} </h3>
+<h3>Brought Forward: {{info["CarryForwardBalance"]}} </h3>
+<h3>Policy Number: {{info["PolicyNumber"]}} </h3>
+</div>
+
+<table border=5>  
+    
+    <thead>
+    <tr>  
+        <th>MONTHS</th>
+        <th>NET PNL</th>
+        <th>NET MONTHLY PAYABLE</th>
+        <th>NET PAID</th>
+        
+    </tr>
+    <tr>
+        <th>Jan</th>
+        <td>{{row1["Jan"]}}</td>
+        <td>{{row2["Jan"]}}</td>
+        <td>{{row3["Jan"]}}</td>
+    </tr>
+    <tr>
+        <th>Feb</th>
+        <td>{{row1["Feb"]}}</td>
+        <td>{{row2["Feb"]}}</td>
+        <td>{{row3["Feb"]}}</td>
+    </tr>    
+    <tr>
+        <th>Mar</th>
+        <td>{{row1["Mar"]}}</td>
+        <td>{{row2["Mar"]}}</td>
+        <td>{{row3["Mar"]}}</td>
+    </tr>
+    <tr>
+        <th>Apr</th>
+        <td>{{row1["Apr"]}}</td>
+        <td>{{row2["Apr"]}}</td>
+        <td>{{row3["Apr"]}}</td>
+
+    </tr>            
+
+    <tr>
+        <th>May</th>
+        <td>{{row1["May"]}}</td>
+        <td>{{row2["May"]}}</td>
+        <td>{{row3["May"]}}</td>
+    </tr>
+    <tr>
+        <th>Jun</th>
+        <td>{{row1["Jun"]}}</td>
+        <td>{{row2["Jun"]}}</td>
+        <td>{{row3["Jun"]}}</td>
+
+    </tr>   
+    <tr>
+        <th>Jul</th>
+        <td>{{row1["Jul"]}}</td>
+        <td>{{row2["Jul"]}}</td>
+        <td>{{row3["Jul"]}}</td>
+    </tr>
+    <tr>
+        <th>Aug</th>
+        <td>{{row1["Aug"]}}</td>
+        <td>{{row2["Aug"]}}</td>
+        <td>{{row3["Aug"]}}</td>
+    </tr>
+    <tr>
+        <th>Sep</th>
+        <td>{{row1["Sep"]}}</td>
+        <td>{{row2["Sep"]}}</td>
+        <td>{{row3["Sep"]}}</td>
+    </tr>  
+    <tr>
+        <th>Oct</th>
+        <td>{{row1["Oct"]}}</td>
+        <td>{{row2["Oct"]}}</td>
+        <td>{{row3["Oct"]}}</td>
+
+    </tr>
+    <tr>
+        <th>Nov</th>
+        <td>{{row1["Nov"]}}</td>
+        <td>{{row2["Nov"]}}</td>
+        <td>{{row3["Nov"]}}</td>
+    </tr>
+    <tr>
+        <th>Dec</th>
+        <td>{{row1["Dec"]}}</td>
+        <td>{{row2["Dec"]}}</td>
+        <td>{{row3["Dec"]}}</td>
+    </tr>   
+        
+    
+    </thead>
+
+    
+</table>  
+<br><br>  
+<form class = "print">
+ <button type = "button" onClick = "window.print()">Print</button>
+</form>  
+<!-- Footer -->
+<footer class="page-footer font-small blue">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="https://github.com/aadarshjain/GEMSCAP"> DUA TECH SOLUTIONS</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+</body>  
+</html>

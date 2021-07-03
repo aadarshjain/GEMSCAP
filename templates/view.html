@@ -1,0 +1,312 @@
+<!--<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>VIEW DETAILS</title> 
+    <a href = "/home.html" class = "previous">&laquo; Back</a>
+    <style type="text/css">
+        *{
+            padding: 5px;
+            margin: 5px;
+        }
+        body{
+            padding: 0;
+            margin: 0;
+            margin-left: 35%;
+            text-align: left; 
+            background-color: #D3D3D3;
+
+        }
+        td, th {
+            width: auto;
+            height: 2rem;
+            border: 2px solid #ccc;
+            text-align: auto;
+        }
+        th {
+            background: lightblue;
+            border-color: white;
+        }
+        td{
+            background: orange;
+            border-color: white;
+        }           
+        .table{
+            
+            table-layout: fixed;
+            width: 100%;
+            border-spacing: 1rem;
+            border-collapse: collapse;
+            font-family: sans-serif;
+        }
+    .print button{      
+        margin: 30px 0 30px 0;
+        height: 40px;
+        width: 250px;
+        font-size: 20px;
+        color: white;
+        outline: none;
+        cursor: pointer;
+        font-weight: bold;
+        background: #1A237E;
+        border-radius: 3px;
+        border: 1px solid #3949AB;
+        transition: .5s;
+    }
+    .print button:hover{
+        background: #800000;
+    }
+    a {
+        text-decoration: none;
+        display: inline-block;
+        padding: 8px 16px;
+        transition: .5s;
+    }
+
+a:hover {
+  background-color: #FAFAFA;
+  color: red;
+}
+.previous {
+  
+  color: black;
+  outline: none;
+  cursor: pointer;
+  border-radius: 1px;
+  border: 1px solid #3949AB;
+}
+
+    </style>
+
+</head>  
+ 
+<body>-->
+{% extends "bootstrap.html" %}
+{% block title %}VIEW DETAILS{% endblock %}
+{% block content %}
+<center><h1></h1></center>
+
+  <div class = "table table-bordered">
+  <h2>EMPLOYEE'S INFORMATION</h2>
+<table>  
+
+     {% for row in rows %}  
+    
+    <tr>  
+        <th>EmployeeID</th>
+        <td>{{row["EmployeeID"]}}</t>
+    </tr>
+    <tr>  
+        <th>First Name</th>
+        <td>{{row["FirstName"]}}</td>
+    </tr>
+    <tr>  
+        <th>Middle Name</th>
+        <td>{{row["MiddleName"]}}</td>
+    </tr>
+    <tr>  
+        <th>Last Name</th>
+        <td>{{row["LastName"]}}</td>
+    </tr>
+    <tr>  
+        <th>Father Name</th>
+        <td>{{row["FatherName"]}}</td>
+    </tr>
+    <tr>  
+        <th>Mother Name</th>
+        <td>{{row["MotherName"]}}</td>
+    </tr>
+    <tr>  
+        <th>DOB</th>
+        <td>{{row["DOB"]}}</td>
+    </tr>
+    <tr>  
+        <th>Age</th>
+        <td>{{ age }}</td>
+    </tr>
+    <tr>  
+        <th>Gender</th>
+        <td>{{row["Gender"]}}</td>
+    </tr>
+    <tr>  
+        <th>Maritial Status</th>
+        <td>{{row["MaritialStatus"]}}</td>
+    </tr>
+    <tr>  
+        <th>Permanent Address</th>
+        <td>{{row["PermanentAddress"]}}</td>
+    </tr>
+    <tr>  
+        <th>City</th>
+        <td>{{row["City1"]}}</td>
+    </tr>
+    <tr>  
+        <th>Pincode</th>
+        <td>{{row["Pincode1"]}}</td>
+    </tr>
+    <tr>  
+        <th>Country</th>
+        <td>{{row["Country1"]}}</td>
+    </tr>
+    <tr>  
+        <th>LocalAddress</th>
+        <td>{{row["LocalAddress"]}}</td>
+    </tr>
+    <tr>  
+        <th>City </th>
+        <td>{{row["City2"]}}</td>
+    </tr>
+    <tr>  
+        <th>Pincode</th>
+        <td>{{row["Pincode2"]}}</td>
+    </tr>
+    <tr>  
+        <th>Country</th>
+        <td>{{row["Country2"]}}</td>
+    </tr>
+    
+    <tr>  
+        <th>Email Address</th>
+        <td>{{row["EmailAddress"]}}</td>
+    </tr>
+    <tr>  
+        <th>Contact Number 1</th>
+        <td>{{row["ContactNumber1"]}}</td>
+    </tr>   
+    <tr>  
+        <th>Contact Number 2</th>
+        <td>{{row["ContactNumber2"]}}</td>
+    </tr>
+    <tr>  
+        <th>Family Persons Name </th>
+        <td>{{row["FamilyPersonsName1"]}}</td>
+    </tr>
+    <tr>  
+        <th>Contact Number </th>
+        <td>{{row["FamilyPersonsContactNumber1"]}}</td>
+    </tr>
+    <tr>  
+        <th>Relation With Employee </th>
+        <td>{{row["FamilyPersonsRelationWithEmployee1"]}}</td>
+    </tr>
+    <tr>  
+        <th>Family Persons Name </th>
+        <td>{{row["FamilyPersonsName2"]}}</td>
+    </tr>
+    <tr>  
+        <th> Contact Number</th>
+        <td>{{row["FamilyPersonsContactNumber2"]}}</td>
+    </tr>
+    <tr>  
+        <th>Relation With Employee </th>
+        <td>{{row["FamilyPersonsRelationWithEmployee2"]}}</td>
+    </tr>
+    <tr>  
+        <th>Aadhar Card</th>
+        <td>{{row["AadharCard"]}}</td>
+    </tr>
+    <tr>  
+        <th>Pan Card</th>
+        <td>{{row["PanCard"]}}</td>
+    </tr>
+    <tr>  
+        <th>Eductional Course Detail</th>
+        <td>{{row["EductionalCourseDetail"]}}</td>
+    </tr>
+    <tr>  
+        <th>Passing Year</th>
+        <td>{{row["PassingYear"]}}</td>
+    </tr>
+    <tr>  
+        <th>Passing Status</th>
+        <td>{{row["PassingStatus"]}}</td>
+    </tr>
+    <tr>  
+        <th>PF Nominee Name</th>
+        <td>{{row["PFNomineeName"]}}</td>
+    </tr>
+    <tr>  
+        <th>PF Nominee Relation</th>
+        <td>{{row["PFNomineeRelation"]}}</td>
+    </tr>
+     <tr>  
+        <th>PF Nominee DOB</th>
+        <td>{{row["PFNomineeDOB"]}}</td>
+    </tr>
+    <tr>  
+        <th>Date Of Joining</th>
+        <td>{{row["DateOfJoining"]}}</td>
+    </tr>
+    <tr>  
+        <th>Date Of Resigning</th>
+        <td>{{row["DateOfResigning"]}}</td>
+    </tr>
+    <tr>  
+        <th>Account Number 1</th>
+        <td>{{row["AccountNumber1"]}}</td>
+    </tr>
+    <tr>  
+        <th>IFSC code</th>
+        <td>{{row["IFSCcode1"]}}</td>
+    </tr>
+    <tr>  
+        <th>Bank Name</th>
+        <td>{{row["BankName1"]}}</td>
+    </tr>
+    <tr>  
+        <th>Account Type</th>
+        <td>{{row["AccountType1"]}}</td>
+    </tr>
+    <tr>  
+        <th>Account Holder Name</th>
+        <td>{{row["AccountHolderName1"]}}</td>
+    </tr>        
+     <tr>  
+        <th>Account Number2</th>
+        <td>{{row["AccountNumber2"]}}</td>
+    </tr>
+    <tr>  
+        <th>IFSC code</th>
+        <td>{{row["IFSCcode2"]}}</td>
+    </tr>
+    <tr>  
+        <th>Bank Name</th>
+        <td>{{row["BankName2"]}}</td>
+    </tr>
+    <tr>  
+        <th>Account Type</th>
+        <td>{{row["AccountType2"]}}</td>
+    </tr>
+    <tr>  
+        <th>Account Holder Name</th>
+        <td>{{row["AccountHolderName2"]}}</td>
+    </tr>
+    <tr>  
+        <th>Policy Number</th>
+        <td>{{row["PolicyNumber"]}}</td>
+    </tr>      
+        
+    {% endfor %}  
+     
+  
+  
+</table>  
+</div>    
+<br>
+<form class = "print">
+ <button class = "btn btn-primary" type = "button" onClick = "window.print()">PRINT</button>
+ <button class = "btn btn-primary" type = "submit" formaction="tryprint.html">VIEW ANOTHER DETAIL</button>
+</form>  
+<!-- Footer -->
+<footer class="page-footer font-small blue">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="https://github.com/aadarshjain/GEMSCAP"> DUA TECH SOLUTIONS</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+ {% endblock %}    
+<!--</body>  
+</html>-->

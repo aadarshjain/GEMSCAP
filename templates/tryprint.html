@@ -1,0 +1,146 @@
+{% extends "bootstrap.html" %}
+{% block title %}VIEW DETAILS{% endblock %}
+{% block content %}
+<center><h1>VIEW EMPLOYEE'S DETAILS</h1></center>
+
+	
+		<form class = "user_form" method = "post" name = "form" >	
+			<!--<a href = "/home.html" class = "previous">&laquo; Back</a>-->
+			<center><p class="font-weight-bold">{{form.EmployeeAccNo.label}}</p></center>
+			<center><p>{{form.EmployeeAccNo}}</p></center>
+			<center><button formaction="trynew" class = "btn btn-primary" value = {{form.submit}} >VIEW</button></center>
+	    	<br>
+	    	<center><p class="font-weight-bold" style = "color: red">{{ info }}</p></center>
+	    </form>
+	    <!-- Footer -->
+<footer class="page-footer font-small blue">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="https://github.com/aadarshjain/GEMSCAP"> DUA TECH SOLUTIONS</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+	{% endblock %}	
+
+
+
+<!--
+	<style type="text/css">
+	*{
+		padding: 0;
+		margin: 0;
+	}
+	body{
+		background: #ade6bb;
+		align-items: center;
+		justify-content: center;
+		display: flex;
+		font-family: sans-serif;
+	}
+	.details{
+		position: relative;
+		margin-top: 100px;
+		width: 450px;
+		height: auto;
+		border-radius: 5px;
+	}
+	.label{
+		padding: 20px 130px;
+		font-size: 30px;
+		font-weight: bold;
+		color: black;
+	}
+	.user_form input{
+		height: 38px;
+		width: 361px;
+		padding: 1px; 
+		font-size: 18px;
+		border-radius: 20px;
+		border: 1px solid silver;
+	}
+	.user_form button{
+		margin: 45px 0 30px 0;
+		height: 40px;
+		width: 380px;
+		font-size: 20px;
+		color: white;
+		outline: none;
+		cursor: pointer;
+		font-weight: bold;
+		background: #1A237E;
+		border-radius: 3px;
+		border: 1px solid #3949AB;
+		transition: .5s;
+	}
+	.user_form button:hover{
+		background: #800000;
+	}
+	p{
+		height: 40px;
+		width: 365px;
+		padding: 0 5px;
+		font-size: 20px;
+		outline: none;
+		border: 1px solid silver;
+	}
+	a{
+  		text-decoration: none;
+  		display: inline-block;
+  		padding: 8px 16px;
+  		transition: .5s;
+	}
+
+	a:hover {
+	  	background-color: #FAFAFA;
+	  	color: red;
+	}
+	.previous {
+	  
+	  	color: black;
+	  	outline: none;
+	  	cursor: pointer;
+	  	border-radius: 1px;
+	  	border: 1px solid #3949AB;
+	}    
+	</style>
+	
+</head>
+<body>
+	<div class = "details">	
+		<center><h1 class = "label">UPLOAD EXCEL FILE</h1></center>
+		<form class = "user_form" method = "post" name = "form" >	
+			<a href = "/home.html" class = "previous">&laquo; Back</a>
+			<center><p>{{form.Month.label}}</p></center>
+			<center><p>{{form.Month}}</p></center>
+            <center><p>{{form.Excel.label}}</p></center> 
+            <center><p>{{form.Excel}}</p></center>
+           	<center><p style = "color: red">Defaulters: {{defaulters}}</p></center>
+
+    <script>
+        function myFunction() {
+        alert("Successfully Submitted!");
+    }
+	</script>
+    
+			<center><button onclick = "myFunction()"  value = {{form.submit}} >Submit</button></center>
+	    </form>
+		<table border=3px >
+			<tr bgcolor='red'>
+				<th>TakionID</th>
+				<th>StartingBalance</th>
+				<th>CarryforwardBalance</th>
+			</tr>
+			{% for row in rows %}
+			<tr bgcolor=#03fcca>
+				<th>{{row[0]}}</th>
+				<th>{{row[2]}}</th>
+				<th>{{row[1]}}</th>
+			</tr>
+			{% endfor %}
+	
+	</table>
+
+	</div>-->
